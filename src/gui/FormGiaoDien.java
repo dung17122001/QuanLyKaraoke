@@ -44,7 +44,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	private JButton btnQldv;
 	private JButton btnQlp;
 	private JButton btnThongKe;
-	private JButton btnTaiKhoan;
+	private JButton btnQlhd;
 	private JButton btnDangXuat;
 	private JLabel txtUsername;
 	private JPanel panel_Manage;
@@ -172,18 +172,18 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		btnThongKe.setBackground(new Color(255, 204, 102));
 		btnThongKe.setForeground(Color.BLACK);
 		btnThongKe.setFocusable(false);
-		btnThongKe.setBounds(1020, 100, 100, 52);
+		btnThongKe.setBounds(1020, 100, 90, 52);
 		panel.add(btnThongKe);
 		
-		btnTaiKhoan = new JButton("Tài khoản");
-		btnTaiKhoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		btnTaiKhoan.setBorderPainted(false);
-		btnTaiKhoan.setBorder(null);
-		btnTaiKhoan.setBackground(new Color(255, 204, 102));
-		btnTaiKhoan.setForeground(Color.BLACK);
-		btnTaiKhoan.setFocusable(false);
-		btnTaiKhoan.setBounds(1130, 100, 100, 52);
-		panel.add(btnTaiKhoan);
+		btnQlhd = new JButton("Quản lý hóa đơn");
+		btnQlhd.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlhd.setBorderPainted(false);
+		btnQlhd.setBorder(null);
+		btnQlhd.setBackground(new Color(255, 204, 102));
+		btnQlhd.setForeground(Color.BLACK);
+		btnQlhd.setFocusable(false);
+		btnQlhd.setBounds(1120, 100, 130, 52);
+		panel.add(btnQlhd);
 		
 		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -192,7 +192,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		btnDangXuat.setBackground(new Color(255, 204, 102));
 		btnDangXuat.setForeground(Color.BLACK);
 		btnDangXuat.setFocusable(false);
-		btnDangXuat.setBounds(1240, 100, 110, 52);
+		btnDangXuat.setBounds(1260, 100, 100, 52);
 		panel.add(btnDangXuat);
 			
 		btnTrangChu.addActionListener(this);
@@ -201,7 +201,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		btnQldv.addActionListener(this);
 		btnQlp.addActionListener(this);
 		btnThongKe.addActionListener(this);
-		btnTaiKhoan.addActionListener(this);
+		btnQlhd.addActionListener(this);
 		btnDangXuat.addActionListener(this);
 		
 		panel_Manage = new JPanel();
@@ -216,7 +216,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		btnQldv.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnQlp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaiKhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnQlhd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 	}
@@ -239,7 +239,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		if(button.equals(btnQlnv)) {
@@ -249,7 +249,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		else if(button.equals(btnQlkh)) {
@@ -259,7 +259,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		else if(button.equals(btnQldv)) {
@@ -269,7 +269,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		else if(button.equals(btnQlp)) {
@@ -279,7 +279,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		else if(button.equals(btnThongKe)) {
@@ -289,17 +289,17 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
-		else if(button.equals(btnTaiKhoan)) {
+		else if(button.equals(btnQlhd)) {
 			button.setBackground(new Color(255, 238, 204));
 			btnQlnv.setBackground(new Color(255, 204, 102));
 			btnQlkh.setBackground(new Color(255, 204, 102));
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 		else if(button.equals(btnDangXuat)) {
@@ -309,7 +309,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			btnQldv.setBackground(new Color(255, 204, 102));
 			btnQlp.setBackground(new Color(255, 204, 102));
 			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnTaiKhoan.setBackground(new Color(255, 204, 102));
+			btnQlhd.setBackground(new Color(255, 204, 102));
 			btnDangXuat.setBackground(new Color(255, 204, 102));
 		}
 	}
