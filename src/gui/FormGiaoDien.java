@@ -59,7 +59,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 1366, 150);
+		panel.setBounds(0, 0, 1366, 175);
 		panel.setBackground(new Color(204,204,204));
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -71,18 +71,18 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		JLabel lblTieuDe = new JLabel("Karaoke Nice");
 		lblTieuDe.setForeground(Color.BLUE);
-		lblTieuDe.setFont(new Font("Times New Roman", Font.BOLD, 50));
-		lblTieuDe.setBounds(550,20, 500, 50);
+		lblTieuDe.setFont(new Font("Times New Roman", Font.BOLD, 70));
+		lblTieuDe.setBounds(500,20, 500, 50);
 		panel.add(lblTieuDe);
 		
 		try {
-			setIconImage(ImageIO.read(new File("img/logo.jfif")));
+			setIconImage(ImageIO.read(new File("img/logo.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		try {
-			BufferedImage image = ImageIO.read(new File("img/logo1.jfif")); 
+			BufferedImage image = ImageIO.read(new File("img/logo.png")); 
 			Area clip = new Area( new Rectangle(0, 0,0, 0) ); 
 			Area oval = new Area( new Ellipse2D.Double(0,0, 0, 0) ); 
 			clip.subtract( oval ); //Khung ảnh
@@ -93,7 +93,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			JLabel lblImage = new JLabel();
 			lblImage.setIcon(new ImageIcon(image));
 			lblImage.setBackground(SystemColor.control);
-			lblImage.setBounds(0,0, 250, 165);
+			lblImage.setBounds(0,-22, 250, 165);
 			panel.add(lblImage);
 			
 		} catch (IOException e) {
@@ -114,88 +114,83 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		panel.revalidate();
 		panel.repaint();
 		
-		btnTrangChu = new JButton("Trang Chủ");
-		btnTrangChu.setIcon(new ImageIcon("img/house.png"));
-		btnTrangChu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		btnTrangChu.setBorderPainted(false);
-		btnTrangChu.setBorder(null);
-		btnTrangChu.setBackground(new Color(255, 204, 102));
-		btnTrangChu.setForeground(Color.BLACK);
-		btnTrangChu.setFocusable(false);
-		btnTrangChu.setBounds(220, 100, 150, 52);
-		panel.add(btnTrangChu);
-		
 		btnQlnv = new JButton("Quản lý nhân viên");
+		btnQlnv.setIcon(new ImageIcon("img/house.png"));
 		btnQlnv.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnQlnv.setBorderPainted(false);
 		btnQlnv.setBorder(null);
 		btnQlnv.setBackground(new Color(255, 204, 102));
 		btnQlnv.setForeground(Color.BLACK);
 		btnQlnv.setFocusable(false);
-		btnQlnv.setBounds(380, 100, 150, 52);
+		btnQlnv.setBounds(0, 125, 180, 50);
 		panel.add(btnQlnv);
 		
 		btnQlkh = new JButton("Quản lý khách hàng");
+		btnQlkh.setIcon(new ImageIcon("img/icon1.png"));
 		btnQlkh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnQlkh.setBorderPainted(false);
 		btnQlkh.setBorder(null);
 		btnQlkh.setBackground(new Color(255, 204, 102));
 		btnQlkh.setForeground(Color.BLACK);
 		btnQlkh.setFocusable(false);
-		btnQlkh.setBounds(540, 100, 170, 52);
+		btnQlkh.setBounds(190,125, 190, 50);
 		panel.add(btnQlkh);
 		
 		btnQldv = new JButton("Quản lý dịch vụ");
+		btnQldv.setIcon(new ImageIcon("img/icon2.png"));
 		btnQldv.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnQldv.setBorderPainted(false);
 		btnQldv.setBorder(null);
 		btnQldv.setBackground(new Color(255, 204, 102));
 		btnQldv.setForeground(Color.BLACK);
 		btnQldv.setFocusable(false);
-		btnQldv.setBounds(720, 100, 150, 52);
+		btnQldv.setBounds(390, 125, 190, 50);
 		panel.add(btnQldv);
 		
 		btnQlp = new JButton("Quản lý phòng");
+		btnQlp.setIcon(new ImageIcon("img/icon3.png"));
 		btnQlp.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnQlp.setBorderPainted(false);
 		btnQlp.setBorder(null);
 		btnQlp.setBackground(new Color(255, 204, 102));
 		btnQlp.setForeground(Color.BLACK);
 		btnQlp.setFocusable(false);
-		btnQlp.setBounds(880, 100, 130, 52);
+		btnQlp.setBounds(590, 125, 190, 50);
 		panel.add(btnQlp);
 		
 		btnThongKe = new JButton("Thống kê");
+		btnThongKe.setIcon(new ImageIcon("img/icon4.png"));
 		btnThongKe.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnThongKe.setBorderPainted(false);
 		btnThongKe.setBorder(null);
 		btnThongKe.setBackground(new Color(255, 204, 102));
 		btnThongKe.setForeground(Color.BLACK);
 		btnThongKe.setFocusable(false);
-		btnThongKe.setBounds(1020, 100, 90, 52);
+		btnThongKe.setBounds(790, 125, 190, 50);
 		panel.add(btnThongKe);
 		
 		btnQlhd = new JButton("Quản lý hóa đơn");
+		btnQlhd.setIcon(new ImageIcon("img/icon5.png"));
 		btnQlhd.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnQlhd.setBorderPainted(false);
 		btnQlhd.setBorder(null);
 		btnQlhd.setBackground(new Color(255, 204, 102));
 		btnQlhd.setForeground(Color.BLACK);
 		btnQlhd.setFocusable(false);
-		btnQlhd.setBounds(1120, 100, 130, 52);
+		btnQlhd.setBounds(990, 125, 190, 50);
 		panel.add(btnQlhd);
 		
 		btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat.setIcon(new ImageIcon("img/icon6.png"));
 		btnDangXuat.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		btnDangXuat.setBorderPainted(false);
 		btnDangXuat.setBorder(null);
 		btnDangXuat.setBackground(new Color(255, 204, 102));
 		btnDangXuat.setForeground(Color.BLACK);
 		btnDangXuat.setFocusable(false);
-		btnDangXuat.setBounds(1260, 100, 100, 52);
+		btnDangXuat.setBounds(1190, 125, 190, 50);
 		panel.add(btnDangXuat);
 			
-		btnTrangChu.addActionListener(this);
 		btnQlnv.addActionListener(this);
 		btnQlkh.addActionListener(this);
 		btnQldv.addActionListener(this);
@@ -210,7 +205,6 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		contentPane.add(panel_Manage);
 		panel_Manage.setLayout(null);
 		
-		btnTrangChu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnQlnv.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnQlkh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnQldv.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -232,16 +226,6 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		//panel_center.removeAll();
 		panel_Manage.repaint();
 		panel_Manage.revalidate();
-		if(button.equals(btnTrangChu)) {
-			button.setBackground(new Color(255, 238, 204));
-			btnQlnv.setBackground(new Color(255, 204, 102));
-			btnQlkh.setBackground(new Color(255, 204, 102));
-			btnQldv.setBackground(new Color(255, 204, 102));
-			btnQlp.setBackground(new Color(255, 204, 102));
-			btnThongKe.setBackground(new Color(255, 204, 102));
-			btnQlhd.setBackground(new Color(255, 204, 102));
-			btnDangXuat.setBackground(new Color(255, 204, 102));
-		}
 		if(button.equals(btnQlnv)) {
 			button.setBackground(new Color(255, 238, 204));
 			btnQlnv.setBackground(new Color(255, 204, 102));
