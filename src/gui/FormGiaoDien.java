@@ -33,7 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import gui.FormTrangChu;
+import gui.FormQLNhanVien;
 
 public class FormGiaoDien extends JFrame  implements ActionListener, MouseListener {
 	private static final long serialVersionUID = -1554680235689968471L;
@@ -102,7 +102,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 
 		JLabel lblUser = new JLabel("Người dùng:");
 		lblUser.setForeground(Color.WHITE);
-		lblUser.setFont(new Font("Times New Roman", Font.PLAIN, 21));
+		lblUser.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		lblUser.setBounds(1150, 60, 120, 31);
 		panel.add(lblUser);
 		
@@ -116,7 +116,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlnv = new JButton("Quản lý nhân viên");
 		btnQlnv.setIcon(new ImageIcon("img/house.png"));
-		btnQlnv.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlnv.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlnv.setBorderPainted(false);
 		btnQlnv.setBorder(null);
 		btnQlnv.setBackground(new Color(255, 204, 102));
@@ -127,7 +127,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlkh = new JButton("Quản lý khách hàng");
 		btnQlkh.setIcon(new ImageIcon("img/icon1.png"));
-		btnQlkh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlkh.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlkh.setBorderPainted(false);
 		btnQlkh.setBorder(null);
 		btnQlkh.setBackground(new Color(255, 204, 102));
@@ -138,7 +138,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQldv = new JButton("Quản lý dịch vụ");
 		btnQldv.setIcon(new ImageIcon("img/icon2.png"));
-		btnQldv.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQldv.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQldv.setBorderPainted(false);
 		btnQldv.setBorder(null);
 		btnQldv.setBackground(new Color(255, 204, 102));
@@ -149,7 +149,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlp = new JButton("Quản lý phòng");
 		btnQlp.setIcon(new ImageIcon("img/icon3.png"));
-		btnQlp.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlp.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlp.setBorderPainted(false);
 		btnQlp.setBorder(null);
 		btnQlp.setBackground(new Color(255, 204, 102));
@@ -160,7 +160,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnThongKe = new JButton("Thống kê");
 		btnThongKe.setIcon(new ImageIcon("img/icon4.png"));
-		btnThongKe.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnThongKe.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnThongKe.setBorderPainted(false);
 		btnThongKe.setBorder(null);
 		btnThongKe.setBackground(new Color(255, 204, 102));
@@ -171,7 +171,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlhd = new JButton("Quản lý hóa đơn");
 		btnQlhd.setIcon(new ImageIcon("img/icon5.png"));
-		btnQlhd.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlhd.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlhd.setBorderPainted(false);
 		btnQlhd.setBorder(null);
 		btnQlhd.setBackground(new Color(255, 204, 102));
@@ -182,7 +182,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setIcon(new ImageIcon("img/icon6.png"));
-		btnDangXuat.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnDangXuat.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnDangXuat.setBorderPainted(false);
 		btnDangXuat.setBorder(null);
 		btnDangXuat.setBackground(new Color(255, 204, 102));
@@ -200,8 +200,8 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		btnDangXuat.addActionListener(this);
 		
 		panel_Manage = new JPanel();
-		panel_Manage.setBounds(0, 150, 1366, 616);
-		panel_Manage.add(new FormTrangChu());
+		panel_Manage.setBounds(0, 175, 1366, 593);
+		panel_Manage.add(new FormQLNhanVien());
 		contentPane.add(panel_Manage);
 		panel_Manage.setLayout(null);
 		
@@ -301,6 +301,25 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		FormGiaoDien frm = new FormGiaoDien();
 		frm.setVisible(true);
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if(o.equals(btnQlnv)) {
+			buttonPressed(btnQlnv);
+			changeScreen(new FormQLNhanVien());
+		}
+		
+		if(o.equals(btnQlkh)) {
+			buttonPressed(btnQlkh);
+			changeScreen(new FormQLKhachHang());
+		}
+		
+		if(o.equals(btnQldv)) {
+			buttonPressed(btnQldv);
+			changeScreen(new FormQLDichVu());
+		}
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -327,12 +346,6 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
