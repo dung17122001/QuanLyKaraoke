@@ -306,19 +306,27 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnQlnv)) {
-			buttonPressed(btnQlnv);
-			changeScreen(new FormQLNhanVien());
+//		if(o.equals(btnQlnv)) {
+//			buttonPressed(btnQlnv);
+//			changeScreen(new FormQLNhanVien());
+//		}
+//		
+//		if(o.equals(btnQlkh)) {
+//			buttonPressed(btnQlkh);
+//			changeScreen(new FormQLKhachHang());
+//		}
+//		
+//		if(o.equals(btnQldv)) {
+//			buttonPressed(btnQldv);
+//			changeScreen(new FormQLDichVu());
+//		}
+		if(o.equals(btnQlp)) {
+			changeScreen(formQLPhong);
+			panel_Manage.add(formQLPhong.getFormQLPhong());
 		}
-		
-		if(o.equals(btnQlkh)) {
-			buttonPressed(btnQlkh);
-			changeScreen(new FormQLKhachHang());
-		}
-		
-		if(o.equals(btnQldv)) {
-			buttonPressed(btnQldv);
-			changeScreen(new FormQLDichVu());
+		if(o.equals(btnThongKe)) {
+			changeScreen(formThongKe);
+			panel_Manage.add(formThongKe.getFormThongKe());
 		}
 		if(o.equals(btnQlp)) {
 			changeScreen(formQLPhong);
