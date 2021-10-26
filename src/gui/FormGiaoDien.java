@@ -33,12 +33,11 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import gui.FormQLNhanVien;
+//import gui.FormQLNhanVien;
 
 public class FormGiaoDien extends JFrame  implements ActionListener, MouseListener {
 	private static final long serialVersionUID = -1554680235689968471L;
 	private JPanel contentPane;
-	private JButton btnTrangChu;
 	private JButton btnQlnv;
 	private JButton btnQlkh;
 	private JButton btnQldv;
@@ -48,6 +47,8 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	private JButton btnDangXuat;
 	private JLabel txtUsername;
 	private JPanel panel_Manage;
+	FormThongKe formThongKe=new FormThongKe();
+	FormQLPhong formQLPhong=new FormQLPhong();
 	
 	public FormGiaoDien(){
 		
@@ -201,7 +202,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		panel_Manage = new JPanel();
 		panel_Manage.setBounds(0, 175, 1366, 593);
-		panel_Manage.add(new FormQLNhanVien());
+//		panel_Manage.add(new FormQLNhanVien());
 		contentPane.add(panel_Manage);
 		panel_Manage.setLayout(null);
 		
@@ -318,6 +319,14 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		if(o.equals(btnQldv)) {
 			buttonPressed(btnQldv);
 			changeScreen(new FormQLDichVu());
+		}
+		if(o.equals(btnQlp)) {
+			changeScreen(formQLPhong);
+			panel_Manage.add(formQLPhong.getFormQLPhong());
+		}
+		if(o.equals(btnThongKe)) {
+			changeScreen(formThongKe);
+			panel_Manage.add(formThongKe.getFormThongKe());
 		}
 	}
 	@Override

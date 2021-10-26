@@ -27,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -41,15 +42,83 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnTim;
+	private JButton btnTinhLuong;
+	private JButton btnXoarong;
+	private JTextField txtTenKh;
+	private JTextField txtID;
+	private JTextField txtCmnd;
+	private JTextField txtDiachi;
+	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
-	private JButton btnReload;
 	public FormQLKhachHang() {
 		setBounds(0, 0, 1366,768);
 		setLayout(null);
 		
+		JPanel pnTTNV = new JPanel();
+		pnTTNV.setBackground(Color.WHITE);
+		pnTTNV.setBorder(new TitledBorder(null, "Thông tin khách hàng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnTTNV.setBounds(0,0, 1366,190);
+		pnTTNV.setLayout(null);
+		add(pnTTNV);
+		
+		JLabel lbManv = new JLabel("Mã KH: ");
+		lbManv.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbManv.setBounds(10, 27, 96, 38);
+		pnTTNV.add(lbManv);
+		
+		txtID = new JTextField();
+		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtID.setBounds(116, 31, 190, 30);
+		pnTTNV.add(txtID);
+		txtID.setColumns(10);
+		
+		JLabel lbTennv = new JLabel("Tên KH: ");
+		lbTennv.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbTennv.setBounds(10, 80, 96, 38);
+		pnTTNV.add(lbTennv);
+		
+		txtTenKh = new JTextField();
+		txtTenKh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtTenKh.setBounds(501, 30, 190, 30);
+		pnTTNV.add(txtTenKh);
+		txtTenKh.setColumns(10);
+		
+		JLabel lbScm = new JLabel("Số CMND");
+		lbScm.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbScm.setBounds(405, 80, 96, 30);
+		pnTTNV.add(lbScm);
+		
+		txtCmnd = new JTextField();
+		txtCmnd.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtCmnd.setBounds(501, 83, 190, 30);
+		pnTTNV.add(txtCmnd);
+		txtCmnd.setColumns(10);
+		
+		JLabel lbSdt = new JLabel("Số điện thoại:");
+		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbSdt.setBounds(405, 24, 96, 38);
+		pnTTNV.add(lbSdt);
+		
+		txtDiachi = new JTextField();
+		txtDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDiachi.setBounds(116, 83, 190, 30);
+		pnTTNV.add(txtDiachi);
+		txtDiachi.setColumns(10);
+		
+		JLabel lbDiachi = new JLabel("Địa chỉ:");
+		lbDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbDiachi.setBounds(855, 83, 190, 30);
+		pnTTNV.add(lbDiachi);
+		
+		txtSdt = new JTextField();
+		txtSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtSdt.setBounds(955, 88, 190, 30);
+		pnTTNV.add(txtSdt);
+		txtSdt.setColumns(10);
+		
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
-		pnChucNang.setBounds(0,0, 1366,50);
+		pnChucNang.setBounds(0,190, 1366,40);
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
@@ -57,7 +126,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		btnThem.setForeground(SystemColor.controlText);
 		btnThem.setBackground(new Color(255, 255, 153));
 		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnThem.setBounds(10, 10, 100, 40);
+		btnThem.setBounds(10, 10, 100, 30);
 		btnThem.setFocusable(false);
 		pnChucNang.add(btnThem);
 		
@@ -65,7 +134,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(120, 10, 100, 40);
+		btnSua.setBounds(120, 10, 100, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
@@ -73,39 +142,47 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		btnXoa.setForeground(SystemColor.controlText);
 		btnXoa.setBackground(new Color(255, 255, 153));
 		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoa.setBounds(230, 10, 100, 40);
+		btnXoa.setBounds(230, 10, 100, 30);
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
 		
+		btnXoarong= new JButton("Xóa rỗng");
+		btnXoarong.setForeground(SystemColor.controlText);
+		btnXoarong.setBackground(new Color(255, 255, 153));
+		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnXoarong.setBounds(340, 10, 160, 30);
+		btnXoarong.setFocusable(false);
+		pnChucNang.add(btnXoarong);
+		
 		txtTimkiem = new JTextField();
 		txtTimkiem.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-		txtTimkiem.setBounds(800, 10, 400, 40);
+		txtTimkiem.setBounds(800, 10, 400, 30);
 		pnChucNang.add(txtTimkiem);
 		txtTimkiem.setColumns(10);
 		
 		btnTim = new JButton("Tìm kiếm");
 		btnTim.setFont(new Font("Times New Roman", Font.PLAIN, 26));
 		btnTim.setBackground(new Color(255, 204, 102));
-		btnTim.setBounds(1200, 10, 150, 40);
+		btnTim.setBounds(1200, 10, 150, 30);
 		pnChucNang.add(btnTim);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 239, 213));
-		panel.setBounds(0, 0, 1368, 768);
+		panel.setBackground(new Color(255, 238, 204));
+		panel.setBounds(0, 230, 1368, 768);
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblDSNV = new JLabel("Danh sách khách hàng:");
+		JLabel lblDSNV = new JLabel("DANH SÁCH KHÁCH HÀNG:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,50, 380, 40);
+		lblDSNV.setBounds(20,0, 380, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 80, 1366, 820);
+		scrollPane.setBounds(0, 30, 1366, 820);
 		panel.add(scrollPane);
 		
-		String[] header = {"Mã NV", "Tên NV","Địa chỉ", "Điện thoại", "CMND"};
+		String[] header = {"Mã KH", "Tên KH","Địa chỉ", "Điện thoại", "CMND"};
 		tableModel = new DefaultTableModel(header, 0){
 			/**
 			 * 
@@ -193,28 +270,19 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		btnReload = new JButton("TẢI LẠI");
-		btnReload.setFocusable(false);
-		btnReload.setBorderPainted(false);
-		btnReload.setOpaque(false);
-		btnReload.setBorder(null);
-		btnReload.setBackground(new Color(255, 204, 102));
-		btnReload.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		btnReload.setBounds(1200, 50, 150, 40);
-		panel.add(btnReload);
-		
 		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnReload.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnTim.addActionListener(this);
-		btnReload.addActionListener(this);
+		btnXoarong.addActionListener(this);
 	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
