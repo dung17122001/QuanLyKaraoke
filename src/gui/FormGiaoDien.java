@@ -48,6 +48,8 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	private JButton btnDangXuat;
 	private JLabel txtUsername;
 	private JPanel panel_Manage;
+	FormThongKe formThongKe=new FormThongKe();
+	FormQLPhong formQLPhong=new FormQLPhong();
 	
 	public FormGiaoDien(){
 		
@@ -116,7 +118,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlnv = new JButton("Quản lý nhân viên");
 		btnQlnv.setIcon(new ImageIcon("img/house.png"));
-		btnQlnv.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlnv.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlnv.setBorderPainted(false);
 		btnQlnv.setBorder(null);
 		btnQlnv.setBackground(new Color(255, 204, 102));
@@ -127,7 +129,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		btnQlkh = new JButton("Quản lý khách hàng");
 		btnQlkh.setIcon(new ImageIcon("img/icon1.png"));
-		btnQlkh.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		btnQlkh.setFont(new Font("Times New Roman", Font.PLAIN, 19));
 		btnQlkh.setBorderPainted(false);
 		btnQlkh.setBorder(null);
 		btnQlkh.setBackground(new Color(255, 204, 102));
@@ -334,7 +336,15 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		Object o=e.getSource();
+		if(o.equals(btnQlp)) {
+			changeScreen(formQLPhong);
+			panel_Manage.add(formQLPhong.getFormQLPhong());
+		}
+		if(o.equals(btnThongKe)) {
+			changeScreen(formThongKe);
+			panel_Manage.add(formThongKe.getFormThongKe());
+		}
 	}
 	
 }
