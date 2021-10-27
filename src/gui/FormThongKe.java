@@ -29,7 +29,7 @@ public class FormThongKe extends JPanel {
 	public FormThongKe() {
 		setLayout(null);
 		
-		panel.setBounds(0, 20, 1355, 560);
+		panel.setBounds(0,0,1366,768);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -82,7 +82,7 @@ public class FormThongKe extends JPanel {
 		
 		JPanel panelThongTinThongKe = new JPanel();
 		panelThongTinThongKe.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelThongTinThongKe.setBounds(665, 10, 680, 177);
+		panelThongTinThongKe.setBounds(665, 10, 676, 177);
 		panel.add(panelThongTinThongKe);
 		panelThongTinThongKe.setLayout(null);
 		

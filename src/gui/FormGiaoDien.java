@@ -203,7 +203,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		panel_Manage = new JPanel();
 		panel_Manage.setBounds(0, 175, 1366, 593);
-//		panel_Manage.add(new FormQLNhanVien());
+		panel_Manage.add(new FormQLNhanVien());
 		contentPane.add(panel_Manage);
 		panel_Manage.setLayout(null);
 		
@@ -307,25 +307,27 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-//		if(o.equals(btnQlnv)) {
-//			buttonPressed(btnQlnv);
-//			changeScreen(new FormQLNhanVien());
-//		}
-//		
-//		if(o.equals(btnQlkh)) {
-//			buttonPressed(btnQlkh);
-//			changeScreen(new FormQLKhachHang());
-//		}
-//		
-//		if(o.equals(btnQldv)) {
-//			buttonPressed(btnQldv);
-//			changeScreen(new FormQLDichVu());
-//		}
+		if(o.equals(btnQlnv)) {
+			buttonPressed(btnQlnv);
+			changeScreen(new FormQLNhanVien());
+		}
+		
+		if(o.equals(btnQlkh)) {
+			buttonPressed(btnQlkh);
+			changeScreen(new FormQLKhachHang());
+		}
+		
+		if(o.equals(btnQldv)) {
+			buttonPressed(btnQldv);
+			changeScreen(new FormQLDichVu());
+		}
 		if(o.equals(btnQlp)) {
+			buttonPressed(btnQlp);
 			changeScreen(formQLPhong);
 			panel_Manage.add(formQLPhong.getFormQLPhong());
 		}
 		if(o.equals(btnThongKe)) {
+			buttonPressed(btnThongKe);
 			changeScreen(formThongKe);
 			panel_Manage.add(formThongKe.getFormThongKe());
 		}
