@@ -56,7 +56,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
-		pnTTNV.setBorder(new TitledBorder(null, "Thông tin khách hàng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnTTNV.setBorder(new TitledBorder(null, "THÔNG TIN KHÁCH HÀNG", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnTTNV.setBounds(0,0, 1366,190);
 		pnTTNV.setLayout(null);
 		add(pnTTNV);
