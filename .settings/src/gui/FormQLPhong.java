@@ -33,7 +33,7 @@ public class FormQLPhong extends JPanel {
 	public FormQLPhong() {
 		setLayout(null);
 		
-		panel.setBounds(0,0,1366,768);//0,20,1355,560
+		panel.setBounds(0, 20, 1355, 560);
 		add(panel);
 		panel.setLayout(null);
 		

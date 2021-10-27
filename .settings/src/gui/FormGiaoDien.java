@@ -38,7 +38,6 @@ import javax.swing.table.DefaultTableModel;
 public class FormGiaoDien extends JFrame  implements ActionListener, MouseListener {
 	private static final long serialVersionUID = -1554680235689968471L;
 	private JPanel contentPane;
-	private JButton btnTrangChu;
 	private JButton btnQlnv;
 	private JButton btnQlkh;
 	private JButton btnQldv;
@@ -203,7 +202,7 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 		
 		panel_Manage = new JPanel();
 		panel_Manage.setBounds(0, 175, 1366, 593);
-		panel_Manage.add(new FormQLNhanVien());
+//		panel_Manage.add(new FormQLNhanVien());
 		contentPane.add(panel_Manage);
 		panel_Manage.setLayout(null);
 		
@@ -322,12 +321,10 @@ public class FormGiaoDien extends JFrame  implements ActionListener, MouseListen
 			changeScreen(new FormQLDichVu());
 		}
 		if(o.equals(btnQlp)) {
-			buttonPressed(btnQlp);
 			changeScreen(formQLPhong);
 			panel_Manage.add(formQLPhong.getFormQLPhong());
 		}
 		if(o.equals(btnThongKe)) {
-			buttonPressed(btnThongKe);
 			changeScreen(formThongKe);
 			panel_Manage.add(formThongKe.getFormThongKe());
 		}
