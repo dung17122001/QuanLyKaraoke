@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JPanel;
 import java.awt.Panel;
+import java.sql.SQLException;
+
 import javax.swing.JLabel;
 
 import java.awt.Color;
@@ -172,6 +174,9 @@ public class FormQLPhong extends JPanel {
 		scrollPhong.setBackground(new Color(248,248,248));
 		panelBangThuoc.add(scrollPhong);
 		
-		
+	}
+	public static void main(String[] args) throws SQLException {		
+		FormQLPhong frm = new FormQLPhong();
+		frm.setVisible(true);
 	}
 }
