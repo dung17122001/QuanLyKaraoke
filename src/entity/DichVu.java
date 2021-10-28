@@ -5,20 +5,20 @@ public class DichVu {
 	private String maDichVu;
 	private String tenDichVu;
 	private String giaTien;
-	private String maLoaiDV;
+	private LoaiDichVu LoaiDichVu;
 	
-	public DichVu(String maDichVu, String tenDichVu, String giaTien, String maLoaiDV) {
+	public DichVu(String maDichVu, String tenDichVu, String giaTien, entity.LoaiDichVu loaiDichVu) {
 		super();
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
 		this.giaTien = giaTien;
-		this.maLoaiDV = maLoaiDV;
+		LoaiDichVu = loaiDichVu;
 	}
 
 	@Override
 	public String toString() {
-		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", giaTien=" + giaTien + ", maLoaiDV="
-				+ maLoaiDV + "]";
+		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", giaTien=" + giaTien + ", LoaiDichVu="
+				+ LoaiDichVu + "]";
 	}
 
 	public String getMaDichVu() {
@@ -45,21 +45,21 @@ public class DichVu {
 		this.giaTien = giaTien;
 	}
 
-	public String getMaLoaiDV() {
-		return maLoaiDV;
+	public LoaiDichVu getLoaiDichVu() {
+		return LoaiDichVu;
 	}
 
-	public void setMaLoaiDV(String maLoaiDV) {
-		this.maLoaiDV = maLoaiDV;
+	public void setLoaiDichVu(LoaiDichVu loaiDichVu) {
+		LoaiDichVu = loaiDichVu;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((LoaiDichVu == null) ? 0 : LoaiDichVu.hashCode());
 		result = prime * result + ((giaTien == null) ? 0 : giaTien.hashCode());
 		result = prime * result + ((maDichVu == null) ? 0 : maDichVu.hashCode());
-		result = prime * result + ((maLoaiDV == null) ? 0 : maLoaiDV.hashCode());
 		result = prime * result + ((tenDichVu == null) ? 0 : tenDichVu.hashCode());
 		return result;
 	}
@@ -73,6 +73,11 @@ public class DichVu {
 		if (getClass() != obj.getClass())
 			return false;
 		DichVu other = (DichVu) obj;
+		if (LoaiDichVu == null) {
+			if (other.LoaiDichVu != null)
+				return false;
+		} else if (!LoaiDichVu.equals(other.LoaiDichVu))
+			return false;
 		if (giaTien == null) {
 			if (other.giaTien != null)
 				return false;
@@ -83,11 +88,6 @@ public class DichVu {
 				return false;
 		} else if (!maDichVu.equals(other.maDichVu))
 			return false;
-		if (maLoaiDV == null) {
-			if (other.maLoaiDV != null)
-				return false;
-		} else if (!maLoaiDV.equals(other.maLoaiDV))
-			return false;
 		if (tenDichVu == null) {
 			if (other.tenDichVu != null)
 				return false;
@@ -95,6 +95,7 @@ public class DichVu {
 			return false;
 		return true;
 	}
+	
 	
 	
 }

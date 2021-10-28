@@ -37,13 +37,10 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JTextField txtTimkiem;
-	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
-	private JButton btnTim;
-	private JButton btnTinhLuong;
 	private JButton btnXoarong;
+	private JButton btnLuu;
 	private JTextField txtTenNv;
 	private JTextField txtID;
 	private JTextField txtNgaySinh;
@@ -146,20 +143,11 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
-		
-		btnThem = new JButton("Thêm");
-		btnThem.setForeground(SystemColor.controlText);
-		btnThem.setBackground(new Color(255, 255, 153));
-		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnThem.setBounds(10, 10, 100, 30);
-		btnThem.setFocusable(false);
-		pnChucNang.add(btnThem);
-		
-		btnSua = new JButton("Sửa");
+		btnSua = new JButton("Cập nhật");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(120, 10, 100, 30);
+		btnSua.setBounds(10, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
@@ -167,37 +155,25 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnXoa.setForeground(SystemColor.controlText);
 		btnXoa.setBackground(new Color(255, 255, 153));
 		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoa.setBounds(230, 10, 100, 30);
+		btnXoa.setBounds(170, 10, 150, 30);
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
-		
-		btnTinhLuong = new JButton("Tính lương");
-		btnTinhLuong.setForeground(SystemColor.controlText);
-		btnTinhLuong.setBackground(new Color(255, 255, 153));
-		btnTinhLuong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnTinhLuong.setBounds(340, 10, 160, 30);
-		btnTinhLuong.setFocusable(false);
-		pnChucNang.add(btnTinhLuong);
 		
 		btnXoarong= new JButton("Xóa rỗng");
 		btnXoarong.setForeground(SystemColor.controlText);
 		btnXoarong.setBackground(new Color(255, 255, 153));
 		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(510, 10, 180, 30);
+		btnXoarong.setBounds(330, 10, 150, 30);
 		btnXoarong.setFocusable(false);
 		pnChucNang.add(btnXoarong);
 		
-		txtTimkiem = new JTextField();
-		txtTimkiem.setFont(new Font("Times New Roman", Font.PLAIN, 24));
-		txtTimkiem.setBounds(800, 10, 400, 30);
-		pnChucNang.add(txtTimkiem);
-		txtTimkiem.setColumns(10);
-		
-		btnTim = new JButton("Tìm kiếm");
-		btnTim.setFont(new Font("Times New Roman", Font.PLAIN, 26));
-		btnTim.setBackground(new Color(255, 204, 102));
-		btnTim.setBounds(1200, 10, 150, 30);
-		pnChucNang.add(btnTim);
+		btnLuu= new JButton("Lưu");
+		btnLuu.setForeground(SystemColor.controlText);
+		btnLuu.setBackground(new Color(255, 255, 153));
+		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnLuu.setBounds(490, 10, 150, 30);
+		btnLuu.setFocusable(false);
+		pnChucNang.add(btnLuu);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -303,19 +279,15 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTinhLuong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
-		btnTinhLuong.addActionListener(this);
-		btnTim.addActionListener(this);
 		btnXoarong.addActionListener(this);
+		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 	
 	@Override
