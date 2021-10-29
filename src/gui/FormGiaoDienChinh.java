@@ -30,8 +30,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -180,7 +186,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mnQLPhong.add(mntmTimPhong);
 		
 		mnQLHoaDon = new JMenu("Quản lý hóa đơn");
-		mnQLHoaDon.setIcon(new ImageIcon("img\\thongke.jpg"));
+		mnQLHoaDon.setIcon(new ImageIcon("img\\hoadon.png"));
 		mnQLHoaDon.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		menuBar.add(mnQLHoaDon);
 		
@@ -335,7 +341,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 
 	}
 
-	public static void main(String[] args) throws SQLException {		
+	public static void main(String[] args) throws SQLException, UnsupportedLookAndFeelException {	
 		FormGiaoDienChinh frm = new FormGiaoDienChinh();
 		frm.setVisible(true);
 	}
@@ -377,6 +383,36 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		if(o.equals(mntmThemNV)) {
 			changeScreen(new FormQLNhanVien());
 			
+		}
+		if(o.equals(mntmThemPhong)) {
+			changeScreen(new FormThemPhong());
+		}
+		if(o.equals(mntmXoaPhong)) {
+			changeScreen(new FormXoaPhong());
+		}
+		if(o.equals(mntmSuaPhong)) {
+			changeScreen(new FormSuaPhong());
+		}
+		if(o.equals(mntmTimPhong)) {
+			changeScreen(new FormTimPhong());
+		}
+		if(o.equals(mntmThemHoaDon)) {
+			changeScreen(new FormLapHD());
+		}
+		if(o.equals(mntmThemDonDatPhong)) {
+			changeScreen(new FormDatPhong());
+		}
+		if(o.equals(mntmTimKiemHoaDon)) {
+			changeScreen(new FormTimHoaDon());
+		}
+		if(o.equals(mntmThongKeDoanhThu)) {
+			changeScreen(new FormThongKeDoanhThu());
+		}
+		if(o.equals(mntmThongKeKH)) {
+			changeScreen(new FormThongKeKhachHang());
+		}
+		if(o.equals(mntmThongKeNV)) {
+			changeScreen(new FormThongKeNV());
 		}
 	}
 }
