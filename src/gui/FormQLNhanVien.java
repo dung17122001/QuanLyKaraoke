@@ -37,7 +37,6 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnXoarong;
 	private JButton btnLuu;
@@ -151,19 +150,11 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
-		btnXoa = new JButton("Xóa");
-		btnXoa.setForeground(SystemColor.controlText);
-		btnXoa.setBackground(new Color(255, 255, 153));
-		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoa.setBounds(170, 10, 150, 30);
-		btnXoa.setFocusable(false);
-		pnChucNang.add(btnXoa);
-		
 		btnXoarong= new JButton("Xóa rỗng");
 		btnXoarong.setForeground(SystemColor.controlText);
 		btnXoarong.setBackground(new Color(255, 255, 153));
 		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(330, 10, 150, 30);
+		btnXoarong.setBounds(170, 10, 150, 30);
 		btnXoarong.setFocusable(false);
 		pnChucNang.add(btnXoarong);
 		
@@ -171,7 +162,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnLuu.setForeground(SystemColor.controlText);
 		btnLuu.setBackground(new Color(255, 255, 153));
 		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(490, 10, 150, 30);
+		btnLuu.setBounds(330, 10, 150, 30);
 		btnLuu.setFocusable(false);
 		pnChucNang.add(btnLuu);
 		
@@ -280,12 +271,10 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setViewportView(table);
 		
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnSua.addActionListener(this);
-		btnXoa.addActionListener(this);
 		btnXoarong.addActionListener(this);
 		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}

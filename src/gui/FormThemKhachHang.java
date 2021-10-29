@@ -23,28 +23,26 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
-public class FormThemNhanVien extends JFrame implements ActionListener{
+public class FormThemKhachHang extends JFrame implements ActionListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtTenNV;
+	private JTextField txtTenKH;
 	private JTextField txtCMND;
 	private JTextField txtSDT;
-	private JTextField txtChucVu;
-	private JDateChooser ngaysinh;
+	private JTextField txtDiaChi;
 	private JButton btnTaoTaikhoan;
 	private JPanel panel_Info;
-	private JComboBox<String> cbGioitinh;
 	private JButton btnDong;
 
 
 	/**
 	 * Create the frame.
 	 */
-	public FormThemNhanVien() {
+	public FormThemKhachHang () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 100, 750, 560);
 		contentPane = new JPanel();
@@ -58,76 +56,51 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		contentPane.add(panel_Info);
 		panel_Info.setLayout(null);
 
-		JLabel lblTenNV = new JLabel("Tên nhân viên:");
+		JLabel lblTenNV = new JLabel("Tên khách hàng:");
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblTenNV.setBounds(10, 100, 190, 30);
+		lblTenNV.setBounds(10, 100, 200, 30);
 		panel_Info.add(lblTenNV);
 
-		txtTenNV = new JTextField();
-		txtTenNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTenNV.setBounds(200, 100, 300, 30);
-		panel_Info.add(txtTenNV);
-		txtTenNV.setColumns(10);
-
-		JLabel lblGioitinh = new JLabel("Giới tính:");
-		lblGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblGioitinh.setBounds(10, 145, 190, 30);
-		panel_Info.add(lblGioitinh);
-
-		cbGioitinh = new JComboBox<String>();
-		cbGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		cbGioitinh.addItem("Nam");
-		cbGioitinh.addItem("Nữ");
-		cbGioitinh.setBounds(200, 145, 200, 30);
-		panel_Info.add(cbGioitinh);
-
-		JLabel lblNgaysinh = new JLabel("Ngày sinh:");
-		lblNgaysinh.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNgaysinh.setBounds(10, 190, 190, 30);
-		panel_Info.add(lblNgaysinh);
-
-		ngaysinh = new JDateChooser();
-		ngaysinh.setDateFormatString("dd/MM/yyyy");
-		ngaysinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		ngaysinh.setPreferredSize(new Dimension(400, 400));
-		ngaysinh.getJCalendar().getMonthChooser().setPreferredSize(new Dimension(150, 30));
-		ngaysinh.setBounds(200, 190, 200, 30);
-		panel_Info.add(ngaysinh);
+		txtTenKH = new JTextField();
+		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTenKH.setBounds(230, 100, 300, 30);
+		panel_Info.add(txtTenKH);
+		txtTenKH.setColumns(10);
 
 		JLabel lblSDT = new JLabel("SDT:");
 		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblSDT.setBounds(10, 231, 190, 30);
+		lblSDT.setBounds(10, 190, 190, 30);
 		panel_Info.add(lblSDT);
 
 		txtSDT = new JTextField();
 		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txtSDT.setColumns(10);
-		txtSDT.setBounds(200, 231, 300, 30);
+		txtSDT.setBounds(230, 190, 300, 30);
 		panel_Info.add(txtSDT);
 		
 		JLabel lblCMND = new JLabel("CMND:");
 		lblCMND.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblCMND.setBounds(10, 276, 190, 30);
+		lblCMND.setBounds(10, 145, 190, 30);
 		panel_Info.add(lblCMND);
 
 		txtCMND = new JTextField();
 		txtCMND.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txtCMND.setColumns(10);
-		txtCMND.setBounds(200, 276, 300, 30);
+		txtCMND.setBounds(230, 145, 300, 30);
 		panel_Info.add(txtCMND);
 		
-		JLabel lblChucVu = new JLabel("Chức Vụ:");
-		lblChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblChucVu.setBounds(10, 321, 190, 30);
-		panel_Info.add(lblChucVu);
+		JLabel lblDiaChi = new JLabel("Địa chỉ:");
+		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblDiaChi.setBounds(10, 231, 190, 30);
+		panel_Info.add(lblDiaChi);
 
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtChucVu.setColumns(10);
-		txtChucVu.setBounds(200, 321, 300, 30);
-		panel_Info.add(txtChucVu);
+		txtDiaChi = new JTextField();
+		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtDiaChi.setColumns(10);
+		txtDiaChi.setBounds(230, 231, 300, 30);
+		panel_Info.add(txtDiaChi);
 		
-		btnTaoTaikhoan = new JButton("Tạo tài khoản");
+		btnTaoTaikhoan = new JButton("Tạo ");
 		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
 		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnTaoTaikhoan.setBounds(350, 460, 230, 50);
@@ -145,7 +118,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("THÊM KHÁCH HÀNG MỚI");
+		JLabel lblTitle = new JLabel("THÊM NHÂN VIÊN MỚI");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -154,7 +127,6 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTaoTaikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		cbGioitinh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
 		btnTaoTaikhoan.addActionListener(this);
@@ -169,8 +141,9 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) throws SQLException {		
-		FormThemNhanVien frm = new FormThemNhanVien();
+		FormThemKhachHang  frm = new FormThemKhachHang ();
 		frm.setVisible(true);
 	}
 	
 }
+
