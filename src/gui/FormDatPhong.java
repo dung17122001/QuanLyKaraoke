@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
+import javax.swing.border.EtchedBorder;
 
 public class FormDatPhong extends JPanel {
 	private JTextField txtTenKH;
@@ -35,7 +36,8 @@ public class FormDatPhong extends JPanel {
 		panel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Nhập thông tin", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setForeground(Color.BLACK);
+		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Nh\u1EADp th\u00F4ng tin", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		panel_1.setBounds(10, 10, 1332, 180);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -108,6 +110,8 @@ public class FormDatPhong extends JPanel {
 		dfPhong=new DefaultTableModel(header,0);
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setRowHeight(20);
+		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tablePhong.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollPhong;
 		panelPhong.setLayout(null);
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -117,11 +121,10 @@ public class FormDatPhong extends JPanel {
 		panelPhong.add(scrollPhong);
 		
 		JButton btnDatPhong = new JButton("Thêm đơn đặt phòng");
-		btnDatPhong.setBounds(511, 504, 196, 30);
+		btnDatPhong.setBackground(Color.ORANGE);
+		btnDatPhong.setBounds(511, 504, 243, 40);
 		panel.add(btnDatPhong);
-		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		String []headerDV= {"Mã dịch vụ","Tên dịch vụ","Số lượng","Đơn giá"};
-		dfDichVu=new DefaultTableModel(headerDV,0);
 	}
 }

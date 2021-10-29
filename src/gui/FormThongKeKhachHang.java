@@ -53,11 +53,13 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		panel_1.add(cbThoiGian);
 		
 		JButton btnThongKe = new JButton("Xem thống kê");
+		btnThongKe.setBackground(Color.ORANGE);
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThongKe.setBounds(103, 107, 164, 30);
 		panel_1.add(btnThongKe);
 		
 		JButton btnInThongKe = new JButton("In thống kê");
+		btnInThongKe.setBackground(Color.ORANGE);
 		btnInThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInThongKe.setBounds(338, 107, 164, 30);
 		panel_1.add(btnInThongKe);
@@ -87,6 +89,8 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		dfKhachHang=new DefaultTableModel(header,0);
 		tableKhachHang=new JTable(dfKhachHang);
 		tableKhachHang.setRowHeight(20);
+		tableKhachHang.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tableKhachHang.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollKhachHang;
 		panelThongKe.setLayout(null);
 		scrollKhachHang=new JScrollPane(tableKhachHang,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

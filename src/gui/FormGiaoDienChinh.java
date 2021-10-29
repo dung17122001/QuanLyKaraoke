@@ -71,7 +71,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmThemHoaDon;
 	private JMenuItem mntmThemDonDatPhong;
 	private JMenuItem mntmTimKiemHoaDon;
-	private JMenuItem mntmInHoaDon;
 	private JMenu mnQLThongKe;
 	private JMenuItem mntmThongKeDoanhThu;
 	private JMenuItem mntmThongKeKH;
@@ -203,11 +202,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemHoaDon.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLHoaDon.add(mntmTimKiemHoaDon);
 		
-		mntmInHoaDon = new JMenuItem("In hóa đơn");
-		mntmInHoaDon.setIcon(new ImageIcon("img\\in.png"));
-		mntmInHoaDon.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLHoaDon.add(mntmInHoaDon);
-		
 		mnQLThongKe = new JMenu("Quản lý thống kê");
 		mnQLThongKe.setIcon(new ImageIcon("img\\thongke.jpg"));
 		mnQLThongKe.setFont(new Font("Times New Roman", Font.PLAIN, 25));
@@ -229,7 +223,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mnQLThongKe.add(mntmThongKeNV);
 		
 		//Thêm sự kiện
-		mntmInHoaDon.addActionListener(this);
 		mntmSuaDV.addActionListener(this);
 		mntmSuaKH.addActionListener(this);
 		mntmSuaNV.addActionListener(this);
@@ -306,13 +299,13 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 
 		JLabel lblUser = new JLabel("Người dùng:");
 		lblUser.setForeground(Color.WHITE);
-		lblUser.setFont(new Font("Times New Roman", Font.PLAIN, 19));
+		lblUser.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 		lblUser.setBounds(1071, 39, 120, 31);
 		panel.add(lblUser);
 		
 		txtUsername = new JLabel("NV001");
 		txtUsername.setForeground(Color.WHITE);
-		txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 19));
+		txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 22));
 		txtUsername.setBounds(1201, 39, 128, 31);
 		panel.add(txtUsername);
 		

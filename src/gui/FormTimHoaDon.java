@@ -66,6 +66,7 @@ public class FormTimHoaDon extends JPanel {
 		panelTimHD.add(cbLoaiTimKiem);
 		
 		JButton btnTimKiem = new JButton("Tìm hóa đơn");
+		btnTimKiem.setBackground(Color.ORANGE);
 		btnTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -112,6 +113,7 @@ public class FormTimHoaDon extends JPanel {
 		txtSoLuong.setColumns(10);
 		
 		JButton btnThemDV = new JButton("Thêm dịch vụ vào hóa đơn");
+		btnThemDV.setBackground(Color.ORANGE);
 		btnThemDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThemDV.setBounds(198, 142, 237, 30);
 		panelDV.add(btnThemDV);
@@ -121,10 +123,12 @@ public class FormTimHoaDon extends JPanel {
 		panel.add(panelCTHD);
 		panelCTHD.setLayout(null);
 		
-		String []header= {"STT","Mã dịch vụ","Tên Dịch vụ","Giá tiền","Số lượng","Thành tiền"};
+		String []header= {"STT","Mã dịch vụ","Tên dịch vụ","Giá tiền","Số lượng","Thành tiền"};
 		dfDichVu=new DefaultTableModel(header,0);
 		tableDichVu=new JTable(dfDichVu);
 		tableDichVu.setRowHeight(20);
+		tableDichVu.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tableDichVu.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollDichVu;
 		scrollDichVu=new JScrollPane(tableDichVu,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollDichVu.setBorder(BorderFactory.createTitledBorder("Thông tin hóa đơn"));
@@ -133,7 +137,7 @@ public class FormTimHoaDon extends JPanel {
 		panelCTHD.add(scrollDichVu);
 		
 		JPanel panelChiTiet = new JPanel();
-		panelChiTiet.setBorder(new TitledBorder(null, "Th\u00F4ng tin chi ti\u1EBFt", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelChiTiet.setBorder(new TitledBorder(null, "Thông tin chi tiết", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelChiTiet.setBounds(10, 397, 1332, 147);
 		panel.add(panelChiTiet);
 		panelChiTiet.setLayout(null);
@@ -202,6 +206,7 @@ public class FormTimHoaDon extends JPanel {
 		txtTienThoi.setColumns(10);
 		
 		JButton btnThanhToan = new JButton("Thanh Toán");
+		btnThanhToan.setBackground(Color.ORANGE);
 		btnThanhToan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -211,6 +216,7 @@ public class FormTimHoaDon extends JPanel {
 		panelChiTiet.add(btnThanhToan);
 		
 		JButton btnInHoaDon = new JButton("In hóa đơn");
+		btnInHoaDon.setBackground(Color.ORANGE);
 		btnInHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInHoaDon.setBounds(1115, 82, 152, 30);
 		panelChiTiet.add(btnInHoaDon);

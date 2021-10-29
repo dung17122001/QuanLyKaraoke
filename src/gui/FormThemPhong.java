@@ -86,6 +86,7 @@ public class FormThemPhong extends JPanel implements ActionListener{
 		panelThemPhong.add(cbLoaiPhong);
 		
 		JButton btnThemPhong = new JButton("Thêm phòng");
+		btnThemPhong.setBackground(Color.ORANGE);
 		btnThemPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -95,11 +96,13 @@ public class FormThemPhong extends JPanel implements ActionListener{
 		panel.add(btnThemPhong);
 		
 		JButton btnXoaTrang = new JButton("Xóa trắng");
+		btnXoaTrang.setBackground(Color.ORANGE);
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnXoaTrang.setBounds(345, 179, 122, 30);
 		panel.add(btnXoaTrang);
 		
 		JButton btnLuuPhong = new JButton("Lưu phòng");
+		btnLuuPhong.setBackground(Color.ORANGE);
 		btnLuuPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -118,8 +121,8 @@ public class FormThemPhong extends JPanel implements ActionListener{
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		tablePhong.setRowHeight(30);
-//		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
-//		tablePhong.getTableHeader().setBackground(new Color(0,234,22,232));
+		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tablePhong.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollPhong;
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));

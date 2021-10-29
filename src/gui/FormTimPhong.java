@@ -41,6 +41,8 @@ public class FormTimPhong extends JPanel {
 		dfPhong=new DefaultTableModel(header,0);
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setRowHeight(20);
+		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tablePhong.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollPhong;
 		panelThongTinPhong.setLayout(null);
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -50,7 +52,7 @@ public class FormTimPhong extends JPanel {
 		panelThongTinPhong.add(scrollPhong);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Nh\u1EADp th\u00F4ng tin ph\u00F2ng c\u1EA7n t\u00ECm", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(null, "Nhập thông tin phòng cần tìm", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(10, 10, 1332, 224);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -79,8 +81,9 @@ public class FormTimPhong extends JPanel {
 		panel_1.add(cbTimKiem);
 		
 		JButton btnTimKiem = new JButton("Tìm kiếm");
-		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnTimKiem.setBounds(586, 171, 145, 30);
+		btnTimKiem.setBackground(Color.ORANGE);
+		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnTimKiem.setBounds(586, 171, 187, 40);
 		panel_1.add(btnTimKiem);
 	}
 

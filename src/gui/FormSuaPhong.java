@@ -38,6 +38,7 @@ public class FormSuaPhong extends JPanel {
 		panel.setLayout(null);
 		
 		JButton btnSuaPhong = new JButton("Sửa phòng");
+		btnSuaPhong.setBackground(Color.ORANGE);
 		btnSuaPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -47,12 +48,13 @@ public class FormSuaPhong extends JPanel {
 		panel.add(btnSuaPhong);
 		
 		JButton btnXoaTrang = new JButton("Xóa trắng");
+		btnXoaTrang.setBackground(Color.ORANGE);
 		btnXoaTrang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnXoaTrang.setBounds(570, 500, 122, 30);
+		btnXoaTrang.setBounds(531, 500, 122, 30);
 		panel.add(btnXoaTrang);
 		
 		JPanel panelThongTinPhong = new JPanel();
@@ -61,7 +63,7 @@ public class FormSuaPhong extends JPanel {
 		panelThongTinPhong.setLayout(null);
 		
 		JPanel panelThemPhong = new JPanel();
-		panelThemPhong.setBounds(0, 10, 1332, 159);
+		panelThemPhong.setBounds(10, 10, 1322, 159);
 		panelThongTinPhong.add(panelThemPhong);
 		panelThemPhong.setBorder(new TitledBorder(null, "Nhập thông tin cần sửa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelThemPhong.setLayout(null);
@@ -112,8 +114,10 @@ public class FormSuaPhong extends JPanel {
 		JScrollPane scrollPhong;
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setRowHeight(20);
+		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tablePhong.getTableHeader().setBackground(new Color(255, 204, 102));
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPhong.setBounds(10, 10, 1325, 301);
+		scrollPhong.setBounds(22, 10, 1313, 301);
 		panel.add(scrollPhong);
 		scrollPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
 		scrollPhong.setBackground(new Color(248,248,248));

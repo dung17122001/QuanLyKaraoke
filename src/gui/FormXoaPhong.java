@@ -41,6 +41,8 @@ public class FormXoaPhong extends JPanel {
 		dfPhong=new DefaultTableModel(header,0);
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setRowHeight(20);
+		tablePhong.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
+		tablePhong.getTableHeader().setBackground(new Color(255, 204, 102));
 		JScrollPane scrollPhong;
 		panelThongTinPhong.setLayout(null);
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -50,7 +52,7 @@ public class FormXoaPhong extends JPanel {
 		panelThongTinPhong.add(scrollPhong);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "T\u00ECm ph\u00F2ng c\u1EA7n x\u00F3a", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBorder(new TitledBorder(null, "Tìm phòng cần xóa", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(10, 10, 1332, 194);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
@@ -78,22 +80,25 @@ public class FormXoaPhong extends JPanel {
 		panel_1.add(cbTimKiem);
 		
 		JButton btnTimKiem = new JButton("Tìm kiếm");
-		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnTimKiem.setBounds(575, 147, 145, 30);
+		btnTimKiem.setBackground(Color.ORANGE);
+		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnTimKiem.setBounds(575, 147, 181, 40);
 		panel_1.add(btnTimKiem);
 		
 		JButton btnXoaPhong = new JButton("Xóa phòng");
+		btnXoaPhong.setBackground(Color.ORANGE);
 		btnXoaPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnXoaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnXoaPhong.setBounds(481, 497, 132, 30);
+		btnXoaPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnXoaPhong.setBounds(439, 497, 174, 40);
 		panel.add(btnXoaPhong);
 		
 		JButton btnHuy = new JButton("Hủy");
-		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnHuy.setBounds(730, 497, 125, 30);
+		btnHuy.setBackground(Color.ORANGE);
+		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnHuy.setBounds(730, 497, 150, 40);
 		panel.add(btnHuy);
 	}
 
