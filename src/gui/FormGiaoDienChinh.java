@@ -35,9 +35,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -406,7 +403,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		}
 		if(o.equals(mntmThongKeNV)) {
 			changeScreen(new FormThongKeNV());
-		
+		}
 		if(o.equals(mntmThemNV)) {
 			FormThemNhanVien formThemNV = new FormThemNhanVien();
 			formThemNV.setVisible(true);
