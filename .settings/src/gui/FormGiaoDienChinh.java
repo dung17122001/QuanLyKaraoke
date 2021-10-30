@@ -61,7 +61,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmThemDV;
 	private JMenuItem mntmXoaDV;
 	private JMenuItem mntmSuaDV;
-	private JMenuItem mntmDatDV;
 	private JMenuItem mntmTimKiemDV;
 	private JMenu mnQLPhong;
 	private JMenuItem mntmThemPhong;
@@ -158,11 +157,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmXoaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmXoaDV);
 		
-		mntmDatDV = new JMenuItem("Đặt dịch vụ");
-		mntmDatDV.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmDatDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmDatDV);
-		
 		mnQLPhong = new JMenu("Quản lý phòng");
 		mnQLPhong.setIcon(new ImageIcon("img\\icon3.png"));
 		mnQLPhong.setFont(new Font("Times New Roman", Font.PLAIN, 25));
@@ -201,7 +195,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmThemDonDatPhong = new JMenuItem("Thêm đơn đặt phòng");
 		mntmThemDonDatPhong.setIcon(new ImageIcon("img\\them.jpg"));
 		mntmThemDonDatPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLPhong.add(mntmThemDonDatPhong);
+		mnQLHoaDon.add(mntmThemDonDatPhong);
 		
 		mntmTimKiemHoaDon = new JMenuItem("Tìm kiếm hóa đơn");
 		mntmTimKiemHoaDon.setIcon(new ImageIcon("img\\timkiem.png"));
@@ -251,7 +245,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmXoaKH.addActionListener(this);
 		mntmXoaPhong.addActionListener(this);
 		mntmXoaNV.addActionListener(this);
-		mntmDatDV.addActionListener(this);
+		
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 0));
@@ -420,9 +415,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		}
 		if(o.equals(mntmXoaDV)) {
 			changeScreen(new FormXoaDV());
-		}
-		if(o.equals(mntmDatDV)) {
-			changeScreen(new FormDatDV());
 		}
 		if(o.equals(mntmThemPhong)) {
 			changeScreen(new FormThemPhong());
