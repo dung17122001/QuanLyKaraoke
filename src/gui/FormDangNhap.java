@@ -146,10 +146,7 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	txtUserName.addActionListener(this);
 	}
 	
-	public static void main(String[] args) throws SQLException {		
-		FormDangNhap frm = new FormDangNhap();
-		frm.setVisible(true);
-	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

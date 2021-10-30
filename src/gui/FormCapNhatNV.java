@@ -23,7 +23,7 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
-public class FormThemNhanVien extends JFrame implements ActionListener{
+public class FormCapNhatNV extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	private JTextField txtSDT;
 	private JTextField txtChucVu;
 	private JDateChooser ngaysinh;
-	private JButton btnTaoTaikhoan;
+	private JButton btnCapNhat;
 	private JPanel panel_Info;
 	private JComboBox<String> cbGioitinh;
 	private JButton btnDong;
@@ -44,7 +44,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public FormThemNhanVien() {
+	public FormCapNhatNV () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 100, 750, 560);
 		contentPane = new JPanel();
@@ -127,11 +127,11 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		txtChucVu.setBounds(200, 321, 300, 30);
 		panel_Info.add(txtChucVu);
 		
-		btnTaoTaikhoan = new JButton("Tạo tài khoản");
-		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
-		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 460, 230, 50);
-		panel_Info.add(btnTaoTaikhoan);
+		btnCapNhat = new JButton("Cập nhật");
+		btnCapNhat.setBackground(new Color(255, 204, 102));
+		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnCapNhat.setBounds(350, 460, 230, 50);
+		panel_Info.add(btnCapNhat);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
@@ -145,7 +145,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("THÊM NHÂN VIÊN MỚI");
+		JLabel lblTitle = new JLabel("SỬA THÔNG TIN NHÂN VIÊN");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -153,11 +153,11 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		panel_Title.add(lblTitle);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaoTaikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cbGioitinh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
-		btnTaoTaikhoan.addActionListener(this);
+		btnCapNhat.addActionListener(this);
 
 	}
 	@Override
