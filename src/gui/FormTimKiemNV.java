@@ -42,7 +42,7 @@ public class FormTimKiemNV extends JFrame implements ActionListener{
 	public FormTimKiemNV() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 40, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -162,13 +162,13 @@ public class FormTimKiemNV extends JFrame implements ActionListener{
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(350, 460, 230, 50);
+		btnTimKiem.setBounds(180, 390, 180, 50);
 		panel_Info.add(btnTimKiem);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(450, 390, 180, 50);
 		panel_Info.add(btnDong);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

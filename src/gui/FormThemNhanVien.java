@@ -46,7 +46,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	 */
 	public FormThemNhanVien() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 100, 750,460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -127,16 +127,16 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		txtChucVu.setBounds(200, 321, 300, 30);
 		panel_Info.add(txtChucVu);
 		
-		btnTaoTaikhoan = new JButton("Tạo tài khoản");
+		btnTaoTaikhoan = new JButton("Tạo");
 		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
 		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 460, 230, 50);
+		btnTaoTaikhoan.setBounds(350, 360,130, 50);
 		panel_Info.add(btnTaoTaikhoan);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(594, 360, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();

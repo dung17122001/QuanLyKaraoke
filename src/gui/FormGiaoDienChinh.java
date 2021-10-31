@@ -54,8 +54,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmSuaKH;
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
-	private JMenuItem mntmThemDV;
-	private JMenuItem mntmXoaDV;
 	private JMenuItem mntmSuaDV;
 	private JMenuItem mntmDatDV;
 	private JMenuItem mntmTimKiemDV;
@@ -118,20 +116,10 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmSuaDV);
 		
-		mntmThemDV = new JMenuItem("Thêm dịch vụ");
-		mntmThemDV.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmThemDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmThemDV);
-		
 		mntmTimKiemDV = new JMenuItem("Tìm kiếm");
 		mntmTimKiemDV.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmTimKiemDV);
-		
-		mntmXoaDV = new JMenuItem("Xóa dịch vụ");
-		mntmXoaDV.setIcon(new ImageIcon("img\\xoa.png"));
-		mntmXoaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmXoaDV);
 		
 		mntmDatDV = new JMenuItem("Đặt dịch vụ");
 		mntmDatDV.setIcon(new ImageIcon("img\\them.jpg"));
@@ -209,7 +197,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaNV.addActionListener(this);
 		mntmSuaPhong.addActionListener(this);
 		mntmThemDonDatPhong.addActionListener(this);
-		mntmThemDV.addActionListener(this);
 		mntmThemHoaDon.addActionListener(this);
 		mntmThemPhong.addActionListener(this);
 		mntmThongKeDoanhThu.addActionListener(this);
@@ -220,7 +207,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.addActionListener(this);
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
-		mntmXoaDV.addActionListener(this);
 		mntmXoaPhong.addActionListener(this);
 		mntmDatDV.addActionListener(this);
 		
@@ -368,22 +354,13 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			FormTimKiemKH formThemNV = new FormTimKiemKH();
 			formThemNV.setVisible(true);
 		}
-		if(o.equals(mntmXoaKH)) {
-			changeScreen(new FormXoaKH());
-		}
 		if(o.equals(mntmSuaDV)) {
 			changeScreen(new FormQLDichVu());
 		}
-		if(o.equals(mntmThemDV)) {
-			FormThemDichVu formThemNV = new FormThemDichVu();
-			formThemNV.setVisible(true);
-		}
+		
 		if(o.equals(mntmTimKiemDV)) {
 			FormTimKiemDV formThemNV = new FormTimKiemDV();
 			formThemNV.setVisible(true);
-		}
-		if(o.equals(mntmXoaDV)) {
-			changeScreen(new FormXoaDV());
 		}
 		if(o.equals(mntmDatDV)) {
 			changeScreen(new FormDatDV());

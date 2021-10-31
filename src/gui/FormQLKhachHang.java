@@ -37,9 +37,11 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JButton btnThem;
 	private JButton btnSua;
 	private JButton btnLuu;
 	private JButton btnXoarong;
+	private JButton btnXoa;
 	private JTextField txtTenKh;
 	private JTextField txtID;
 	private JTextField txtCmnd;
@@ -118,19 +120,35 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
-		btnSua = new JButton("Sửa");
+		btnThem = new JButton("Thêm");
+		btnThem.setForeground(SystemColor.controlText);
+		btnThem.setBackground(new Color(255, 255, 153));
+		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnThem.setBounds(50, 10, 150, 30);
+		btnThem.setFocusable(false);
+		pnChucNang.add(btnThem);
+		
+		btnSua = new JButton("Cập nhật");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(10, 10, 100, 30);
+		btnSua.setBounds(300, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
-		btnXoarong = new JButton("Xóa rỗng");
+		btnXoa = new JButton("Xóa");
+		btnXoa.setForeground(SystemColor.controlText);
+		btnXoa.setBackground(new Color(255, 255, 153));
+		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnXoa.setBounds(550, 10, 150, 30);
+		btnXoa.setFocusable(false);
+		pnChucNang.add(btnXoa);
+		
+		btnXoarong= new JButton("Xóa rỗng");
 		btnXoarong.setForeground(SystemColor.controlText);
 		btnXoarong.setBackground(new Color(255, 255, 153));
 		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(150, 10, 150, 30);
+		btnXoarong.setBounds(800, 10, 150, 30);
 		btnXoarong.setFocusable(false);
 		pnChucNang.add(btnXoarong);
 		
@@ -138,7 +156,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		btnLuu.setForeground(SystemColor.controlText);
 		btnLuu.setBackground(new Color(255, 255, 153));
 		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(340, 10, 130, 30);
+		btnLuu.setBounds(1050, 10, 150, 30);
 		btnLuu.setFocusable(false);
 		pnChucNang.add(btnLuu);
 		
@@ -246,10 +264,14 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
+		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
+		btnThem.addActionListener(this);
+		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoarong.addActionListener(this);
 		btnLuu.addActionListener(this);
@@ -287,8 +309,15 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			FormThemKhachHang formThemKH = new FormThemKhachHang();
+			formThemKH.setVisible(true);
+		}
+		if(o.equals(btnSua)) {
+			FormSuaKH formSuaKH = new FormSuaKH();
+			formSuaKH.setVisible(true);
+		}
 	}
 
 }

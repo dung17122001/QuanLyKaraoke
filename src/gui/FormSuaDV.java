@@ -23,18 +23,16 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
-public class FormThemKhachHang extends JFrame implements ActionListener{
+public class FormSuaDV extends JFrame implements ActionListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtTenKH;
-	private JTextField txtCMND;
-	private JTextField txtSDT;
-	private JTextField txtDiaChi;
-	private JButton btnTaoTaikhoan;
+	private JTextField txtTenDV;
+	private JTextField txtGiaDV;
+	private JButton btnTao;
 	private JPanel panel_Info;
 	private JButton btnDong;
 
@@ -42,9 +40,9 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public FormThemKhachHang () {
+	public FormSuaDV () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 460);
+		setBounds(300, 100, 750, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -56,60 +54,38 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		contentPane.add(panel_Info);
 		panel_Info.setLayout(null);
 
-		JLabel lblTenNV = new JLabel("Tên khách hàng:");
+		JLabel lblTenNV = new JLabel("Tên dịch vụ:");
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblTenNV.setBounds(10, 100, 200, 30);
 		panel_Info.add(lblTenNV);
 
-		txtTenKH = new JTextField();
-		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTenKH.setBounds(230, 100, 300, 30);
-		panel_Info.add(txtTenKH);
-		txtTenKH.setColumns(10);
+		txtTenDV = new JTextField();
+		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTenDV.setBounds(230, 100, 300, 30);
+		panel_Info.add(txtTenDV);
+		txtTenDV.setColumns(10);
 
-		JLabel lblSDT = new JLabel("SDT:");
+		JLabel lblSDT = new JLabel("Giá dịch vụ:");
 		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblSDT.setBounds(10, 190, 190, 30);
 		panel_Info.add(lblSDT);
 
-		txtSDT = new JTextField();
-		txtSDT.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtSDT.setColumns(10);
-		txtSDT.setBounds(230, 190, 300, 30);
-		panel_Info.add(txtSDT);
+		txtGiaDV = new JTextField();
+		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtGiaDV.setColumns(10);
+		txtGiaDV.setBounds(230, 190, 300, 30);
+		panel_Info.add(txtGiaDV);
 		
-		JLabel lblCMND = new JLabel("CMND:");
-		lblCMND.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblCMND.setBounds(10, 145, 190, 30);
-		panel_Info.add(lblCMND);
-
-		txtCMND = new JTextField();
-		txtCMND.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtCMND.setColumns(10);
-		txtCMND.setBounds(230, 145, 300, 30);
-		panel_Info.add(txtCMND);
-		
-		JLabel lblDiaChi = new JLabel("Địa chỉ:");
-		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblDiaChi.setBounds(10, 231, 190, 30);
-		panel_Info.add(lblDiaChi);
-
-		txtDiaChi = new JTextField();
-		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtDiaChi.setColumns(10);
-		txtDiaChi.setBounds(230, 231, 300, 30);
-		panel_Info.add(txtDiaChi);
-		
-		btnTaoTaikhoan = new JButton("Tạo ");
-		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
-		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 360, 130, 50);
-		panel_Info.add(btnTaoTaikhoan);
+		btnTao= new JButton("Tạo ");
+		btnTao.setBackground(new Color(255, 204, 102));
+		btnTao.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnTao.setBounds(350, 250, 230, 50);
+		panel_Info.add(btnTao);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 360, 130, 50);
+		btnDong.setBounds(594, 250, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();
@@ -118,7 +94,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("THÊM KHÁCH HÀNG MỚI");
+		JLabel lblTitle = new JLabel("SỬA DỊCH VỤ");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -126,10 +102,10 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		panel_Title.add(lblTitle);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaoTaikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
-		btnTaoTaikhoan.addActionListener(this);
+		btnTao.addActionListener(this);
 
 	}
 	@Override
@@ -141,9 +117,10 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) throws SQLException {		
-		FormThemKhachHang  frm = new FormThemKhachHang ();
+		FormThemDichVu  frm = new FormThemDichVu();
 		frm.setVisible(true);
 	}
 	
 }
+
 

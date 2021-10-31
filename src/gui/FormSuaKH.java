@@ -23,7 +23,7 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
-public class FormThemKhachHang extends JFrame implements ActionListener{
+public class FormSuaKH extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	private JTextField txtCMND;
 	private JTextField txtSDT;
 	private JTextField txtDiaChi;
-	private JButton btnTaoTaikhoan;
+	private JButton btnSua;
 	private JPanel panel_Info;
 	private JButton btnDong;
 
@@ -42,7 +42,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public FormThemKhachHang () {
+	public FormSuaKH () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 100, 750, 460);
 		contentPane = new JPanel();
@@ -100,11 +100,11 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		txtDiaChi.setBounds(230, 231, 300, 30);
 		panel_Info.add(txtDiaChi);
 		
-		btnTaoTaikhoan = new JButton("Tạo ");
-		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
-		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 360, 130, 50);
-		panel_Info.add(btnTaoTaikhoan);
+		btnSua = new JButton("Cập nhật ");
+		btnSua.setBackground(new Color(255, 204, 102));
+		btnSua.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnSua.setBounds(350, 360, 170, 50);
+		panel_Info.add(btnSua);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
@@ -118,7 +118,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("THÊM KHÁCH HÀNG MỚI");
+		JLabel lblTitle = new JLabel("SỬA KHÁCH HÀNG");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));
@@ -126,10 +126,10 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		panel_Title.add(lblTitle);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaoTaikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
-		btnTaoTaikhoan.addActionListener(this);
+		btnSua.addActionListener(this);
 
 	}
 	@Override
@@ -140,10 +140,6 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		}
 	}
 	
-	public static void main(String[] args) throws SQLException {		
-		FormThemKhachHang  frm = new FormThemKhachHang ();
-		frm.setVisible(true);
-	}
-	
 }
+
 

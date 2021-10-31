@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
@@ -28,16 +29,18 @@ public class FormTimKiemDV extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtTimDV;
+	private JTextField txtTimMaDV;
+	private JTextField txtTimTenDV;
+	private JTextField txtTimGia;
 	private JButton btnTimKiem;
 	private JPanel panel_Info;
 	private JButton btnDong;
-	
+	private JRadioButton rb1;
 	
 	public FormTimKiemDV() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 40, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,39 +65,61 @@ public class FormTimKiemDV extends JFrame implements ActionListener{
 		lblTitle.setBounds(0, 9, 704, 50);
 		panel_Title.add(lblTitle);
 		
-		JLabel lblNtttk = new JLabel("Nhập thông tin cần tìm:");
-		lblNtttk.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNtttk.setBounds(10, 100, 300, 30);
-		panel_Info.add(lblNtttk);
+		JLabel lblMaNV = new JLabel("Mã dịch vụ:");
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblMaNV.setBounds(10, 100, 300, 30);
+		panel_Info.add(lblMaNV);
 
-		txtTimDV = new JTextField();
-		txtTimDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimDV.setBounds(350, 100, 330, 30);
-		panel_Info.add(txtTimDV);
-		txtTimDV.setColumns(10);
+		txtTimMaDV= new JTextField();
+		txtTimMaDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimMaDV.setBounds(350, 100, 300, 30);
+		panel_Info.add(txtTimMaDV);
+		txtTimMaDV.setColumns(10);
 		
-		JLabel lbLoaiTimKiem = new JLabel("Chọn loại tìm kiếm:");
-		lbLoaiTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lbLoaiTimKiem.setBounds(10, 145, 300, 30);
-		panel_Info.add(lbLoaiTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 100, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblTenNV = new JLabel("Tên dịch vụ:");
+        lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblTenNV.setBounds(10, 150, 300, 30);
+		panel_Info.add(lblTenNV);
+
+		txtTimTenDV = new JTextField();
+		txtTimTenDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimTenDV.setBounds(350, 150, 300, 30);
+		panel_Info.add(txtTimTenDV);
+		txtTimTenDV.setColumns(10);
 		
-		JComboBox<String> cbTimKiem = new JComboBox<String>();
-		cbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		cbTimKiem.setBounds(350, 145, 330, 30);
-		cbTimKiem.addItem("Tìm theo mã dịch vụ");
-		cbTimKiem.addItem("Tìm theo tên dịch vụ");
-		panel_Info.add(cbTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 150, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblNsNV = new JLabel("Gía dịch vụ:");
+        lblNsNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblNsNV.setBounds(10, 200, 300, 30);
+		panel_Info.add(lblNsNV);
+
+		txtTimGia = new JTextField();
+		txtTimGia.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimGia.setBounds(350, 200, 300, 30);
+		panel_Info.add(txtTimGia);
+		txtTimGia.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 200, 20, 30);
+        panel_Info.add(rb1);
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(350, 460, 230, 50);
+		btnTimKiem.setBounds(180, 390, 180, 50);
 		panel_Info.add(btnTimKiem);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(450, 390, 180, 50);
 		panel_Info.add(btnDong);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -113,11 +138,4 @@ public class FormTimKiemDV extends JFrame implements ActionListener{
 		
 	}
 
-	public static void main(String[] args) throws SQLException {		
-		FormTimKiemDV frm = new FormTimKiemDV();
-		frm.setVisible(true);
-	}
-	
 }
-
-

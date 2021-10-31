@@ -32,7 +32,7 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTextField txtTenDV;
 	private JTextField txtGiaDV;
-	private JButton btnTaoTaikhoan;
+	private JButton btnTao;
 	private JPanel panel_Info;
 	private JButton btnDong;
 
@@ -42,7 +42,7 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 	 */
 	public FormThemDichVu () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 100, 750, 350);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,16 +76,16 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 		txtGiaDV.setBounds(230, 190, 300, 30);
 		panel_Info.add(txtGiaDV);
 		
-		btnTaoTaikhoan = new JButton("Tạo ");
-		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
-		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 460, 230, 50);
-		panel_Info.add(btnTaoTaikhoan);
+		btnTao= new JButton("Tạo ");
+		btnTao.setBackground(new Color(255, 204, 102));
+		btnTao.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnTao.setBounds(350, 250, 230, 50);
+		panel_Info.add(btnTao);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(594, 250, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();
@@ -102,10 +102,10 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 		panel_Title.add(lblTitle);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnTaoTaikhoan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
-		btnTaoTaikhoan.addActionListener(this);
+		btnTao.addActionListener(this);
 
 	}
 	@Override
