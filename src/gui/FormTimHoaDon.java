@@ -43,12 +43,12 @@ public class FormTimHoaDon extends JPanel {
 		
 		JLabel lbTimKiem = new JLabel("Nhập thông tin hóa đơn cần tìm: ");
 		lbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTimKiem.setBounds(30, 10, 240, 30);
+		lbTimKiem.setBounds(30, 21, 240, 30);
 		panelTimHD.add(lbTimKiem);
 		
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTimKiem.setBounds(280, 11, 328, 30);
+		txtTimKiem.setBounds(280, 22, 328, 30);
 		panelTimHD.add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 		
@@ -65,15 +65,21 @@ public class FormTimHoaDon extends JPanel {
 		cbLoaiTimKiem.addItem("Tìm theo số điện thoại khách hàng");
 		panelTimHD.add(cbLoaiTimKiem);
 		
-		JButton btnTimKiem = new JButton("Tìm hóa đơn");
+		JButton btnTimKiem = new JButton("Tìm hóa đơn chờ thanh toán");
 		btnTimKiem.setBackground(Color.ORANGE);
 		btnTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnTimKiem.setBounds(259, 128, 139, 30);
+		btnTimKiem.setBounds(368, 128, 240, 30);
 		panelTimHD.add(btnTimKiem);
+		
+		JButton btnTimHDDaThanhToan = new JButton("Tìm hóa đơn đã thanh toán");
+		btnTimHDDaThanhToan.setBackground(Color.ORANGE);
+		btnTimHDDaThanhToan.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTimHDDaThanhToan.setBounds(40, 128, 226, 30);
+		panelTimHD.add(btnTimHDDaThanhToan);
 		
 		JPanel panelDV = new JPanel();
 		panelDV.setBorder(new TitledBorder(null, "Chọn dịch vụ cần thêm vào hóa đơn", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -88,12 +94,12 @@ public class FormTimHoaDon extends JPanel {
 		
 		JLabel lbTenDV = new JLabel("Tên dịch vụ:");
 		lbTenDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTenDV.setBounds(75, 52, 157, 30);
+		lbTenDV.setBounds(54, 53, 157, 30);
 		panelDV.add(lbTenDV);
 		
 		JLabel lbSoLuong = new JLabel("Số lượng: ");
 		lbSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSoLuong.setBounds(75, 93, 157, 30);
+		lbSoLuong.setBounds(54, 93, 157, 30);
 		panelDV.add(lbSoLuong);
 		
 		JComboBox cbLoaiDV = new JComboBox();
@@ -123,7 +129,7 @@ public class FormTimHoaDon extends JPanel {
 		panel.add(panelCTHD);
 		panelCTHD.setLayout(null);
 		
-		String []header= {"STT","Mã dịch vụ","Tên dịch vụ","Giá tiền","Số lượng","Thành tiền"};
+		String []header= {"STT","Mã hàng hóa","Tên hàng hóa","Đơn giá","Số lượng","Thành tiền"};
 		dfDichVu=new DefaultTableModel(header,0);
 		tableDichVu=new JTable(dfDichVu);
 		tableDichVu.setRowHeight(20);
@@ -132,7 +138,7 @@ public class FormTimHoaDon extends JPanel {
 		JScrollPane scrollDichVu;
 		scrollDichVu=new JScrollPane(tableDichVu,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollDichVu.setBorder(BorderFactory.createTitledBorder("Thông tin hóa đơn"));
-		scrollDichVu.setBounds(10, 10, 1312,176);
+		scrollDichVu.setBounds(10, 10, 1312,187);
 		scrollDichVu.setBackground(new Color(248,248,248));
 		panelCTHD.add(scrollDichVu);
 		
