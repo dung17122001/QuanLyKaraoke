@@ -44,7 +44,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	 */
 	public FormThemKhachHang () {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 100, 750, 460);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -103,13 +103,13 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		btnTaoTaikhoan = new JButton("Tạo ");
 		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
 		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 460, 230, 50);
+		btnTaoTaikhoan.setBounds(350, 360, 130, 50);
 		panel_Info.add(btnTaoTaikhoan);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(594, 360, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();
@@ -118,7 +118,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
 		
-		JLabel lblTitle = new JLabel("THÊM NHÂN VIÊN MỚI");
+		JLabel lblTitle = new JLabel("THÊM KHÁCH HÀNG MỚI");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));

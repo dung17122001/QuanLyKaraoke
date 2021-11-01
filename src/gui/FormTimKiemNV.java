@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
@@ -28,16 +29,20 @@ public class FormTimKiemNV extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtTimNV;
+	private JTextField txtTimMaNV;
+	private JTextField txtTimTenNV;
+	private JTextField txtTimNsNV;
+	private JTextField txtTimSdtNV;
+	private JTextField txtTimSocmNV;
 	private JButton btnTimKiem;
 	private JPanel panel_Info;
 	private JButton btnDong;
-	
+	private JRadioButton rb1;
 	
 	public FormTimKiemNV() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 40, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,39 +67,108 @@ public class FormTimKiemNV extends JFrame implements ActionListener{
 		lblTitle.setBounds(0, 9, 704, 50);
 		panel_Title.add(lblTitle);
 		
-		JLabel lblNtttk = new JLabel("Nhập thông tin cần tìm:");
-		lblNtttk.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNtttk.setBounds(10, 100, 300, 30);
-		panel_Info.add(lblNtttk);
+		JLabel lblMaNV = new JLabel("Mã nhân viên:");
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblMaNV.setBounds(10, 100, 300, 30);
+		panel_Info.add(lblMaNV);
 
-		txtTimNV = new JTextField();
-		txtTimNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimNV.setBounds(350, 100, 300, 30);
-		panel_Info.add(txtTimNV);
-		txtTimNV.setColumns(10);
+		txtTimMaNV = new JTextField();
+		txtTimMaNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimMaNV.setBounds(350, 100, 300, 30);
+		panel_Info.add(txtTimMaNV);
+		txtTimMaNV.setColumns(10);
 		
-		JLabel lbLoaiTimKiem = new JLabel("Chọn loại tìm kiếm:");
-		lbLoaiTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lbLoaiTimKiem.setBounds(10, 145, 300, 30);
-		panel_Info.add(lbLoaiTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 100, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblTenNV = new JLabel("Tên nhân viên:");
+        lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblTenNV.setBounds(10, 150, 300, 30);
+		panel_Info.add(lblTenNV);
+
+		txtTimTenNV = new JTextField();
+		txtTimTenNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimTenNV.setBounds(350, 150, 300, 30);
+		panel_Info.add(txtTimTenNV);
+		txtTimTenNV.setColumns(10);
 		
-		JComboBox<String> cbTimKiem = new JComboBox<String>();
-		cbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		cbTimKiem.setBounds(350, 145, 300, 30);
-		cbTimKiem.addItem("Tìm theo mã nhân viên");
-		cbTimKiem.addItem("Tìm theo tên nhân viên");
-		panel_Info.add(cbTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 150, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblNsNV = new JLabel("Ngày sinh:");
+        lblNsNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblNsNV.setBounds(10, 200, 300, 30);
+		panel_Info.add(lblNsNV);
+
+		txtTimNsNV = new JTextField();
+		txtTimNsNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimNsNV.setBounds(350, 250, 300, 30);
+		panel_Info.add(txtTimNsNV);
+		txtTimNsNV.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 250, 20, 30);
+        panel_Info.add(rb1);
+		
+        JLabel lblSdt = new JLabel("Số điện thoại:");
+        lblSdt.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblSdt.setBounds(10, 250, 300, 30);
+		panel_Info.add(lblSdt);
+
+		txtTimSdtNV = new JTextField();
+		txtTimSdtNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimSdtNV.setBounds(350, 200, 300, 30);
+		panel_Info.add(txtTimSdtNV);
+		txtTimSdtNV.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 200, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblCmnd = new JLabel("CMND:");
+        lblCmnd.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblCmnd.setBounds(10, 300, 300, 30);
+		panel_Info.add(lblCmnd);
+
+		txtTimSocmNV = new JTextField();
+		txtTimSocmNV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimSocmNV.setBounds(350, 300, 300, 30);
+		panel_Info.add(txtTimSocmNV);
+		txtTimSocmNV.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 300, 20, 30);
+        panel_Info.add(rb1);
+        
+		JLabel lbChucVu= new JLabel("Chức vụ:");
+		lbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lbChucVu.setBounds(10, 350, 300, 30);
+		panel_Info.add(lbChucVu);
+		
+		JComboBox<String> cbChucVu = new JComboBox<String>();
+		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		cbChucVu.setBounds(350, 350, 300, 30);
+		cbChucVu.addItem("Nhân viên thu ngân");
+		cbChucVu.addItem("Nhân viên phục vụ");
+		cbChucVu.addItem("Nhân viên kế toán");
+		panel_Info.add(cbChucVu);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 350, 20, 30);
+        panel_Info.add(rb1);
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(350, 460, 230, 50);
+		btnTimKiem.setBounds(180, 390, 180, 50);
 		panel_Info.add(btnTimKiem);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(450, 390, 180, 50);
 		panel_Info.add(btnDong);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

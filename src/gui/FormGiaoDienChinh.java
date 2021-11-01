@@ -39,8 +39,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-//import gui.FormQLNhanVien;
-
 public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseListener {
 	private static final long serialVersionUID = -1554680235689968471L;
 	private JPanel contentPane;
@@ -49,18 +47,15 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuBar menuBar;
 	private JMenu mnQLNhanVien;
 	private JMenu mnQLKhachHang;
-	private JMenuItem mntmThemNV;
 	private JMenuItem mntmSuaNV;
 	private JMenuItem mntmTimKiemNV;
-	private JMenuItem mntmXoaNV;
 	private JMenuItem mntmThemKH;
 	private JMenuItem mntmXoaKH;
 	private JMenuItem mntmSuaKH;
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
-	private JMenuItem mntmThemDV;
-	private JMenuItem mntmXoaDV;
 	private JMenuItem mntmSuaDV;
+	private JMenuItem mntmDatDV;
 	private JMenuItem mntmTimKiemDV;
 	private JMenu mnQLPhong;
 	private JMenuItem mntmCapNhatPhong;
@@ -79,31 +74,20 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		mnQLNhanVien = new JMenu("Quản lý nhân viên");
+		mnQLNhanVien = new JMenu("Nhân viên");
 		mnQLNhanVien.setIcon(new ImageIcon("img\\nhanvien.jpg"));
 		mnQLNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		menuBar.add(mnQLNhanVien);
 		
-		mntmSuaNV = new JMenuItem("Sửa nhân viên");
+		mntmSuaNV = new JMenuItem("Cập nhật nhân viên");
 		mntmSuaNV.setIcon(new ImageIcon("img\\sua.png"));
 		mntmSuaNV.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmSuaNV);
-		
-		mntmThemNV = new JMenuItem("Thêm nhân viên");
-		mntmThemNV.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmThemNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLNhanVien.add(mntmThemNV);
 		
 		mntmTimKiemNV = new JMenuItem("Tìm kiếm");
 		mntmTimKiemNV.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmTimKiemNV);
-		
-		mntmXoaNV = new JMenuItem("Xóa nhân viên");
-		mntmXoaNV.setIcon(new ImageIcon("img\\xoa.png"));
-		mntmXoaNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLNhanVien.add(mntmXoaNV);
-		
 		
 		mnQLKhachHang = new JMenu("Quản lý khách hàng");
 		mnQLKhachHang.setIcon(new ImageIcon("img\\img\\icon1.png"));
@@ -115,20 +99,10 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLKhachHang.add(mntmSuaKH);
 		
-		mntmThemKH = new JMenuItem("Thêm khách hàng");
-		mntmThemKH.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmThemKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLKhachHang.add(mntmThemKH);
-		
 		mntmTimKiemKH = new JMenuItem("Tìm kiếm");
 		mntmTimKiemKH.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLKhachHang.add(mntmTimKiemKH);
-		
-		mntmXoaKH = new JMenuItem("Xóa khách hàng");
-		mntmXoaKH.setIcon(new ImageIcon("img\\xoa.png"));
-		mntmXoaKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLKhachHang.add(mntmXoaKH);
 		
 		mnQlDichVu = new JMenu("Quản lý dịch vụ");
 		mnQlDichVu.setIcon(new ImageIcon("img\\img\\icon2.png"));
@@ -140,20 +114,15 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmSuaDV);
 		
-		mntmThemDV = new JMenuItem("Thêm dịch vụ");
-		mntmThemDV.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmThemDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmThemDV);
-		
 		mntmTimKiemDV = new JMenuItem("Tìm kiếm");
 		mntmTimKiemDV.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmTimKiemDV);
 		
-		mntmXoaDV = new JMenuItem("Xóa dịch vụ");
-		mntmXoaDV.setIcon(new ImageIcon("img\\xoa.png"));
-		mntmXoaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmXoaDV);
+		mntmDatDV = new JMenuItem("Đặt dịch vụ");
+		mntmDatDV.setIcon(new ImageIcon("img\\them.jpg"));
+		mntmDatDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnQlDichVu.add(mntmDatDV);
 		
 		mnQLPhong = new JMenu("Phòng");
 		mnQLPhong.setIcon(new ImageIcon("img\\icon3.png"));
@@ -183,7 +152,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmThemDonDatPhong = new JMenuItem("Thêm đơn đặt phòng");
 		mntmThemDonDatPhong.setIcon(new ImageIcon("img\\them.jpg"));
 		mntmThemDonDatPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQLHoaDon.add(mntmThemDonDatPhong);
+		mnQLPhong.add(mntmThemDonDatPhong);
 		
 		mntmTimKiemHoaDon = new JMenuItem("Tìm kiếm");
 		mntmTimKiemHoaDon.setIcon(new ImageIcon("img\\timkiem.png"));
@@ -215,11 +184,14 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaKH.addActionListener(this);
 		mntmSuaNV.addActionListener(this);
 		mntmThemDonDatPhong.addActionListener(this);
-		mntmThemDV.addActionListener(this);
 		mntmThemHoaDon.addActionListener(this);
+<<<<<<< HEAD
 		mntmThemKH.addActionListener(this);
 		mntmThemNV.addActionListener(this);
 		mntmCapNhatPhong.addActionListener(this);
+=======
+		mntmThemPhong.addActionListener(this);
+>>>>>>> b0c5984ea4ac94dfd683b3d87abbf51d84333b7c
 		mntmThongKeDoanhThu.addActionListener(this);
 		mntmThongKeKH.addActionListener(this);
 		mntmThongKeNV.addActionListener(this);
@@ -228,11 +200,16 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.addActionListener(this);
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
+<<<<<<< HEAD
 		mntmXoaDV.addActionListener(this);
 		mntmXoaKH.addActionListener(this);
 		mntmXoaNV.addActionListener(this);
 		
 		
+=======
+		mntmXoaPhong.addActionListener(this);
+		mntmDatDV.addActionListener(this);
+>>>>>>> b0c5984ea4ac94dfd683b3d87abbf51d84333b7c
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 0));
@@ -361,19 +338,12 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			changeScreen(new FormQLNhanVien());
 			
 		}
-		if(o.equals(mntmThemNV)) {
-			FormThemNhanVien formThemNV = new FormThemNhanVien();
-			formThemNV.setVisible(true);
-		}
 		
 		if(o.equals(mntmTimKiemNV)) {
 			FormTimKiemNV formThemNV = new FormTimKiemNV();
 			formThemNV.setVisible(true);
 		}
 		
-		if(o.equals(mntmXoaNV)) {
-			changeScreen(new FormXoaNV());
-		}
 		if(o.equals(mntmSuaKH)) {
 			changeScreen(new FormQLKhachHang());
 		}
@@ -385,22 +355,16 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			FormTimKiemKH formThemNV = new FormTimKiemKH();
 			formThemNV.setVisible(true);
 		}
-		if(o.equals(mntmXoaKH)) {
-			changeScreen(new FormXoaKH());
-		}
 		if(o.equals(mntmSuaDV)) {
 			changeScreen(new FormQLDichVu());
 		}
-		if(o.equals(mntmThemDV)) {
-			FormThemDichVu formThemNV = new FormThemDichVu();
-			formThemNV.setVisible(true);
-		}
+		
 		if(o.equals(mntmTimKiemDV)) {
 			FormTimKiemDV formThemNV = new FormTimKiemDV();
 			formThemNV.setVisible(true);
 		}
-		if(o.equals(mntmXoaDV)) {
-			changeScreen(new FormXoaDV());
+		if(o.equals(mntmDatDV)) {
+			changeScreen(new FormDatDV());
 		}
 		if(o.equals(mntmCapNhatPhong)) {
 			changeScreen(new FormQLPhong());

@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
@@ -28,16 +29,19 @@ public class FormTimKiemKH extends JFrame implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtTimKH;
+	private JTextField txtTimMaKH;
+	private JTextField txtTimTenKH;
+	private JTextField txtTimSdtKH;
+	private JTextField txtTimSocmKH;
 	private JButton btnTimKiem;
 	private JPanel panel_Info;
 	private JButton btnDong;
-	
+	private JRadioButton rb1;
 	
 	public FormTimKiemKH() {
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 100, 750, 560);
+		setBounds(300, 40, 750, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -62,39 +66,76 @@ public class FormTimKiemKH extends JFrame implements ActionListener{
 		lblTitle.setBounds(0, 9, 704, 50);
 		panel_Title.add(lblTitle);
 		
-		JLabel lblNtttk = new JLabel("Nhập thông tin cần tìm:");
-		lblNtttk.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNtttk.setBounds(10, 100, 300, 30);
-		panel_Info.add(lblNtttk);
+		JLabel lblMaNV = new JLabel("Mã khách hàng:");
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblMaNV.setBounds(10, 100, 300, 30);
+		panel_Info.add(lblMaNV);
 
-		txtTimKH = new JTextField();
-		txtTimKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimKH.setBounds(350, 100, 330, 30);
-		panel_Info.add(txtTimKH);
-		txtTimKH.setColumns(10);
+		txtTimMaKH= new JTextField();
+		txtTimMaKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimMaKH.setBounds(350, 100, 300, 30);
+		panel_Info.add(txtTimMaKH);
+		txtTimMaKH.setColumns(10);
 		
-		JLabel lbLoaiTimKiem = new JLabel("Chọn loại tìm kiếm:");
-		lbLoaiTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lbLoaiTimKiem.setBounds(10, 145, 300, 30);
-		panel_Info.add(lbLoaiTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 100, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblTenNV = new JLabel("Tên khách hàng:");
+        lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblTenNV.setBounds(10, 150, 300, 30);
+		panel_Info.add(lblTenNV);
+
+		txtTimTenKH = new JTextField();
+		txtTimTenKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimTenKH.setBounds(350, 150, 300, 30);
+		panel_Info.add(txtTimTenKH);
+		txtTimTenKH.setColumns(10);
 		
-		JComboBox<String> cbTimKiem = new JComboBox<String>();
-		cbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		cbTimKiem.setBounds(350, 145, 330, 30);
-		cbTimKiem.addItem("Tìm theo mã khách hàng");
-		cbTimKiem.addItem("Tìm theo tên khách hàng");
-		panel_Info.add(cbTimKiem);
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 150, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblNsNV = new JLabel("Số điện thoại:");
+        lblNsNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblNsNV.setBounds(10, 200, 300, 30);
+		panel_Info.add(lblNsNV);
+
+		txtTimSdtKH = new JTextField();
+		txtTimSdtKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimSdtKH.setBounds(350, 200, 300, 30);
+		panel_Info.add(txtTimSdtKH);
+		txtTimSdtKH.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 200, 20, 30);
+        panel_Info.add(rb1);
+        
+        JLabel lblCmnd = new JLabel("CMND:");
+        lblCmnd.setFont(new Font("Tahoma", Font.PLAIN, 26));
+        lblCmnd.setBounds(10, 250, 300, 30);
+		panel_Info.add(lblCmnd);
+		
+		txtTimSocmKH = new JTextField();
+		txtTimSocmKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtTimSocmKH.setBounds(350, 250, 300, 30);
+		panel_Info.add(txtTimSocmKH);
+		txtTimSocmKH.setColumns(10);
+		
+		rb1 = new JRadioButton("");
+        rb1.setBounds(660, 250, 20, 30);
+        panel_Info.add(rb1);
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(350, 460, 230, 50);
+		btnTimKiem.setBounds(180, 390, 180, 50);
 		panel_Info.add(btnTimKiem);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 460, 130, 50);
+		btnDong.setBounds(450, 390, 180, 50);
 		panel_Info.add(btnDong);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -113,10 +154,4 @@ public class FormTimKiemKH extends JFrame implements ActionListener{
 		
 	}
 
-	public static void main(String[] args) throws SQLException {		
-		FormTimKiemKH frm = new FormTimKiemKH();
-		frm.setVisible(true);
-	}
-	
 }
-
