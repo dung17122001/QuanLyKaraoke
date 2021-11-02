@@ -88,7 +88,7 @@ public class FormLapHD extends JPanel {
 		panelChiTietHD.setBounds(665, 50, 677, 406);
 		panel.add(panelChiTietHD);
 		
-		String []headerDV= {"Mã hàng hóa","Tên hàng hóa","Số lượng","Đơn giá","Thành tiền"};
+		String []headerDV= {"STT","Mã hàng hóa","Tên hàng hóa","Số lượng","Đơn giá","Thành tiền"};
 		dfDichVu=new DefaultTableModel(headerDV,0);
 		JScrollPane scrollDichVu;
 		panelChiTietHD.setLayout(null);

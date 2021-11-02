@@ -59,32 +59,41 @@ public class FormTimPhong extends JPanel {
 		
 		JLabel lbTimKiem = new JLabel("Nhập thông tin phòng cần tìm:");
 		lbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTimKiem.setBounds(435, 31, 224, 30);
+		lbTimKiem.setBounds(458, 131, 224, 30);
 		panel_1.add(lbTimKiem);
 		
 		txtTimKiem = new JTextField();
-		txtTimKiem.setBounds(696, 34, 284, 30);
+		txtTimKiem.setBounds(721, 134, 284, 30);
 		panel_1.add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 		
-		JLabel lbHinhThuc = new JLabel("Loại tìm kiếm: ");
+		JLabel lbHinhThuc = new JLabel("Tìm theo loại phòng: ");
 		lbHinhThuc.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbHinhThuc.setBounds(435, 92, 224, 30);
+		lbHinhThuc.setBounds(458, 20, 224, 30);
 		panel_1.add(lbHinhThuc);
 		
-		JComboBox<String> cbTimKiem = new JComboBox<String>();
-		cbTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbTimKiem.setBounds(696, 92, 284, 30);
-		cbTimKiem.addItem("Tìm theo mã phòng");
-		cbTimKiem.addItem("Tìm theo tên phòng");
-		cbTimKiem.addItem("Tìm các phòng còn trống");
-		panel_1.add(cbTimKiem);
+		JComboBox<String> cbLoaiPhong = new JComboBox<String>();
+		cbLoaiPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbLoaiPhong.setBounds(721, 20, 284, 30);
+		cbLoaiPhong.addItem("Phòng thường");
+		cbLoaiPhong.addItem("Phòng vip");
+		panel_1.add(cbLoaiPhong);
 		
 		JButton btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(Color.ORANGE);
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnTimKiem.setBounds(586, 171, 187, 40);
 		panel_1.add(btnTimKiem);
+		
+		JLabel lbTrinhTrang = new JLabel("Tìm theo trình trạng phòng: ");
+		lbTrinhTrang.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbTrinhTrang.setBounds(458, 76, 224, 30);
+		panel_1.add(lbTrinhTrang);
+		
+		JComboBox<String> cbTrinhTrang = new JComboBox<String>();
+		cbTrinhTrang.addItem("Còn trống");
+		cbTrinhTrang.addItem("Đang sử dụng");
+		cbTrinhTrang.setBounds(721, 78, 284, 30);
+		panel_1.add(cbTrinhTrang);
 	}
-
 }

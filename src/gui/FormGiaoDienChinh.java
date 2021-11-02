@@ -185,13 +185,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaNV.addActionListener(this);
 		mntmThemDonDatPhong.addActionListener(this);
 		mntmThemHoaDon.addActionListener(this);
-<<<<<<< HEAD
-		mntmThemKH.addActionListener(this);
-		mntmThemNV.addActionListener(this);
+//		mntmThemKH.addActionListener(this);
 		mntmCapNhatPhong.addActionListener(this);
-=======
-		mntmThemPhong.addActionListener(this);
->>>>>>> b0c5984ea4ac94dfd683b3d87abbf51d84333b7c
 		mntmThongKeDoanhThu.addActionListener(this);
 		mntmThongKeKH.addActionListener(this);
 		mntmThongKeNV.addActionListener(this);
@@ -200,16 +195,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.addActionListener(this);
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
-<<<<<<< HEAD
-		mntmXoaDV.addActionListener(this);
-		mntmXoaKH.addActionListener(this);
-		mntmXoaNV.addActionListener(this);
-		
-		
-=======
-		mntmXoaPhong.addActionListener(this);
+//		mntmXoaKH.addActionListener(this);
 		mntmDatDV.addActionListener(this);
->>>>>>> b0c5984ea4ac94dfd683b3d87abbf51d84333b7c
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 0));
