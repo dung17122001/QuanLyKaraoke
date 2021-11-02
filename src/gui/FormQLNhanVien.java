@@ -44,8 +44,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private JButton btnSua;
-	private JButton btnXoarong;
-	private JButton btnLuu;
+	private JButton btnCapNhat;
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JTextField txtTenNv;
@@ -57,10 +56,11 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
 	private DAO_NhanVien dao = new DAO_NhanVien();
+	
 	public FormQLNhanVien() {
 		setBounds(0, 0, 1366, 620);
 		setLayout(null);
-		
+		//connect database
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {
@@ -163,15 +163,15 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnThem.setForeground(SystemColor.controlText);
 		btnThem.setBackground(new Color(255, 255, 153));
 		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnThem.setBounds(50, 10, 150, 30);
+		btnThem.setBounds(200, 10, 150, 30);
 		btnThem.setFocusable(false);
 		pnChucNang.add(btnThem);
 		
-		btnSua = new JButton("Cập nhật");
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(300, 10, 150, 30);
+		btnSua.setBounds(450, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
@@ -179,25 +179,24 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnXoa.setForeground(SystemColor.controlText);
 		btnXoa.setBackground(new Color(255, 255, 153));
 		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoa.setBounds(550, 10, 150, 30);
+		btnXoa.setBounds(700, 10, 150, 30);
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
 		
-		btnXoarong= new JButton("Xóa rỗng");
-		btnXoarong.setForeground(SystemColor.controlText);
-		btnXoarong.setBackground(new Color(255, 255, 153));
-		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(800, 10, 150, 30);
-		btnXoarong.setFocusable(false);
-		pnChucNang.add(btnXoarong);
-		
-		btnLuu= new JButton("Lưu");
-		btnLuu.setForeground(SystemColor.controlText);
-		btnLuu.setBackground(new Color(255, 255, 153));
-		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(1050, 10, 150, 30);
-		btnLuu.setFocusable(false);
-		pnChucNang.add(btnLuu);
+		btnCapNhat= new JButton("Tải lại");
+		btnCapNhat.setForeground(SystemColor.controlText);
+		btnCapNhat.setBackground(new Color(255, 255, 153));
+		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnCapNhat.setBounds(950, 10, 150, 30);
+		btnCapNhat.setFocusable(false);
+		pnChucNang.add(btnCapNhat);
+		btnCapNhat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reloadData();
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -303,6 +302,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
+		//Add thông tin vào bảng
 		try {
 			dao_nhanvien.loadData("select * from NhanVien ", tableModel); 
 		} catch (SQLException e) {
@@ -312,16 +312,12 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
-		btnXoarong.addActionListener(this);
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-	
-		
+		btnCapNhat.addActionListener(this);
 		
 		}
 	
@@ -336,7 +332,6 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		txtCmnd.setText(tableModel.getValueAt(i, 5).toString());
 		txtChucVu.setText(tableModel.getValueAt(i, 6).toString());
 	}
-		
 	
 
 	@Override
@@ -381,4 +376,14 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		}
 	}
 
+	public void reloadData() {
+		DAO_NhanVien dao_nhanvien = new DAO_NhanVien();
+		try {
+			tableModel.setRowCount(0);
+			dao_nhanvien.loadData("select * from NhanVien ", tableModel);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
 }

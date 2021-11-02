@@ -1,5 +1,13 @@
 package entity;
 
+import java.io.Serializable;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import connect.ConnectDB;
+import dao.DAO_KhachHang;
+
 public class KhachHang {
 	
 	private String maKhachHang;

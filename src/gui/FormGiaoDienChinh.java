@@ -72,7 +72,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		mnQLNhanVien = new JMenu("Nhân viên");
+		mnQLNhanVien = new JMenu("Nhân Viên");
 		mnQLNhanVien.setIcon(new ImageIcon("img\\nhanvien.jpg"));
 		mnQLNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		menuBar.add(mnQLNhanVien);
@@ -87,12 +87,12 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmTimKiemNV);
 		
-		mnQLKhachHang = new JMenu("Quản lý khách hàng");
+		mnQLKhachHang = new JMenu("Khách Hàng");
 		mnQLKhachHang.setIcon(new ImageIcon("img\\img\\icon1.png"));
 		mnQLKhachHang.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		menuBar.add(mnQLKhachHang);
 		
-		mntmSuaKH = new JMenuItem("Sửa khách hàng");
+		mntmSuaKH = new JMenuItem("Cập nhật khách hàng");
 		mntmSuaKH.setIcon(new ImageIcon("img\\sua.png"));
 		mntmSuaKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLKhachHang.add(mntmSuaKH);
@@ -102,12 +102,12 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLKhachHang.add(mntmTimKiemKH);
 		
-		mnQlDichVu = new JMenu("Quản lý dịch vụ");
+		mnQlDichVu = new JMenu("Dịch vụ");
 		mnQlDichVu.setIcon(new ImageIcon("img\\img\\icon2.png"));
 		mnQlDichVu.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		menuBar.add(mnQlDichVu);
 		
-		mntmSuaDV = new JMenuItem("Sửa dịch vụ");
+		mntmSuaDV = new JMenuItem("Cập nhật dịch vụ");
 		mntmSuaDV.setIcon(new ImageIcon("img\\sua.png"));
 		mntmSuaDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmSuaDV);
@@ -319,7 +319,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		Object o=e.getSource();
 		if(o.equals(mntmSuaNV)) {
 			changeScreen(new FormQLNhanVien());
-			
 		}
 		if(o.equals(mntmTimKiemNV)) {
 			FormTimKiemNV formThemNV = new FormTimKiemNV();
