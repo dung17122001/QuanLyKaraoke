@@ -4,17 +4,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import com.toedter.calendar.JDateChooser;
-
 
 import javax.swing.JButton;
 import java.awt.Color;
@@ -23,6 +26,10 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
+import connect.ConnectDB;
+import dao.DAO_NhanVien;
+import entity.NhanVien;
+
 public class FormThemNhanVien extends JFrame implements ActionListener{
 
 	/**
@@ -30,6 +37,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField txtID;
 	private JTextField txtTenNV;
 	private JTextField txtCMND;
 	private JTextField txtSDT;
@@ -53,11 +61,22 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		contentPane.setLayout(null);
 
 		panel_Info = new JPanel();
-		panel_Info.setBounds(0, 0, 734, 521);
+		panel_Info.setBounds(0, 0, 734, 600);
 		panel_Info.setBackground(SystemColor.WHITE);
 		contentPane.add(panel_Info);
 		panel_Info.setLayout(null);
 
+		JLabel lblMaNV = new JLabel("Mã nhân viên:");
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblMaNV.setBounds(10, 50, 190, 30);
+		panel_Info.add(lblMaNV);
+
+		txtID = new JTextField();
+		txtID.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtID.setBounds(200, 50, 300, 30);
+		panel_Info.add(txtID);
+		txtID.setColumns(10);
+		
 		JLabel lblTenNV = new JLabel("Tên nhân viên:");
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblTenNV.setBounds(10, 100, 190, 30);
@@ -130,17 +149,17 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		btnTaoTaikhoan = new JButton("Tạo");
 		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
 		btnTaoTaikhoan.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTaoTaikhoan.setBounds(350, 360,130, 50);
+		btnTaoTaikhoan.setBounds(200, 360,130, 50);
 		panel_Info.add(btnTaoTaikhoan);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 360, 130, 50);
+		btnDong.setBounds(370, 360, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();
-		panel_Title.setBounds(0, 0, 734, 70);
+		panel_Title.setBounds(0, 0, 734, 45);
 		panel_Info.add(panel_Title);
 		panel_Title.setBackground(new Color(255, 204, 102));
 		panel_Title.setLayout(null);
@@ -148,8 +167,8 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		JLabel lblTitle = new JLabel("THÊM NHÂN VIÊN MỚI");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(21, 25, 28));
-		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 32));
-		lblTitle.setBounds(0, 9, 704, 50);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblTitle.setBounds(0, 9, 704,35);
 		panel_Title.add(lblTitle);
 		
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -163,6 +182,28 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		if(o.equals(btnTaoTaikhoan)) {
+			DAO_NhanVien dao_Nhanvien = new DAO_NhanVien();
+			String ma = txtID.getText();
+			String ten = txtTenNV.getText();
+			String gt = (String) cbGioitinh.getSelectedItem();
+			Date ns = new Date(ngaysinh.getDate().getTime());
+			String sdt = txtSDT.getText();
+			String cmnd = txtCMND.getText();
+			String chucvu = txtChucVu.getText();
+			NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,chucvu);
+			try {
+				if (dao_Nhanvien.themNhanVien(nv)) {
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+					this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
+					
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 		if(o.equals(btnDong)) {
 			this.dispose();
 		}

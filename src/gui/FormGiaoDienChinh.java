@@ -49,8 +49,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenu mnQLKhachHang;
 	private JMenuItem mntmSuaNV;
 	private JMenuItem mntmTimKiemNV;
-	private JMenuItem mntmThemKH;
-	private JMenuItem mntmXoaKH;
 	private JMenuItem mntmSuaKH;
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
@@ -185,7 +183,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmSuaNV.addActionListener(this);
 		mntmThemDonDatPhong.addActionListener(this);
 		mntmThemHoaDon.addActionListener(this);
-//		mntmThemKH.addActionListener(this);
 		mntmCapNhatPhong.addActionListener(this);
 		mntmThongKeDoanhThu.addActionListener(this);
 		mntmThongKeKH.addActionListener(this);
@@ -195,7 +192,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.addActionListener(this);
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
-//		mntmXoaKH.addActionListener(this);
 		mntmDatDV.addActionListener(this);
 		
 		contentPane = new JPanel();
@@ -325,18 +321,12 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			changeScreen(new FormQLNhanVien());
 			
 		}
-		
 		if(o.equals(mntmTimKiemNV)) {
 			FormTimKiemNV formThemNV = new FormTimKiemNV();
 			formThemNV.setVisible(true);
 		}
-		
 		if(o.equals(mntmSuaKH)) {
 			changeScreen(new FormQLKhachHang());
-		}
-		if(o.equals(mntmThemKH)) {
-			FormThemKhachHang formThemNV = new FormThemKhachHang();
-			formThemNV.setVisible(true);
 		}
 		if(o.equals(mntmTimKiemKH)) {
 			FormTimKiemKH formThemNV = new FormTimKiemKH();

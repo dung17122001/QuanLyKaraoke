@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,12 +28,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import connect.ConnectDB;
+import entity.NhanVien;
+import dao.DAO_NhanVien;
 
 public class FormQLNhanVien extends JPanel implements ActionListener, MouseListener {
 
@@ -51,9 +56,18 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JTextField txtChucVu;
 	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
+	private DAO_NhanVien dao = new DAO_NhanVien();
 	public FormQLNhanVien() {
-		setBounds(0, 0, 1352, 539);
+		setBounds(0, 0, 1366, 620);
 		setLayout(null);
+		
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		DAO_NhanVien dao_nhanvien = new DAO_NhanVien(); 
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -187,18 +201,18 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
-		panel.setBounds(0, 230, 1368, 768);
+		panel.setBounds(0, 230, 1366, 820);
 		add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblDSNV = new JLabel("DANH SÁCH NHÂN VIÊN:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,0, 380, 40);
+		lblDSNV.setBounds(500,0, 500, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1366, 820);
+		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
 		String[] header = {"Mã NV", "Tên NV","Giới tính","Ngày sinh", "Điện thoại", "CMND", "Chức vụ"};
@@ -215,66 +229,66 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 				}
 			};
 		
-		table = new JTable()
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			/**
-			 * tô màu từng dòng
-			 */
-			@Override
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : new Color(218, 223, 225));
-				return c;
-			}
-			
-            public boolean getScrollableTracksViewportWidth()
-            {
-                return getPreferredSize().width < getParent().getWidth();
-            }
-            @Override
-            public void doLayout()
-            {
-                TableColumn resizingColumn = null;
+			table = new JTable() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-                if (tableHeader != null)
-                    resizingColumn = tableHeader.getResizingColumn();
+				/**
+				 * tô màu từng dòng
+				 */
+				@Override
+				public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+					Component c = super.prepareRenderer(renderer, row, column);
+					if (!isRowSelected(row))
+						c.setBackground(row % 2 == 0 ? getBackground() :  new Color(218, 223, 225));
+					return c;
+				}
 
-                //  Viewport size changed. May need to increase columns widths
+				public boolean getScrollableTracksViewportWidth() {
+					return getPreferredSize().width < getParent().getWidth();
+				}
 
-                if (resizingColumn == null)
-                {
-                    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                    super.doLayout();
-                }
+				@Override
+				public void doLayout() {
+					TableColumn resizingColumn = null;
+					TableColumnModel tcm = getColumnModel();
 
-                //  Specific column resized. Reset preferred widths
+					if (tableHeader != null)
+						resizingColumn = tableHeader.getResizingColumn();
 
-                else
-                {
-                    TableColumnModel tcm = getColumnModel();
+					// Viewport size changed. May need to increase columns widths
 
-                    for (int i = 0; i < tcm.getColumnCount(); i++)
-                    {
-                        TableColumn tc = tcm.getColumn(i);
-                        tc.setPreferredWidth( tc.getWidth() );
-                    }
+					if (resizingColumn == null) {
+						setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
 
-                    // Columns don't fill the viewport, invoke default layout
+					// Specific column resized. Reset preferred widths
 
-                    if (tcm.getTotalColumnWidth() < getParent().getWidth())
-                        setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                        super.doLayout();
-                }
+					else {
 
-                setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            }
+						for (int i = 0; i < tcm.getColumnCount(); i++) {
+							resizingColumn = table.getColumnModel().getColumn(i);
+							if (i == 1) {
+								resizingColumn.setPreferredWidth(700); // second column is bigger
+							} else {
+								resizingColumn.setPreferredWidth(resizingColumn.getWidth());
+							}
+						}
 
-        };
+						// Columns don't fill the viewport, invoke default layout
+
+						if (tcm.getTotalColumnWidth() < getParent().getWidth())
+							setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
+
+					setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				}
+
+			};
         
         table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -288,6 +302,12 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
+		
+		try {
+			dao_nhanvien.loadData("select * from NhanVien ", tableModel); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -307,7 +327,14 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		int i = table.getSelectedRow();
+		txtID.setText(tableModel.getValueAt(i, 0).toString());
+		txtTenNv.setText(tableModel.getValueAt(i, 1).toString());
+		txtGioitinh.setText(tableModel.getValueAt(i, 2).toString());
+		txtNgaySinh.setText(tableModel.getValueAt(i, 3).toString());
+		txtSdt.setText(tableModel.getValueAt(i, 4).toString());
+		txtCmnd.setText(tableModel.getValueAt(i, 5).toString());
+		txtChucVu.setText(tableModel.getValueAt(i, 6).toString());
 	}
 		
 	
@@ -344,8 +371,13 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 			formThemNV.setVisible(true);
 		}
 		if(o.equals(btnSua)) {
-			FormSuaNV formCapNhatNV = new FormSuaNV();
-			formCapNhatNV.setVisible(true);
+			int i = table.getSelectedRow();
+			if (i != -1) {
+				FormSuaNV formSua = new FormSuaNV();
+				formSua.setVisible(true);	
+			} else {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần cập nhật thông tin");
+			}
 		}
 	}
 
