@@ -60,6 +60,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	public FormQLNhanVien() {
 		setBounds(0, 0, 1366, 620);
 		setLayout(null);
+		
 		//connect database
 		try {
 			ConnectDB.getInstance().connect();

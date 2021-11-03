@@ -1,5 +1,9 @@
 package entity;
 
+import connect.ConnectDB;
+import dao.DAO_DichVu;
+
+
 public class DichVu {
 	
 	private String maDichVu;
