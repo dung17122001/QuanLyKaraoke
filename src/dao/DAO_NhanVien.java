@@ -52,7 +52,7 @@ public class DAO_NhanVien {
 				String dienThoai=rs.getString(5);
 				String soCMND=rs.getString(6);
 				String chucVu=rs.getString(7);
-				NhanVien nv= new NhanVien(maNhanVien,tenNhanVien,gioiTinh,ngaySinh,dienThoai,soCMND,chucVu);
+				NhanVien nv= new NhanVien(maNhanVien,tenNhanVien,gioiTinh,ngaySinh,dienThoai,soCMND,chucVu,null);
 				dsnhanvien.add(nv);
 			}
 		}
@@ -87,5 +87,137 @@ public class DAO_NhanVien {
 			}
 		}
 		return n > 0;
+	}
+	/*
+	 tìm nhân viên theo maNhanVien
+	 */
+	public NhanVien getNhanvienByMaNhanVien(String maNhanVien) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where maNhanVien = '" + maNhanVien + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
+	}
+	/*
+	 tìm nhân viên theo tenNhanVien
+	 */
+	public NhanVien getNhanvienByTenNhanVien(String tenNhanVien) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where tenNhanVien = '" + tenNhanVien + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
+	}
+	/*
+	 tìm nhân viên theo tenNhanVien
+	 */
+	public NhanVien getNhanvienByNsNhanVien(String ngaySinh) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where ngaySinh = '" + ngaySinh + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
+	}
+	/*
+	 tìm nhân viên theo sdt NhanVien
+	 */
+	public NhanVien getNhanvienBySdtNhanVien(String dienThoai) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where dienThoai = '" + dienThoai + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
+	}
+	/*
+	 tìm nhân viên theo sCMND NhanVien
+	 */
+	public NhanVien getNhanvienByCmndNhanVien(String soCMND) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where soCMND = '" + soCMND + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
+	}
+	/*
+	 tìm nhân viên theo chuc vu NhanVien
+	 */
+	public NhanVien getNhanvienByChucVuNhanVien(String chucVu) throws SQLException {
+		NhanVien nv = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select * from NhanVien where chucVu = '" + chucVu + "'";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			String maNV = rs.getString(1);
+			String ten = rs.getString(2);
+			String gt = rs.getString(3);
+			Date ns = rs.getDate(4);
+			String phone = rs.getString(5);
+			String cmnd = rs.getString(6);
+			String chucvu = rs.getString(7);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+		}
+		return nv;
 	}
 }

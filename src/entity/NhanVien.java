@@ -17,9 +17,11 @@ public class NhanVien {
 	private String dienThoai;
 	private String soCMND;
 	private String chucVu;
+	private Ca Ca;
+	
 	
 	public NhanVien(String maNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String dienThoai,
-			String soCMND, String chucVu) {
+			String soCMND, String chucVu, entity.Ca ca) {
 		super();
 		this.maNhanVien = maNhanVien;
 		this.tenNhanVien = tenNhanVien;
@@ -28,14 +30,19 @@ public class NhanVien {
 		this.dienThoai = dienThoai;
 		this.soCMND = soCMND;
 		this.chucVu = chucVu;
+		Ca = ca;
 	}
+
+	
 
 	@Override
 	public String toString() {
 		return "NhanVien [maNhanVien=" + maNhanVien + ", tenNhanVien=" + tenNhanVien + ", gioiTinh=" + gioiTinh
 				+ ", ngaySinh=" + ngaySinh + ", dienThoai=" + dienThoai + ", soCMND=" + soCMND + ", chucVu=" + chucVu
-				+ "]";
+				+ ", Ca=" + Ca + "]";
 	}
+
+
 
 	public String getMaNhanVien() {
 		return maNhanVien;
@@ -93,10 +100,22 @@ public class NhanVien {
 		this.chucVu = chucVu;
 	}
 
+	
+	public Ca getCa() {
+		return Ca;
+	}
+
+	public void setCa(Ca ca) {
+		Ca = ca;
+	}
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((Ca == null) ? 0 : Ca.hashCode());
 		result = prime * result + ((chucVu == null) ? 0 : chucVu.hashCode());
 		result = prime * result + ((dienThoai == null) ? 0 : dienThoai.hashCode());
 		result = prime * result + ((gioiTinh == null) ? 0 : gioiTinh.hashCode());
@@ -107,6 +126,8 @@ public class NhanVien {
 		return result;
 	}
 
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -116,6 +137,11 @@ public class NhanVien {
 		if (getClass() != obj.getClass())
 			return false;
 		NhanVien other = (NhanVien) obj;
+		if (Ca == null) {
+			if (other.Ca != null)
+				return false;
+		} else if (!Ca.equals(other.Ca))
+			return false;
 		if (chucVu == null) {
 			if (other.chucVu != null)
 				return false;
@@ -153,7 +179,11 @@ public class NhanVien {
 			return false;
 		return true;
 	}
+
+
+
 	
+
 	
 	
 }
