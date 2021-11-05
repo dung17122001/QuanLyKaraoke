@@ -191,7 +191,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 			String sdt = txtSDT.getText();
 			String cmnd = txtCMND.getText();
 			String chucvu = txtChucVu.getText();
-			NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,chucvu,null);
+			NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,chucvu);
 			try {
 				if (dao_Nhanvien.themNhanVien(nv)) {
 					JOptionPane.showMessageDialog(this, "Thêm thành công");

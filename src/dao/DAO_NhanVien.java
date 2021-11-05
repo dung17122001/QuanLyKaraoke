@@ -45,14 +45,14 @@ public class DAO_NhanVien {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				String maNhanVien=rs.getString(1);
-				String tenNhanVien=rs.getString(2);
-				String gioiTinh=rs.getString(3);
-				Date ngaySinh=rs.getDate(4);
-				String dienThoai=rs.getString(5);
-				String soCMND=rs.getString(6);
-				String chucVu=rs.getString(7);
-				NhanVien nv= new NhanVien(maNhanVien,tenNhanVien,gioiTinh,ngaySinh,dienThoai,soCMND,chucVu,null);
+				String manv=rs.getString("maNhanVien");
+				String tennv=rs.getString("tenNhanVien");
+				String gt=rs.getString("gioiTinh");
+				Date ns=rs.getDate("ngaySinh");
+				String dt=rs.getString("dienThoai");
+				String socm=rs.getString("soCMND");
+				String cv=rs.getString("chucVu");
+				NhanVien nv= new NhanVien(manv,tennv,gt,ns,dt,socm,cv);
 				dsnhanvien.add(nv);
 			}
 		}
@@ -88,6 +88,33 @@ public class DAO_NhanVien {
 		}
 		return n > 0;
 	}
+	
+	public boolean suaThongtinNhanvien(NhanVien nv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("update NhanVien set tenNhanVien=?, gioiTinh=?, ngaySinh=?, dienThoai=?, soCMND=?, chucVu=?  where maNhanVien=?");
+			ps.setString(1, nv.getTenNhanVien());
+			ps.setString(2, nv.getGioiTinh());
+			ps.setDate(3, nv.getNgaySinh());
+			ps.setString(4, nv.getDienThoai());
+			ps.setString(5, nv.getSoCMND());
+			ps.setString(6, nv.getChucVu());
+			ps.setString(7, nv.getMaNhanVien());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	/*
 	 tìm nhân viên theo maNhanVien
 	 */
@@ -106,7 +133,7 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
 	}
@@ -128,7 +155,7 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
 	}
@@ -150,7 +177,7 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
 	}
@@ -172,7 +199,7 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
 	}
@@ -194,7 +221,7 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
 	}
@@ -216,8 +243,28 @@ public class DAO_NhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu,null);
+			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
 		}
 		return nv;
+	}
+	//xoa nhan vien
+	public boolean delNhanVien(String maNhanVien) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		try {
+			PreparedStatement ps = con.prepareStatement("delete from NhanVien where maNhanVien=?");
+			ps.setString(1, maNhanVien);
+			int n = ps.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean delCongNhan(String text) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

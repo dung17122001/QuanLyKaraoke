@@ -369,11 +369,36 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		if(o.equals(btnSua)) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
-				FormSuaNV formSua = new FormSuaNV();
-				formSua.setVisible(true);	
+				FormSuaNV formSua = new FormSuaNV(txtID.getText());
+				formSua.setVisible(true);
 			} else {
+				reloadData();
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần cập nhật thông tin");
 			}
+		
+		}
+		if(o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
+			if (row != -1) {
+				try {
+						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhân viên này", "Chú ý",
+								JOptionPane.YES_NO_OPTION);
+						if (xacnhan == JOptionPane.YES_OPTION) {
+							if (dao.delNhanVien(txtID.getText())) {
+								tableModel.removeRow(row);
+								JOptionPane.showMessageDialog(this, "Xóa không thành công!");
+								reloadData();
+							} 
+							else {
+								JOptionPane.showMessageDialog(this, "Xóa nhân viên " + txtID.getText() + " thành công!");
+							}
+						}
+					}
+				 catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xóa");
 		}
 	}
 
