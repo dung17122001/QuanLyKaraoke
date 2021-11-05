@@ -33,6 +33,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import connect.ConnectDB;
+import entity.DichVu;
+import dao.DAO_DichVu;
+
 public class FormQLDichVu extends JPanel implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
@@ -40,15 +44,25 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
-	private JButton btnXoarong;
-	private JButton btnLuu;
+	private JButton btnCapNhat;
 	private JTextField txtGiaDV;
 	private JTextField txtID;
 	private JTextField txtTenDV;
 	private DefaultTableModel tableModel;
+	private DAO_DichVu dao = new DAO_DichVu();
+	
 	public FormQLDichVu() {
 		setBounds(0, 0, 1366,768);
 		setLayout(null);
+		
+		//connect database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+				
+		DAO_DichVu dao_dichvu = new DAO_DichVu(); 
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -102,15 +116,15 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		btnThem.setForeground(SystemColor.controlText);
 		btnThem.setBackground(new Color(255, 255, 153));
 		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnThem.setBounds(50, 10, 150, 30);
+		btnThem.setBounds(200, 10, 150, 30);
 		btnThem.setFocusable(false);
 		pnChucNang.add(btnThem);
 		
-		btnSua = new JButton("Cập nhật");
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(300, 10, 150, 30);
+		btnSua.setBounds(450, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
@@ -118,25 +132,24 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		btnXoa.setForeground(SystemColor.controlText);
 		btnXoa.setBackground(new Color(255, 255, 153));
 		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoa.setBounds(550, 10, 150, 30);
+		btnXoa.setBounds(700, 10, 150, 30);
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
 		
-		btnXoarong= new JButton("Xóa rỗng");
-		btnXoarong.setForeground(SystemColor.controlText);
-		btnXoarong.setBackground(new Color(255, 255, 153));
-		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(800, 10, 150, 30);
-		btnXoarong.setFocusable(false);
-		pnChucNang.add(btnXoarong);
-		
-		btnLuu= new JButton("Lưu");
-		btnLuu.setForeground(SystemColor.controlText);
-		btnLuu.setBackground(new Color(255, 255, 153));
-		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(1050, 10, 150, 30);
-		btnLuu.setFocusable(false);
-		pnChucNang.add(btnLuu);
+		btnCapNhat= new JButton("Tải lại");
+		btnCapNhat.setForeground(SystemColor.controlText);
+		btnCapNhat.setBackground(new Color(255, 255, 153));
+		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnCapNhat.setBounds(950, 10, 150, 30);
+		btnCapNhat.setFocusable(false);
+		pnChucNang.add(btnCapNhat);
+		btnCapNhat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reloadData();
+			}
+		});
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -147,11 +160,11 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		JLabel lblDSNV = new JLabel("DANH SÁCH DỊCH VỤ:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,0, 380, 40);
+		lblDSNV.setBounds(500,0, 500, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1366, 820);
+		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
 		String[] header = {"Mã DV", "Tên DV","Giá dịch vụ"};
@@ -242,25 +255,32 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
+		//Add thông tin vào bảng
+		try {
+			dao_dichvu.loadData("select * from DichVu ", tableModel); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
-		btnXoarong.addActionListener(this);
-		btnLuu.addActionListener(this);
+		btnCapNhat.addActionListener(this);
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		int i = table.getSelectedRow();
+		txtID.setText(tableModel.getValueAt(i, 0).toString());
+		txtTenDV.setText(tableModel.getValueAt(i, 1).toString());
+		txtGiaDV.setText(tableModel.getValueAt(i, 2).toString());
 	}
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -293,10 +313,23 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 			formThemDV.setVisible(true);
 		}
 		if(o.equals(btnSua)) {
-			FormSuaDV formSuaDV = new FormSuaDV();
-			formSuaDV.setVisible(true);
+			int i = table.getSelectedRow();
+			if (i != -1) {
+				FormSuaDV formSua = new FormSuaDV();
+				formSua.setVisible(true);	
+			} else {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn dịch vụ cần cập nhật thông tin");
+			}
 		}
-		
+	}
+	public void reloadData() {
+		DAO_DichVu dao_dichvu = new DAO_DichVu();
+		try {
+			tableModel.setRowCount(0);
+			dao_dichvu.loadData("select * from DichVu ", tableModel);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

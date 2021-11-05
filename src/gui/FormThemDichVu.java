@@ -4,10 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.swing.JTextField;
@@ -23,6 +26,10 @@ import java.awt.Dimension;
 
 import javax.swing.JComboBox;
 
+import connect.ConnectDB;
+import dao.DAO_DichVu;
+import entity.DichVu;
+
 public class FormThemDichVu extends JFrame implements ActionListener{
 
 	/**
@@ -32,6 +39,7 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTextField txtTenDV;
 	private JTextField txtGiaDV;
+	private JTextField txtMaDV;
 	private JButton btnTao;
 	private JPanel panel_Info;
 	private JButton btnDong;
@@ -54,38 +62,49 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 		contentPane.add(panel_Info);
 		panel_Info.setLayout(null);
 
+		JLabel lblMaNV = new JLabel("Mã dịch vụ:");
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		lblMaNV.setBounds(10, 80, 200, 30);
+		panel_Info.add(lblMaNV);
+
+		txtMaDV = new JTextField();
+		txtMaDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		txtMaDV.setBounds(230, 80, 300, 30);
+		panel_Info.add(txtMaDV);
+		txtMaDV.setColumns(10);
+		
 		JLabel lblTenNV = new JLabel("Tên dịch vụ:");
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblTenNV.setBounds(10, 100, 200, 30);
+		lblTenNV.setBounds(10, 130, 200, 30);
 		panel_Info.add(lblTenNV);
 
 		txtTenDV = new JTextField();
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTenDV.setBounds(230, 100, 300, 30);
+		txtTenDV.setBounds(230, 130, 300, 30);
 		panel_Info.add(txtTenDV);
 		txtTenDV.setColumns(10);
 
 		JLabel lblSDT = new JLabel("Giá dịch vụ:");
 		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblSDT.setBounds(10, 190, 190, 30);
+		lblSDT.setBounds(10, 180, 250, 30);
 		panel_Info.add(lblSDT);
 
 		txtGiaDV = new JTextField();
 		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		txtGiaDV.setColumns(10);
-		txtGiaDV.setBounds(230, 190, 300, 30);
+		txtGiaDV.setBounds(230, 180, 300, 30);
 		panel_Info.add(txtGiaDV);
 		
 		btnTao= new JButton("Tạo ");
 		btnTao.setBackground(new Color(255, 204, 102));
 		btnTao.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTao.setBounds(350, 250, 230, 50);
+		btnTao.setBounds(230, 240,130, 50);
 		panel_Info.add(btnTao);
 		
 		btnDong = new JButton("Đóng");
 		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setBounds(594, 250, 130, 50);
+		btnDong.setBounds(400, 240, 130, 50);
 		panel_Info.add(btnDong);
 		
 		JPanel panel_Title = new JPanel();
@@ -111,6 +130,24 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		if(o.equals(btnTao)) {
+			DAO_DichVu dao_dichvu = new DAO_DichVu();
+			String ma = txtMaDV.getText();
+			String ten = txtTenDV.getText();
+			String gia = txtGiaDV.getText();
+			DichVu dv =new DichVu(ma,ten,gia, null);
+			try {
+				if (dao_dichvu.themDichVu(dv)) {
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+					this.dispose();
+				}else {
+					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
+					
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
 		if(o.equals(btnDong)) {
 			this.dispose();
 		}

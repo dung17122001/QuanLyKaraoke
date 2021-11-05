@@ -36,7 +36,6 @@ import javax.swing.table.TableColumnModel;
 import connect.ConnectDB;
 import entity.KhachHang;
 import dao.DAO_KhachHang;
-import dao.DAO_NhanVien;
 
 public class FormQLKhachHang extends JPanel implements ActionListener, MouseListener {
 
@@ -330,10 +329,10 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	}
 
 	public void reloadData() {
-		DAO_NhanVien dao_nhanvien = new DAO_NhanVien();
+		DAO_KhachHang dao_khachhang = new DAO_KhachHang();
 		try {
 			tableModel.setRowCount(0);
-			dao_nhanvien.loadData("select * from NhanVien ", tableModel);
+			dao_khachhang.loadData("select * from KhachHang ", tableModel);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -348,11 +347,34 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		if(o.equals(btnSua)) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
-				FormSuaKH formSua = new FormSuaKH();
+				FormSuaKH formSua = new FormSuaKH(txtID.getText());
 				formSua.setVisible(true);	
 			} else {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần cập nhật thông tin");
 			}
+		}
+		if(o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
+			if (row != -1) {
+				try {
+						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa khách hàng này", "Chú ý",
+								JOptionPane.YES_NO_OPTION);
+						if (xacnhan == JOptionPane.YES_OPTION) {
+							if (dao.delKhachHang(txtID.getText())) {
+								tableModel.removeRow(row);
+								JOptionPane.showMessageDialog(this, "Xóa thành công!");
+								reloadData();
+							} 
+							else {
+								JOptionPane.showMessageDialog(this, "Xóa khách hàng " + txtID.getText() + " thành công!");
+							}
+						}
+					}
+				 catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng để xóa");
 		}
 	}
 

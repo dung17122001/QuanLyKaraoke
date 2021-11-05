@@ -60,6 +60,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	public FormQLNhanVien() {
 		setBounds(0, 0, 1366, 620);
 		setLayout(null);
+		
 		//connect database
 		try {
 			ConnectDB.getInstance().connect();
@@ -78,78 +79,78 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		
 		JLabel lbManv = new JLabel("Mã NV: ");
 		lbManv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbManv.setBounds(10, 27, 96, 38);
+		lbManv.setBounds(110, 27, 96, 38);
 		pnTTNV.add(lbManv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(116, 31, 190, 30);
+		txtID.setBounds(216, 31, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
 		
 		JLabel lbTennv = new JLabel("Tên NV: ");
 		lbTennv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTennv.setBounds(405, 24, 96, 38);
+		lbTennv.setBounds(505, 24, 96, 38);
 		pnTTNV.add(lbTennv);
 		
 		txtTenNv = new JTextField();
 		txtTenNv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenNv.setBounds(501, 30, 190, 30);
+		txtTenNv.setBounds(601, 30, 190, 30);
 		pnTTNV.add(txtTenNv);
 		txtTenNv.setColumns(10);
 		
 		JLabel lbGt = new JLabel("Giới tính:");
 		lbGt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGt.setBounds(855, 24, 96, 38);
+		lbGt.setBounds(955, 24, 96, 38);
 		pnTTNV.add(lbGt);
 		
 		txtGioitinh = new JTextField();
 		txtGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGioitinh.setBounds(955, 30, 190, 30);
+		txtGioitinh.setBounds(1055, 30, 190, 30);
 		pnTTNV.add(txtGioitinh);
 		txtGioitinh.setColumns(10);
 		
 		JLabel lbNs = new JLabel("Ngày sinh:");
 		lbNs.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbNs.setBounds(10, 80, 96, 38);
+		lbNs.setBounds(110, 80, 96, 38);
 		pnTTNV.add(lbNs);
 		
 		txtNgaySinh = new JTextField();
 		txtNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtNgaySinh.setBounds(116, 83, 190, 30);
+		txtNgaySinh.setBounds(216, 83, 190, 30);
 		pnTTNV.add(txtNgaySinh);
 		txtNgaySinh.setColumns(10);
 		
 		JLabel lbScm = new JLabel("Số CMND:");
 		lbScm.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbScm.setBounds(405, 80, 96, 30);
+		lbScm.setBounds(505, 80, 96, 30);
 		pnTTNV.add(lbScm);
 		
 		txtCmnd = new JTextField();
 		txtCmnd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtCmnd.setBounds(501, 83, 190, 30);
+		txtCmnd.setBounds(601, 83, 190, 30);
 		pnTTNV.add(txtCmnd);
 		txtCmnd.setColumns(10);
 		
 		JLabel lbSdt = new JLabel("Số điện thoại:");
 		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSdt.setBounds(855, 83, 190, 30);
+		lbSdt.setBounds(955, 83, 190, 30);
 		pnTTNV.add(lbSdt);
 		
 		txtSdt = new JTextField();
 		txtSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtSdt.setBounds(955, 88, 190, 30);
+		txtSdt.setBounds(1055, 88, 190, 30);
 		pnTTNV.add(txtSdt);
 		txtSdt.setColumns(10);
 		
 		JLabel lbCv = new JLabel("Chức vụ: ");
 		lbCv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbCv.setBounds(10, 137, 96, 38);
+		lbCv.setBounds(110, 137, 96, 38);
 		pnTTNV.add(lbCv);
 		
 		txtChucVu = new JTextField();
 		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtChucVu.setBounds(116, 140, 190, 30);
+		txtChucVu.setBounds(216, 140, 190, 30);
 		pnTTNV.add(txtChucVu);
 		txtChucVu.setColumns(10);
 		
@@ -368,11 +369,36 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		if(o.equals(btnSua)) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
-				FormSuaNV formSua = new FormSuaNV();
-				formSua.setVisible(true);	
+				FormSuaNV formSua = new FormSuaNV(txtID.getText());
+				formSua.setVisible(true);
 			} else {
+				reloadData();
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần cập nhật thông tin");
 			}
+		
+		}
+		if(o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
+			if (row != -1) {
+				try {
+						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhân viên này", "Chú ý",
+								JOptionPane.YES_NO_OPTION);
+						if (xacnhan == JOptionPane.YES_OPTION) {
+							if (dao.delNhanVien(txtID.getText())) {
+								tableModel.removeRow(row);
+								JOptionPane.showMessageDialog(this, "Xóa thành công!");
+								reloadData();
+							} 
+							else {
+								JOptionPane.showMessageDialog(this, "Xóa nhân viên " + txtID.getText() + " thành công!");
+							}
+						}
+					}
+				 catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xóa");
 		}
 	}
 

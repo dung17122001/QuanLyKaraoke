@@ -8,8 +8,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import connect.ConnectDB;
 import dao.DAO_NhanVien;
 
-public class NhanVien {
+public class NhanVien implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String maNhanVien;
 	private String tenNhanVien;
 	private String gioiTinh;
@@ -20,6 +24,7 @@ public class NhanVien {
 	
 	public NhanVien(String maNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String dienThoai,
 			String soCMND, String chucVu) {
+		
 		super();
 		this.maNhanVien = maNhanVien;
 		this.tenNhanVien = tenNhanVien;
@@ -28,8 +33,10 @@ public class NhanVien {
 		this.dienThoai = dienThoai;
 		this.soCMND = soCMND;
 		this.chucVu = chucVu;
+
 	}
 
+	
 	@Override
 	public String toString() {
 		return "NhanVien [maNhanVien=" + maNhanVien + ", tenNhanVien=" + tenNhanVien + ", gioiTinh=" + gioiTinh
@@ -37,13 +44,19 @@ public class NhanVien {
 				+ "]";
 	}
 
+
+
+	
+
 	public String getMaNhanVien() {
 		return maNhanVien;
 	}
 
+
 	public void setMaNhanVien(String maNhanVien) {
 		this.maNhanVien = maNhanVien;
 	}
+
 
 	public String getTenNhanVien() {
 		return tenNhanVien;
@@ -93,6 +106,9 @@ public class NhanVien {
 		this.chucVu = chucVu;
 	}
 
+	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,6 +122,7 @@ public class NhanVien {
 		result = prime * result + ((tenNhanVien == null) ? 0 : tenNhanVien.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -153,7 +170,15 @@ public class NhanVien {
 			return false;
 		return true;
 	}
+
+
+
 	
+
+
+
+	
+
 	
 	
 }

@@ -1,4 +1,4 @@
-package gui;
+package main;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -29,7 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import gui.FormDangNhap;
+import main.FormDangNhap;
 
 
 public class FormDangNhap extends JFrame implements ActionListener, MouseListener {
