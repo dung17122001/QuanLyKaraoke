@@ -1,20 +1,26 @@
 package entity;
 
+import java.util.Objects;
+
 public class DichVu {
 	
 	private String maDichVu;
 	private String tenDichVu;
-	private String giaTien;
+	private double giaTien;
 	private LoaiDichVu LoaiDichVu;
 	
-	public DichVu(String maDichVu, String tenDichVu, String giaTien, entity.LoaiDichVu loaiDichVu) {
+	public DichVu(String maDichVu, String tenDichVu, double giaTien, LoaiDichVu loaiDichVu) {
 		super();
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
 		this.giaTien = giaTien;
 		LoaiDichVu = loaiDichVu;
 	}
-
+	
+	public DichVu() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	public String toString() {
 		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", giaTien=" + giaTien + ", LoaiDichVu="
@@ -37,11 +43,11 @@ public class DichVu {
 		this.tenDichVu = tenDichVu;
 	}
 
-	public String getGiaTien() {
+	public double getGiaTien() {
 		return giaTien;
 	}
 
-	public void setGiaTien(String giaTien) {
+	public void setGiaTien(double giaTien) {
 		this.giaTien = giaTien;
 	}
 
@@ -55,13 +61,7 @@ public class DichVu {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((LoaiDichVu == null) ? 0 : LoaiDichVu.hashCode());
-		result = prime * result + ((giaTien == null) ? 0 : giaTien.hashCode());
-		result = prime * result + ((maDichVu == null) ? 0 : maDichVu.hashCode());
-		result = prime * result + ((tenDichVu == null) ? 0 : tenDichVu.hashCode());
-		return result;
+		return Objects.hash(maDichVu);
 	}
 
 	@Override
@@ -73,28 +73,9 @@ public class DichVu {
 		if (getClass() != obj.getClass())
 			return false;
 		DichVu other = (DichVu) obj;
-		if (LoaiDichVu == null) {
-			if (other.LoaiDichVu != null)
-				return false;
-		} else if (!LoaiDichVu.equals(other.LoaiDichVu))
-			return false;
-		if (giaTien == null) {
-			if (other.giaTien != null)
-				return false;
-		} else if (!giaTien.equals(other.giaTien))
-			return false;
-		if (maDichVu == null) {
-			if (other.maDichVu != null)
-				return false;
-		} else if (!maDichVu.equals(other.maDichVu))
-			return false;
-		if (tenDichVu == null) {
-			if (other.tenDichVu != null)
-				return false;
-		} else if (!tenDichVu.equals(other.tenDichVu))
-			return false;
-		return true;
+		return Objects.equals(maDichVu, other.maDichVu);
 	}
+
 	
 	
 	

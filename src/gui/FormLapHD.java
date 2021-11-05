@@ -1,6 +1,11 @@
 package gui;
 
 import javax.swing.JPanel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.BorderFactory;
@@ -9,6 +14,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.JTextField;
@@ -17,6 +23,16 @@ import javax.swing.table.DefaultTableModel;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.components.JTitlePanel;
 
+import connect.ConnectDB;
+import dao.DAO_Phong;
+import dao.DaoDichVu;
+import dao.DaoLoaiDV;
+import dao.DaoLoaiPhong;
+import entity.DichVu;
+import entity.LoaiDichVu;
+import entity.LoaiPhong;
+import entity.Phong;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
@@ -24,12 +40,23 @@ import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class FormLapHD extends JPanel {
+public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
 	private DefaultTableModel dfDichVu;
 	private JTable tableDichVu;
 	private JTextField txtSoLuongDV;
+	private JButton btnThemPhong;
+	private JButton btnThemDV;
+	private JButton btnTinhGio;
+	private JComboBox<String> cbLoaiDV;
+	private JComboBox<String> cbTenDV;
+	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
+	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
+	private DaoDichVu daoDichVu=new DaoDichVu();
+	private int stt=1;
+	private DecimalFormat df = new DecimalFormat("# ###");
 
 	public FormLapHD() {
 		
@@ -46,7 +73,7 @@ public class FormLapHD extends JPanel {
 		panelPhong.setBounds(10, 10, 645, 368);
 		panel.add(panelPhong);
 		
-		String []header= {"STT","Mã phòng","Tên phòng","Loại phòng","Giá phòng","Trình trạng"};
+		String []header= {"Mã phòng","Tên phòng","Loại phòng","Giá phòng","Trình trạng"};
 		dfPhong=new DefaultTableModel(header,0);
 		tablePhong=new JTable(dfPhong);
 		tablePhong.setRowHeight(20);
@@ -73,7 +100,7 @@ public class FormLapHD extends JPanel {
 		lbTenPhong.setBounds(80, 229, 53, 30);
 		panelPhong.add(lbTenPhong);
 		
-		JButton btnThemPhong = new JButton("Thêm phòng vào hóa đơn");
+		btnThemPhong = new JButton("Thêm phòng vào hóa đơn");
 		btnThemPhong.setBackground(Color.ORANGE);
 		btnThemPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,7 +112,7 @@ public class FormLapHD extends JPanel {
 		 
 		
 		JPanel panelChiTietHD = new JPanel();
-		panelChiTietHD.setBounds(665, 50, 677, 406);
+		panelChiTietHD.setBounds(665, 50, 677, 421);
 		panel.add(panelChiTietHD);
 		
 		String []headerDV= {"STT","Mã hàng hóa","Tên hàng hóa","Số lượng","Đơn giá","Thành tiền"};
@@ -97,7 +124,7 @@ public class FormLapHD extends JPanel {
 		tableDichVu.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
 		tableDichVu.getTableHeader().setBackground(new Color(255, 204, 102));
 		scrollDichVu=new JScrollPane(tableDichVu,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollDichVu.setBounds(0, 10, 667, 386);
+		scrollDichVu.setBounds(0, 10, 667, 401);
 		panelChiTietHD.add(scrollDichVu);
 		scrollDichVu.setBorder(BorderFactory.createTitledBorder("Thông tin hóa đơn"));
 		scrollDichVu.setBackground(new Color(248,248,248));
@@ -113,7 +140,7 @@ public class FormLapHD extends JPanel {
 		lbLaoiDV.setBounds(10, 33, 106, 30);
 		panelDichVu.add(lbLaoiDV);
 		
-		JComboBox cbLoaiDV = new JComboBox();
+		cbLoaiDV = new JComboBox<String>();
 		cbLoaiDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbLoaiDV.setBounds(130, 33, 205, 30);
 		panelDichVu.add(cbLoaiDV);
@@ -123,11 +150,11 @@ public class FormLapHD extends JPanel {
 		lbTenDV.setBounds(10, 94, 87, 30);
 		panelDichVu.add(lbTenDV);
 		
-		JComboBox cbTenDV = new JComboBox();
+		cbTenDV = new JComboBox<String>();
 		cbTenDV.setBounds(130, 96, 205, 30);
 		panelDichVu.add(cbTenDV);
 		
-		JButton btnThemDV = new JButton("Thêm vào hóa đơn");
+		btnThemDV = new JButton("Thêm vào hóa đơn");
 		btnThemDV.setBackground(Color.ORANGE);
 		btnThemDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThemDV.setBounds(375, 94, 241, 30);
@@ -150,10 +177,123 @@ public class FormLapHD extends JPanel {
 		lbThongTinHD.setBounds(969, 10, 218, 30);
 		panel.add(lbThongTinHD);
 		
-		JButton btnTinhGio = new JButton("Bắt đầu tính giờ");
+		btnTinhGio = new JButton("Bắt đầu tính giờ");
 		btnTinhGio.setBackground(Color.ORANGE);
 		btnTinhGio.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTinhGio.setBounds(936, 495, 186, 30);
 		panel.add(btnTinhGio);
+		
+//	Thêm sự kiện
+		btnThemDV.addActionListener(this);
+		btnThemPhong.addActionListener(this);
+		btnTinhGio.addActionListener(this);
+		cbLoaiDV.addActionListener(this);
+		tablePhong.addMouseListener(this);
+		tableDichVu.addMouseListener(this);
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		thêm dữ liệu vào table
+//		ThemDuLieuVaoTable();
+		LoadTatCaPhong();
+		
+//		Thêm dữ liệu vào combobox
+		ThemDuLieuVaoCBLoaiDichVu();
+		
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object o=e.getSource();
+		if(o.equals(cbLoaiDV)) {
+			cbTenDV.removeAllItems();
+			ArrayList<DichVu> dsDV=daoDichVu.getDichVuTheoLoai(cbLoaiDV.getSelectedItem().toString());
+			for(DichVu dv:dsDV) {
+				cbTenDV.addItem(dv.getTenDichVu());
+			}
+		}
+		if(o.equals(btnThemPhong)) {
+			int i=tablePhong.getSelectedColumn();
+			LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(dfPhong.getValueAt(i, 4).toString());
+			Phong p=new Phong(dfPhong.getValueAt(i, 0).toString(), dfPhong.getValueAt(i, 1).toString(),
+					dfPhong.getValueAt(i, 2).toString(),Double.parseDouble(dfPhong.getValueAt(i, 3).toString()) ,lp );
+			dfDichVu.addRow(new Object[] {
+					stt++,p.getMaPhong(),p.getTenPhong(),0,p.getGiaPhong(),0
+			});
+		}
+		if(o.equals(btnThemDV)) {
+			DichVu dv=new DichVu();
+			dv=daoDichVu.getDichVuTheoTen(cbTenDV.getSelectedItem().toString());
+			dfDichVu.addRow(new Object[] {
+					stt++,dv.getMaDichVu(),dv.getTenDichVu(),txtSoLuongDV.getText(),dv.getGiaTien(),dv.getGiaTien()*Double.parseDouble(txtSoLuongDV.getText())
+			});
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void ThemDuLieuVaoTable() {
+		try {
+			daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong,"
+					+ " Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong", dfPhong);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void LoadTatCaPhong() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getTatCaPhong();
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
+	}
+	
+	public void ThemDuLieuVaoCBLoaiDichVu() {
+		ArrayList<LoaiDichVu> dsDV=new ArrayList<LoaiDichVu>();
+		dsDV=daoLoaiDV.getTatCaLoaiDV();
+		for(LoaiDichVu l: dsDV) {
+			cbLoaiDV.addItem(l.getTenLoaiDV());
+		}
+	}
+	
 }

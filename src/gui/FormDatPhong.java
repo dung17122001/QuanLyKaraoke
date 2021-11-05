@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.BorderFactory;
@@ -15,13 +16,47 @@ import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
 import javax.swing.border.EtchedBorder;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
-public class FormDatPhong extends JPanel {
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.TableModel;
+
+import com.toedter.calendar.JDateChooser;
+
+import connect.ConnectDB;
+import dao.DAO_Phong;
+import dao.DaoLoaiPhong;
+import entity.LoaiPhong;
+import entity.Phong;
+
+public class FormDatPhong extends JPanel implements ActionListener, MouseListener{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
-	private DefaultTableModel dfDichVu;
-	private JTextField txtNgay;
-	private JTextField txtGio;
+	private JDateChooser ngayDat;
+	private JButton btnDatPhong;
+	private JButton btnLuu;
+	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
+	private DefaultTableModel dfCTPhong;
+	private JTable tablePhongCT;
+	private JComboBox<Integer> cbGio;
+	private JComboBox<Integer> cbPhut;
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	private DecimalFormat df = new DecimalFormat("# ### ");
 
 	public FormDatPhong() {
 		
@@ -35,7 +70,7 @@ public class FormDatPhong extends JPanel {
 		
 		JPanel panelPhong = new JPanel();
 		panelPhong.setBorder(new TitledBorder(null, "Lựa chọn phòng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelPhong.setBounds(10, 10, 1332, 430);
+		panelPhong.setBounds(10, 10, 640, 531);
 		panel.add(panelPhong);
 		
 		String []header= {"Mã phòng","Tên phòng","Loại phòng","Giá phòng","Trình trạng"};
@@ -48,37 +83,177 @@ public class FormDatPhong extends JPanel {
 		panelPhong.setLayout(null);
 		scrollPhong=new JScrollPane(tablePhong,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //		scrollPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
-		scrollPhong.setBounds(10, 20, 1312, 400);
+		scrollPhong.setBounds(10, 20, 620, 373);
 		scrollPhong.setBackground(new Color(248,248,248));
 		panelPhong.add(scrollPhong);
 		
-		JButton btnDatPhong = new JButton("Thêm đơn đặt phòng");
+		JLabel lbGioDat = new JLabel("Giờ muốn đặt: ");
+		lbGioDat.setBounds(375, 421, 102, 30);
+		panelPhong.add(lbGioDat);
+		lbGioDat.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		btnDatPhong = new JButton("Thêm vào đơn đặt phòng");
+		btnDatPhong.setBounds(209, 473, 223, 30);
+		panelPhong.add(btnDatPhong);
 		btnDatPhong.setBackground(Color.ORANGE);
-		btnDatPhong.setBounds(863, 482, 243, 40);
-		panel.add(btnDatPhong);
-		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		cbGio = new JComboBox<Integer>();
+		cbGio.setBounds(479, 423, 42, 30);
+		for(int i=0;i<25;i++) {
+			cbGio.addItem(i);
+		}
+		panelPhong.add(cbGio);
+		
+		JLabel lbphu = new JLabel(":");
+		lbphu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbphu.setBounds(527, 421, 13, 30);
+		panelPhong.add(lbphu);
+		
+		cbPhut = new JComboBox<Integer>();
+		cbPhut.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbPhut.setBounds(539, 423, 42, 30);
+		for(int i=0;i<60;i++) {
+			cbPhut.addItem(i);
+		}
+		panelPhong.add(cbPhut);
 		
 		JLabel lbNgay = new JLabel("Ngày muốn đặt phòng:");
+		lbNgay.setBounds(10, 421, 158, 30);
+		panelPhong.add(lbNgay);
 		lbNgay.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbNgay.setBounds(42, 450, 198, 30);
-		panel.add(lbNgay);
 		
-		txtNgay = new JTextField();
-		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtNgay.setBounds(250, 451, 253, 30);
-		panel.add(txtNgay);
-		txtNgay.setColumns(10);
+		ngayDat = new JDateChooser();
+		ngayDat.setBounds(179, 424, 169, 30);
+		panelPhong.add(ngayDat);
+		ngayDat.setDateFormatString("dd/MM/yyyy");
+		ngayDat.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		ngayDat.setPreferredSize(new Dimension(400, 400));
+		ngayDat.getJCalendar().getMonthChooser().setPreferredSize(new Dimension(150, 30));
 		
-		JLabel lbGioDat = new JLabel("Giờ muốn đặt: ");
-		lbGioDat.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGioDat.setBounds(42, 511, 198, 30);
-		panel.add(lbGioDat);
+		JPanel panelDDP = new JPanel();
+		panelDDP.setBorder(new TitledBorder(null, "Chi tiết đơn đặt phòng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelDDP.setBounds(649, 10, 693, 531);
+		panel.add(panelDDP);
+		panelDDP.setLayout(null);
 		
-		txtGio = new JTextField();
-		txtGio.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGio.setBounds(250, 512, 251, 30);
-		panel.add(txtGio);
-		txtGio.setColumns(10);
+		String []headerCT= {"Mã phòng","Tên phòng","Ngày đặt","Giờ đặt"};
+		dfCTPhong=new DefaultTableModel(headerCT,0);
+		tablePhongCT=new JTable(dfCTPhong);
+		tablePhongCT.setRowHeight(20);
+		tablePhongCT.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
+		tablePhongCT.getTableHeader().setBackground(new Color(255, 204, 102));
+		JScrollPane scrollCT;
+		panelDDP.setLayout(null);
+		scrollCT=new JScrollPane(tablePhongCT,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//		scrollPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
+		scrollCT.setBounds(10, 66, 673, 364);
+		scrollCT.setBackground(new Color(248,248,248));
+		panelDDP.add(scrollCT);
+		
+		JLabel lbChiTiet = new JLabel("Đơn đặt phòng");
+		lbChiTiet.setBounds(303, 28, 186, 30);
+		lbChiTiet.setForeground(Color.BLUE);
+		lbChiTiet.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panelDDP.add(lbChiTiet);
+		
+		btnLuu = new JButton("Lưu đơn đặt phòng");
+		btnLuu.setBackground(Color.ORANGE);
+		btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnLuu.setBounds(280, 470, 186, 30);
+		panelDDP.add(btnLuu);
+		
+//		Thêm sự kiện
+		btnDatPhong.addActionListener(this);
+		btnLuu.addActionListener(this);
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		thêm dữ liệu vào table
+//		ThemDuLieuVaoTable();
+		LoadTatCaPhong();
 		
 	}
+	public static void main(String[] args) {
+		FormDatPhong f=new FormDatPhong();
+		f.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o=e.getSource();
+		if(o.equals(btnDatPhong)) {
+			int i = tablePhong.getSelectedRow();
+			Date d = new Date(ngayDat.getDate().getTime());
+			LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(dfPhong.getValueAt(i, 4).toString());
+			Phong p=new Phong(dfPhong.getValueAt(i, 0).toString(), dfPhong.getValueAt(i, 1).toString(),
+					dfPhong.getValueAt(i, 2).toString(),Double.parseDouble(dfPhong.getValueAt(i, 3).toString()) ,lp );
+			dfCTPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),simpleDateFormat.format(d),cbGio.getSelectedItem().toString()+":"+cbPhut.getSelectedItem().toString()
+			});
+		}
+		if(o.equals(btnLuu)) {
+			int i = tablePhong.getSelectedRow();
+			Date d = new Date(ngayDat.getDate().getTime());
+			LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(dfPhong.getValueAt(i, 4).toString());
+			Phong p=new Phong(dfPhong.getValueAt(i, 0).toString(), dfPhong.getValueAt(i, 1).toString(), 
+					dfPhong.getValueAt(i, 2).toString(),Double.parseDouble(dfPhong.getValueAt(i, 3).toString()) ,lp );
+			
+		}
+		
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void ThemDuLieuVaoTable() {
+		try {
+			daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong,"
+					+ " Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong", dfPhong);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void LoadTatCaPhong() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getTatCaPhong();
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
+	}
+	
 }

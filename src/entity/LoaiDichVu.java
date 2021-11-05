@@ -11,6 +11,13 @@ public class LoaiDichVu {
 		this.tenLoaiDV = tenLoaiDV;
 	}
 
+	
+	public LoaiDichVu(String maLoai) {
+		super();
+		this.maLoai = maLoai;
+	}
+
+
 	@Override
 	public String toString() {
 		return "LoaiDichVu [maLoai=" + maLoai + ", tenLoaiDV=" + tenLoaiDV + "]";

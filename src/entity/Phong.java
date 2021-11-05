@@ -1,20 +1,27 @@
 package entity;
 
+import java.util.Objects;
+
 public class Phong {
 	
 	private String maPhong;
 	private String tenPhong;
 	private String tinhTrang;
-	private String giaPhong;
+	private double giaPhong;
 	private LoaiPhong LoaiPhong;
 	
-	public Phong(String maPhong, String tenPhong, String tinhTrang, String giaPhong, entity.LoaiPhong loaiPhong) {
+	public Phong(String maPhong, String tenPhong, String tinhTrang, double giaPhong, entity.LoaiPhong loaiPhong) {
 		super();
 		this.maPhong = maPhong;
 		this.tenPhong = tenPhong;
 		this.tinhTrang = tinhTrang;
 		this.giaPhong = giaPhong;
 		LoaiPhong = loaiPhong;
+	}
+	
+	public Phong() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -47,11 +54,11 @@ public class Phong {
 		this.tinhTrang = tinhTrang;
 	}
 
-	public String getGiaPhong() {
+	public double getGiaPhong() {
 		return giaPhong;
 	}
 
-	public void setGiaPhong(String giaPhong) {
+	public void setGiaPhong(long giaPhong) {
 		this.giaPhong = giaPhong;
 	}
 
@@ -65,14 +72,7 @@ public class Phong {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((LoaiPhong == null) ? 0 : LoaiPhong.hashCode());
-		result = prime * result + ((giaPhong == null) ? 0 : giaPhong.hashCode());
-		result = prime * result + ((maPhong == null) ? 0 : maPhong.hashCode());
-		result = prime * result + ((tenPhong == null) ? 0 : tenPhong.hashCode());
-		result = prime * result + ((tinhTrang == null) ? 0 : tinhTrang.hashCode());
-		return result;
+		return Objects.hash(maPhong);
 	}
 
 	@Override
@@ -84,34 +84,9 @@ public class Phong {
 		if (getClass() != obj.getClass())
 			return false;
 		Phong other = (Phong) obj;
-		if (LoaiPhong == null) {
-			if (other.LoaiPhong != null)
-				return false;
-		} else if (!LoaiPhong.equals(other.LoaiPhong))
-			return false;
-		if (giaPhong == null) {
-			if (other.giaPhong != null)
-				return false;
-		} else if (!giaPhong.equals(other.giaPhong))
-			return false;
-		if (maPhong == null) {
-			if (other.maPhong != null)
-				return false;
-		} else if (!maPhong.equals(other.maPhong))
-			return false;
-		if (tenPhong == null) {
-			if (other.tenPhong != null)
-				return false;
-		} else if (!tenPhong.equals(other.tenPhong))
-			return false;
-		if (tinhTrang == null) {
-			if (other.tinhTrang != null)
-				return false;
-		} else if (!tinhTrang.equals(other.tinhTrang))
-			return false;
-		return true;
+		return Objects.equals(maPhong, other.maPhong);
 	}
-	
+
 	
 	
 }

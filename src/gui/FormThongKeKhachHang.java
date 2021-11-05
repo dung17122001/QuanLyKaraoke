@@ -34,7 +34,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Chọn thời gian cần thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 10, 624, 166);
+		panel_1.setBounds(10, 10, 663, 166);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -66,13 +66,13 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(644, 10, 698, 166);
+		panel_2.setBounds(679, 10, 663, 166);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel lbKhachHang = new JLabel("Tổng số khách hàng ");
 		lbKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbKhachHang.setBounds(24, 71, 193, 30);
+		lbKhachHang.setBounds(49, 71, 193, 30);
 		panel_2.add(lbKhachHang);
 		
 		txtPhong = new JTextField();

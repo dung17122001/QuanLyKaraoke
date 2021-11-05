@@ -7,22 +7,44 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import connect.ConnectDB;
+import dao.DAO_Phong;
+import dao.DaoLoaiPhong;
+import entity.LoaiPhong;
+import entity.Phong;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
-public class FormTimPhong extends JPanel {
+public class FormTimPhong extends JPanel implements ActionListener{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
 	private JTextField txtTimKiem;
+	private JComboBox<String> cbLoaiPhong;
+	private JComboBox<String> cbTrinhTrang;
+	private JButton btnTimKiem;
+	private JButton btnReset;
+	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
+	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 
 	public FormTimPhong() {
 		setBounds(0, 0, 1352, 565);
@@ -72,17 +94,15 @@ public class FormTimPhong extends JPanel {
 		lbHinhThuc.setBounds(458, 20, 224, 30);
 		panel_1.add(lbHinhThuc);
 		
-		JComboBox<String> cbLoaiPhong = new JComboBox<String>();
+		cbLoaiPhong = new JComboBox<String>();
 		cbLoaiPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbLoaiPhong.setBounds(721, 20, 284, 30);
-		cbLoaiPhong.addItem("Phòng thường");
-		cbLoaiPhong.addItem("Phòng vip");
 		panel_1.add(cbLoaiPhong);
 		
-		JButton btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(Color.ORANGE);
-		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnTimKiem.setBounds(586, 171, 187, 40);
+		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTimKiem.setBounds(513, 174, 187, 35);
 		panel_1.add(btnTimKiem);
 		
 		JLabel lbTrinhTrang = new JLabel("Tìm theo trình trạng phòng: ");
@@ -90,10 +110,122 @@ public class FormTimPhong extends JPanel {
 		lbTrinhTrang.setBounds(458, 76, 224, 30);
 		panel_1.add(lbTrinhTrang);
 		
-		JComboBox<String> cbTrinhTrang = new JComboBox<String>();
-		cbTrinhTrang.addItem("Còn trống");
+		cbTrinhTrang = new JComboBox<String>();
+		cbTrinhTrang.addItem("Trống");
 		cbTrinhTrang.addItem("Đang sử dụng");
 		cbTrinhTrang.setBounds(721, 78, 284, 30);
 		panel_1.add(cbTrinhTrang);
+		
+		btnReset = new JButton("Tải lại");
+		btnReset.setBackground(Color.ORANGE);
+		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnReset.setBounds(768, 174, 187, 35);
+		panel_1.add(btnReset);
+		
+		btnTimKiem.addActionListener(this);
+		btnReset.addActionListener(this);
+		cbLoaiPhong.addActionListener(this);
+		cbTrinhTrang.addActionListener(this);
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		thêm dữ liệu vào table
+//		ThemDuLieuVaoTable();
+		
+//		Thêm dữ liệu vào combobox loại phòng
+		ThemDuLieuVaoCBLoaiPhong();
+		
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o=e.getSource();
+		if(o.equals(cbLoaiPhong)) {
+			clearTable();
+			LoadTatCaPhongTheoDieuKien();
+//			try {
+//				daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong"
+//				+ " where LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem() + "' and Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem()+"' ", dfPhong);
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+		}
+		if(o.equals(cbTrinhTrang)) {
+		clearTable();
+		LoadTatCaPhongTheoDieuKien();
+//			try {
+//				daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong"
+//				+ " ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem()+"' and LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem() + "'", dfPhong);
+//			} catch (SQLException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+		}
+		if(o.equals(btnTimKiem)) {
+			if(txtTimKiem.getText().equals(""))
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập dữ liệu cần tìm");
+			else {
+				clearTable();
+				HienThiPhongTheoThongTinTimKiem();
+//					daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong"
+//					+ " ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where (Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem().toString()+"' and LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem().toString() + "') "
+//					+ "and (Phong.maPhong=N'"+ txtTimKiem.getText() +"' or Phong.tenPhong=N'"+ txtTimKiem.getText() +"')"+ "", dfPhong);
+				int i=dfPhong.getRowCount();
+				if(i==0)
+					JOptionPane.showMessageDialog(this, "Không có phòng nào khớp với thông tin tìm kiếm");
+			}
+			
+		}
+		if(o.equals(btnReset)) {
+			clearTable();
+		}
+		
+	}
+	
+	public void ThemDuLieuVaoCBLoaiPhong() {
+		ArrayList<LoaiPhong> dslp=new ArrayList<LoaiPhong>();
+		dslp=daoLoaiPhong.getTatCaLoaiPhong();
+		for(LoaiPhong lp: dslp) {
+			cbLoaiPhong.addItem(lp.getTenLoai());
+		}
+	}
+	
+	
+	private void clearTable() {
+		while (tablePhong.getRowCount() > 0) {
+			dfPhong.removeRow(0);
+		}
+	}
+	//Tim phong theo 2 combobox
+	public void LoadTatCaPhongTheoDieuKien() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getTatCaPhongTheoDieuKien(cbLoaiPhong.getSelectedItem().toString(),cbTrinhTrang.getSelectedItem().toString());
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
+	}
+	
+	//tim phong theo textbox va combobox
+	public void HienThiPhongTheoThongTinTimKiem() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getPhongTheoThongTinTimKiem(cbTrinhTrang.getSelectedItem().toString(),cbLoaiPhong.getSelectedItem().toString(),txtTimKiem.getText());
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
 	}
 }

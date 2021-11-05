@@ -3,31 +3,55 @@ package gui;
 import javax.swing.JPanel;
 import java.awt.Panel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
+
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import connect.ConnectDB;
+import dao.DAO_Phong;
+import dao.DaoLoaiPhong;
+import entity.LoaiPhong;
+import entity.Phong;
+
 import javax.swing.JTable;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.BevelBorder;
 
-public class FormQLPhong extends JPanel {
+public class FormQLPhong extends JPanel implements ActionListener, MouseListener{
 	
+	private static final long serialVersionUID = 1L;
 	private JTextField txtMaPhong;
 	private JTextField txtGiaPhong;
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
 	private JTextField txtTenPhong;
-
+	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
+	private JComboBox<String> cbLoaiPhong;
+	private JComboBox<String> cbTrinhTrang;
+	private JButton btnThemPhong;
+	private JButton btnXoaPhong;
+	private JButton btnSuaPhong;
+	private JButton btnReset;
+	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 	
 	public FormQLPhong() {
 		setBounds(0, 0, 1352, 565);
@@ -58,12 +82,12 @@ public class FormQLPhong extends JPanel {
 		
 		JLabel lbGiaPhong = new JLabel("Giá phòng: ");
 		lbGiaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGiaPhong.setBounds(34, 84, 96, 38);
+		lbGiaPhong.setBounds(34, 132, 96, 38);
 		panelThongTinPhong.add(lbGiaPhong);
 		
 		txtGiaPhong = new JTextField();
 		txtGiaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGiaPhong.setBounds(130, 89, 244, 30);
+		txtGiaPhong.setBounds(130, 137, 244, 30);
 		panelThongTinPhong.add(txtGiaPhong);
 		txtGiaPhong.setColumns(10);
 		
@@ -72,19 +96,21 @@ public class FormQLPhong extends JPanel {
 		lbTrinhTrang.setBounds(423, 84, 96, 38);
 		panelThongTinPhong.add(lbTrinhTrang);
 		
-		JComboBox cbTrinhTrang = new JComboBox();
+		cbTrinhTrang = new JComboBox<String>();
 		cbTrinhTrang.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbTrinhTrang.setBounds(529, 88, 245, 30);
+		cbTrinhTrang.addItem("Trống");
+		cbTrinhTrang.addItem("Đang sử dụng");
 		panelThongTinPhong.add(cbTrinhTrang);
 		
 		JLabel lbTenPhong = new JLabel("Tên phòng: ");
 		lbTenPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTenPhong.setBounds(34, 132, 96, 38);
+		lbTenPhong.setBounds(34, 84, 96, 38);
 		panelThongTinPhong.add(lbTenPhong);
 		
 		txtTenPhong = new JTextField();
 		txtTenPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenPhong.setBounds(130, 137, 244, 30);
+		txtTenPhong.setBounds(130, 84, 244, 30);
 		panelThongTinPhong.add(txtTenPhong);
 		txtTenPhong.setColumns(10);
 		
@@ -93,7 +119,7 @@ public class FormQLPhong extends JPanel {
 		panelThongTinPhong.add(lbLoaiPhong);
 		lbLoaiPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JComboBox cbLoaiPhong = new JComboBox();
+		cbLoaiPhong = new JComboBox<String>();
 		cbLoaiPhong.setBounds(529, 26, 245, 30);
 		panelThongTinPhong.add(cbLoaiPhong);
 		cbLoaiPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -122,42 +148,202 @@ public class FormQLPhong extends JPanel {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JButton btnThemPhong = new JButton("Thêm phòng");
+		btnThemPhong = new JButton("Thêm phòng");
 		btnThemPhong.setBackground(Color.ORANGE);
 		btnThemPhong.setBounds(84, 36, 120, 30);
 		panel_1.add(btnThemPhong);
-		btnThemPhong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnThemPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnXoaPhong = new JButton("Xóa phòng");
+		btnXoaPhong = new JButton("Xóa phòng");
 		btnXoaPhong.setBackground(Color.ORANGE);
-		btnXoaPhong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnXoaPhong.setBounds(304, 36, 120, 30);
 		panel_1.add(btnXoaPhong);
 		btnXoaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnSuaPhong = new JButton("Sửa phòng");
+		btnSuaPhong = new JButton("Sửa phòng");
 		btnSuaPhong.setBackground(Color.ORANGE);
 		btnSuaPhong.setBounds(84, 113, 120, 30);
 		panel_1.add(btnSuaPhong);
 		btnSuaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnReset = new JButton("Xóa rỗng");
+		btnReset = new JButton("Xóa rỗng");
 		btnReset.setBackground(Color.ORANGE);
 		btnReset.setBounds(304, 113, 120, 30);
 		panel_1.add(btnReset);
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
+		//Thêm sự kiện
+		tablePhong.addMouseListener(this);
+		btnReset.addActionListener(this);
+		btnSuaPhong.addActionListener(this);
+		btnThemPhong.addActionListener(this);
+		btnXoaPhong.addActionListener(this);
 		
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+//		thêm dữ liệu vào table
+//		ThemDuLieuVaoTable();
+		LoadTatCaPhong();
+		
+//		Thêm dữ liệu vào combobox loại phòng
+		ThemDuLieuVaoCBLoaiPhong();
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int i = tablePhong.getSelectedRow();
+		txtMaPhong.setText(dfPhong.getValueAt(i, 0).toString());
+		txtTenPhong.setText(dfPhong.getValueAt(i, 1).toString());
+		cbLoaiPhong.setSelectedItem(dfPhong.getValueAt(i, 2).toString());
+		txtGiaPhong.setText(dfPhong.getValueAt(i, 3).toString());
+		cbTrinhTrang.setSelectedItem(dfPhong.getValueAt(i, 4).toString());
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o=e.getSource();
+		if(o.equals(btnThemPhong)) {
+			String maPhong=txtMaPhong.getText();
+			String tenPhong=txtTenPhong.getText();
+			Double giaPhong=Double.parseDouble(txtGiaPhong.getText());
+			String tenLoaiPhong=cbLoaiPhong.getSelectedItem().toString();
+			String trinhTrang=cbTrinhTrang.getSelectedItem().toString();
+			
+			LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(tenLoaiPhong);
+			Phong p=new Phong(maPhong, tenPhong, trinhTrang, giaPhong, lp);
+			
+				if (daoPhong.themPhong(p)) {
+					clearTable();
+					LoadTatCaPhong();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				} else
+					JOptionPane.showMessageDialog(this, "Lỗi");
+		}
+		
+		if(o.equals(btnSuaPhong)) {
+			
+			if (tablePhong.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn phòng cần sửa");
+			} else {
+				String maPhong=txtMaPhong.getText();
+				String tenPhong=txtTenPhong.getText();
+				Double giaPhong=Double.parseDouble(txtGiaPhong.getText());
+				String tenLoaiPhong=cbLoaiPhong.getSelectedItem().toString();
+				String trinhTrang=cbTrinhTrang.getSelectedItem().toString();
+				
+				LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(tenLoaiPhong);
+				Phong p=new Phong(maPhong, tenPhong, trinhTrang, giaPhong, lp);
+				
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa phòng này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoPhong.SuaPhong(p);
+					clearTable();
+					LoadTatCaPhong();
+					JOptionPane.showMessageDialog(this, "Đã sửa");
+					XoaTrang();
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
+			}
+			
+		}
+		if(o.equals(btnXoaPhong)) {
+			String maPhong=txtMaPhong.getText();
+			if (tablePhong.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn phòng cần xóa");
+			} else {
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa phòng này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoPhong.xoaPhong(maPhong);
+					clearTable();
+					LoadTatCaPhong();
+					JOptionPane.showMessageDialog(this, "Đã xóa");
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
+			}
+		}
+		if(o.equals(btnReset)) {
+			XoaTrang();
+		}
+		
+	}
+	
+	public void LoadTatCaPhong() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getTatCaPhong();
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
+	}
+	
+//	public void ThemDuLieuVaoTable() {
+//		try {
+//			daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong,"
+//					+ " Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong", dfPhong);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
+	public void ThemDuLieuVaoCBLoaiPhong() {
+		ArrayList<LoaiPhong> dslp=new ArrayList<LoaiPhong>();
+		dslp=daoLoaiPhong.getTatCaLoaiPhong();
+		for(LoaiPhong lp: dslp) {
+			cbLoaiPhong.addItem(lp.getTenLoai());
+		}
+	}
+	
+	private void clearTable() {
+		while (tablePhong.getRowCount() > 0) {
+			dfPhong.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtGiaPhong.setText("");
+		txtMaPhong.setText("");
+		txtTenPhong.setText("");
 	}
 }

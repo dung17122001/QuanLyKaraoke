@@ -35,7 +35,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Chọn thời gian cần thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 10, 624, 166);
+		panel_1.setBounds(10, 10, 663, 166);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -67,7 +67,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(644, 10, 698, 166);
+		panel_2.setBounds(679, 10, 663, 166);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		

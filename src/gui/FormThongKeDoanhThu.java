@@ -44,18 +44,18 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Chọn thời gian cần thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 10, 624, 166);
+		panel_1.setBounds(10, 10, 663, 166);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lbThoiGian = new JLabel("Thời gian cần thống kê:");
 		lbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbThoiGian.setBounds(28, 17, 198, 30);
+		lbThoiGian.setBounds(43, 17, 198, 30);
 		panel_1.add(lbThoiGian);
 		
 		JComboBox<String> cbThoiGian = new JComboBox<String>();
 		cbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbThoiGian.setBounds(236, 17, 314, 30);
+		cbThoiGian.setBounds(268, 17, 314, 30);
 		cbThoiGian.addItem("Hôm nay");
 		cbThoiGian.addItem("Tuần này");
 		cbThoiGian.addItem("Tháng này");
@@ -76,7 +76,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(644, 10, 698, 166);
+		panel_2.setBounds(679, 10, 663, 166);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
