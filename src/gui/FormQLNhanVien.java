@@ -386,7 +386,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 						if (xacnhan == JOptionPane.YES_OPTION) {
 							if (dao.delNhanVien(txtID.getText())) {
 								tableModel.removeRow(row);
-								JOptionPane.showMessageDialog(this, "Xóa không thành công!");
+								JOptionPane.showMessageDialog(this, "Xóa thành công!");
 								reloadData();
 							} 
 							else {
