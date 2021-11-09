@@ -23,6 +23,20 @@ public class Phong {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Phong(String maPhong) {
+		super();
+		this.maPhong = maPhong;
+	}
+
+	public Phong(String maPhong, String tenPhong, double giaPhong) {
+		super();
+		this.maPhong = maPhong;
+		this.tenPhong = tenPhong;
+		this.giaPhong = giaPhong;
+	}
 
 	@Override
 	public String toString() {

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
 import dao.DAO_Phong;
 import dao.DaoLoaiPhong;
+import dao.PhatSinhMa;
 import entity.LoaiPhong;
 import entity.Phong;
 
@@ -51,7 +52,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 	private JButton btnXoaPhong;
 	private JButton btnSuaPhong;
 	private JButton btnReset;
-	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
+	private DecimalFormat df = new DecimalFormat("###");
 	
 	public FormQLPhong() {
 		setBounds(0, 0, 1352, 565);
@@ -77,6 +78,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		txtMaPhong = new JTextField();
 		txtMaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtMaPhong.setBounds(130, 27, 244, 30);
+		txtMaPhong.setEnabled(false);
 		panelThongTinPhong.add(txtMaPhong);
 		txtMaPhong.setColumns(10);
 		
@@ -234,7 +236,8 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnThemPhong)) {
-			String maPhong=txtMaPhong.getText();
+			PhatSinhMa ma=new PhatSinhMa();
+			String maPhong=ma.maPhong();
 			String tenPhong=txtTenPhong.getText();
 			Double giaPhong=Double.parseDouble(txtGiaPhong.getText());
 			String tenLoaiPhong=cbLoaiPhong.getSelectedItem().toString();

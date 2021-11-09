@@ -21,7 +21,15 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import connect.ConnectDB;
+import dao.DAO_DichVu;
+import dao.DAO_Phong;
+import dao.DaoDichVu;
+import dao.DaoHoaDon;
+
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class FormThongKeDoanhThu extends JPanel implements ActionListener{
@@ -30,8 +38,15 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	private JTextField txtPhong;
 	private JTextField txtDichVu;
 	private JTextField txtDoanhThu;
-	private DefaultTableModel dfHangHoa;
+	public static DefaultTableModel dfHangHoa=new DefaultTableModel();
 	private JTable tableHangHoa;
+	private JButton btnThongKe;
+	private JButton btnInThongKe;
+	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoDichVu daoDichVu=new DaoDichVu();
+	private DaoHoaDon daoHoaDon=new DaoHoaDon();
+	private JComboBox<String> cbThoiGian;
+	
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -53,7 +68,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		lbThoiGian.setBounds(43, 17, 198, 30);
 		panel_1.add(lbThoiGian);
 		
-		JComboBox<String> cbThoiGian = new JComboBox<String>();
+		cbThoiGian = new JComboBox<String>();
 		cbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbThoiGian.setBounds(268, 17, 314, 30);
 		cbThoiGian.addItem("Hôm nay");
@@ -62,13 +77,13 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		cbThoiGian.addItem("Cả năm");
 		panel_1.add(cbThoiGian);
 		
-		JButton btnThongKe = new JButton("Xem thống kê");
+		btnThongKe = new JButton("Xem thống kê");
 		btnThongKe.setBackground(Color.ORANGE);
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThongKe.setBounds(103, 107, 164, 30);
 		panel_1.add(btnThongKe);
 		
-		JButton btnInThongKe = new JButton("In thống kê");
+		btnInThongKe = new JButton("In thống kê");
 		btnInThongKe.setBackground(Color.ORANGE);
 		btnInThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInThongKe.setBounds(338, 107, 164, 30);
@@ -132,11 +147,38 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		scrollHangHoa.setBounds(0, 0, 1332, 369);
 		scrollHangHoa.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollHangHoa);
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+//		thêm sự kiện
+		btnThongKe.addActionListener(this);
+		btnInThongKe.addActionListener(this);
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o=e.getSource();
+		if(o.equals(btnThongKe)) {
+			if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
+				daoHoaDon.ThongKeDoanhThuPhongTheoNgay();
+			}
+			if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
+				
+			}
+			if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
+				
+			}
+			if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
+				
+			}
+		}
+		if(o.equals(btnInThongKe)) {
+			
+		}
 	}
 }
