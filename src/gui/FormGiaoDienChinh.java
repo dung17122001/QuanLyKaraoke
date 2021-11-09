@@ -321,8 +321,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			changeScreen(new FormQLNhanVien());
 		}
 		if(o.equals(mntmTimKiemNV)) {
-			FormTimKiemNV formThemNV = new FormTimKiemNV();
-			formThemNV.setVisible(true);
+			changeScreen(new FormTimKiemNV());
+			
 		}
 		if(o.equals(mntmSuaKH)) {
 			changeScreen(new FormQLKhachHang());

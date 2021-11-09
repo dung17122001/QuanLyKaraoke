@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -45,6 +44,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	private JButton btnTaoTaikhoan;
 	private JPanel panel_Info;
 	private JButton btnDong;
+
 
 	/**
 	 * Create the frame.
@@ -161,7 +161,6 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 			String sdt = txtSDT.getText();
 			String cmnd = txtCMND.getText();
 			KhachHang kh =new KhachHang(ma,ten,diachi,sdt,cmnd);
-			
 			try {
 				if (dao_khachhang.themKhachHang(kh)) {
 					JOptionPane.showMessageDialog(this, "Thêm thành công");

@@ -24,19 +24,6 @@ public class KhachHang {
 		this.soDienThoai = soDienThoai;
 		this.soCMND = soCMND;
 	}
-	
-	public KhachHang() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-
-	public KhachHang(String maKhachHang, String tenKhachHang, String soDienThoai) {
-		super();
-		this.maKhachHang = maKhachHang;
-		this.tenKhachHang = tenKhachHang;
-		this.soDienThoai = soDienThoai;
-	}
 
 	@Override
 	public String toString() {

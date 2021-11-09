@@ -52,7 +52,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JTextField txtNgaySinh;
 	private JTextField txtGioitinh;
 	private JTextField txtCmnd;
-	private JTextField txtChucVu;
+	private JComboBox<String> cbChucVu;
 	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
 	private DAO_NhanVien dao = new DAO_NhanVien();
@@ -143,16 +143,18 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		pnTTNV.add(txtSdt);
 		txtSdt.setColumns(10);
 		
-		JLabel lbCv = new JLabel("Chức vụ: ");
-		lbCv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbCv.setBounds(110, 137, 96, 38);
-		pnTTNV.add(lbCv);
+		JLabel lbChucVu = new JLabel("Chức vụ: ");
+		lbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbChucVu.setBounds(110, 137, 96, 38);
+		pnTTNV.add(lbChucVu);
 		
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtChucVu.setBounds(216, 140, 190, 30);
-		pnTTNV.add(txtChucVu);
-		txtChucVu.setColumns(10);
+		cbChucVu = new JComboBox<String>();
+		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbChucVu.setBounds(216, 140, 190, 30);
+		cbChucVu.addItem("Nhân viên thu ngân");
+		cbChucVu.addItem("Nhân viên phục vụ");
+		cbChucVu.addItem("Nhân viên kế toán");
+		pnTTNV.add(cbChucVu);
 		
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
@@ -331,7 +333,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		txtNgaySinh.setText(tableModel.getValueAt(i, 3).toString());
 		txtSdt.setText(tableModel.getValueAt(i, 4).toString());
 		txtCmnd.setText(tableModel.getValueAt(i, 5).toString());
-		txtChucVu.setText(tableModel.getValueAt(i, 6).toString());
+		cbChucVu.setSelectedItem(tableModel.getValueAt(i, 6).toString());
 	}
 	
 

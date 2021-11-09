@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Toolkit;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -22,21 +23,6 @@ public class NhanVien implements Serializable{
 	private String soCMND;
 	private String chucVu;
 	
-	public NhanVien() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	
-	
-	public NhanVien(String maNhanVien) {
-		super();
-		this.maNhanVien = maNhanVien;
-	}
-
-
-
-
 	public NhanVien(String maNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String dienThoai,
 			String soCMND, String chucVu) {
 		
@@ -51,17 +37,6 @@ public class NhanVien implements Serializable{
 
 	}
 
-	
-	@Override
-	public String toString() {
-		return "NhanVien [maNhanVien=" + maNhanVien + ", tenNhanVien=" + tenNhanVien + ", gioiTinh=" + gioiTinh
-				+ ", ngaySinh=" + ngaySinh + ", dienThoai=" + dienThoai + ", soCMND=" + soCMND + ", chucVu=" + chucVu
-				+ "]";
-	}
-
-
-
-	
 
 	public String getMaNhanVien() {
 		return maNhanVien;

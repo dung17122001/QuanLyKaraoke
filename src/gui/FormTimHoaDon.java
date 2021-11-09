@@ -150,7 +150,7 @@ public class FormTimHoaDon extends JPanel {
 		
 		JLabel lbGioVao = new JLabel("Giờ vào: ");
 		lbGioVao.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGioVao.setBounds(24, 60, 69, 30);
+		lbGioVao.setBounds(24, 60, 93, 30);
 		panelChiTiet.add(lbGioVao);
 		
 		JLabel lbTrinhTrang = new JLabel("Trình trạng hóa đơn: ");
@@ -170,8 +170,13 @@ public class FormTimHoaDon extends JPanel {
 		
 		JLabel lbGioRa = new JLabel("Giờ ra:");
 		lbGioRa.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGioRa.setBounds(24, 100, 55, 30);
+		lbGioRa.setBounds(185, 60, 55, 30);
 		panelChiTiet.add(lbGioRa);
+		
+		JLabel lbPhong = new JLabel("Phòng đã hát:");
+		lbPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbPhong.setBounds(24, 99, 107, 30);
+		panelChiTiet.add(lbPhong);
 		
 		JLabel lbTongTien = new JLabel("Tổng tiền cần thanh toán (VNĐ):");
 		lbTongTien.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -221,43 +226,5 @@ public class FormTimHoaDon extends JPanel {
 		btnInHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInHoaDon.setBounds(1115, 82, 152, 30);
 		panelChiTiet.add(btnInHoaDon);
-		
-		JComboBox<Integer> cbGioVao = new JComboBox<Integer>();
-		cbGioVao.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbGioVao.setBounds(100, 62, 46, 30);
-		for(int i=0;i<25;i++)
-			cbGioVao.addItem(i);
-		panelChiTiet.add(cbGioVao);
-		
-		JLabel lbphu = new JLabel(":");
-		lbphu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbphu.setBounds(156, 60, 12, 30);
-		panelChiTiet.add(lbphu);
-		
-		JComboBox<Integer> cbPhutVao = new JComboBox<Integer>();
-		cbPhutVao.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbPhutVao.setBounds(166, 62, 46, 30);
-		for(int i=0;i<60;i++)
-			cbPhutVao.addItem(i);
-		panelChiTiet.add(cbPhutVao);
-		
-		JComboBox<Integer> cbGioRa = new JComboBox<Integer>();
-		cbGioRa.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbGioRa.setBounds(100, 100, 46, 30);
-		for(int i=0;i<25;i++)
-			cbGioRa.addItem(i);
-		panelChiTiet.add(cbGioRa);
-		
-		JLabel lbphu_1 = new JLabel(":");
-		lbphu_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbphu_1.setBounds(156, 100, 12, 30);
-		panelChiTiet.add(lbphu_1);
-		
-		JComboBox<Integer> cbPhutRa = new JComboBox<Integer>();
-		cbPhutRa.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbPhutRa.setBounds(166, 100, 46, 30);
-		for(int i=0;i<60;i++)
-			cbPhutRa.addItem(i);
-		panelChiTiet.add(cbPhutRa);
 	}
 }

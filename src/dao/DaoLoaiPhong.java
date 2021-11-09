@@ -66,7 +66,7 @@ public class DaoLoaiPhong {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();
-			String sql="select * from [dbo].[LoaiPhong] where [maLoaiPhong] ='" + maPhong + "'";
+			String sql="select * from [dbo].[LoaiPhong] where [maLoaiPhong] like N'" + maPhong + "'";
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {

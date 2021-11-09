@@ -40,11 +40,11 @@ public class FormSuaNV extends JFrame implements ActionListener{
 	private JTextField txtTenNV;
 	private JTextField txtCMND;
 	private JTextField txtSDT;
-	private JTextField txtChucVu;
 	private JDateChooser ngaysinh;
 	private JButton btnCapNhat;
 	private JPanel panel_Info;
 	private JComboBox<String> cbGioitinh;
+	private JComboBox<String> cbChucVu;
 	private JButton btnDong;
 	private NhanVien nv;
 
@@ -142,16 +142,19 @@ public class FormSuaNV extends JFrame implements ActionListener{
 		txtCMND.setBounds(200, 321, 300, 30);
 		panel_Info.add(txtCMND);
 		
-		JLabel lblChucVu = new JLabel("Chức Vụ:");
-		lblChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblChucVu.setBounds(10, 371, 190, 30);
-		panel_Info.add(lblChucVu);
 
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtChucVu.setColumns(10);
-		txtChucVu.setBounds(200, 371, 300, 30);
-		panel_Info.add(txtChucVu);
+		JLabel lbChucVu = new JLabel("Chức vụ: ");
+		lbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lbChucVu.setBounds(10, 371, 190, 30);
+		panel_Info.add(lbChucVu);
+		
+		cbChucVu = new JComboBox<String>();
+		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		cbChucVu.setBounds(200, 371, 300, 30);
+		cbChucVu.addItem("Nhân viên thu ngân");
+		cbChucVu.addItem("Nhân viên phục vụ");
+		cbChucVu.addItem("Nhân viên kế toán");
+		panel_Info.add(cbChucVu);
 		
 		btnCapNhat = new JButton("Cập nhật");
 		btnCapNhat.setBackground(new Color(255, 204, 102));
@@ -181,6 +184,7 @@ public class FormSuaNV extends JFrame implements ActionListener{
 		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		cbGioitinh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		cbChucVu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		btnDong.addActionListener(this);
 		btnCapNhat.addActionListener(this);
@@ -195,7 +199,7 @@ public class FormSuaNV extends JFrame implements ActionListener{
 				ngaysinh.setDate(nv.getNgaySinh());
 				txtSDT.setText(nv.getDienThoai());
 				txtCMND.setText(nv.getSoCMND());
-				txtChucVu.setText(nv.getChucVu());
+				cbChucVu.setSelectedItem(nv.getChucVu());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -220,7 +224,8 @@ public class FormSuaNV extends JFrame implements ActionListener{
 					Date ns = new Date(ngaysinh.getDate().getTime());
 					String sdt = txtSDT.getText();
 					String cmnd = txtCMND.getText();
-					String chucvu = txtChucVu.getText();
+					String chucvu = (String) cbChucVu.getSelectedItem();
+					
 					nv.setTenNhanVien(tennv);
 					nv.setGioiTinh(gt);
 					nv.setNgaySinh(ns);

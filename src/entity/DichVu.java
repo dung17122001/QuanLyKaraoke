@@ -1,11 +1,12 @@
 package entity;
 
-
+<<<<<<< HEAD
 import java.util.Objects;
-
+=======
 import connect.ConnectDB;
 import dao.DAO_DichVu;
 
+>>>>>>> 8d3f7fc6359749956735185aed185d564be05dbd
 
 public class DichVu {
 	

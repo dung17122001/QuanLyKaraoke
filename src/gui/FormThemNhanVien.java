@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -41,7 +42,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	private JTextField txtTenNV;
 	private JTextField txtCMND;
 	private JTextField txtSDT;
-	private JTextField txtChucVu;
+	private JComboBox<String> cbChucVu;
 	private JDateChooser ngaysinh;
 	private JButton btnTaoTaikhoan;
 	private JPanel panel_Info;
@@ -135,16 +136,18 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		txtCMND.setBounds(200, 276, 300, 30);
 		panel_Info.add(txtCMND);
 		
-		JLabel lblChucVu = new JLabel("Chức Vụ:");
-		lblChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblChucVu.setBounds(10, 321, 190, 30);
-		panel_Info.add(lblChucVu);
-
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtChucVu.setColumns(10);
-		txtChucVu.setBounds(200, 321, 300, 30);
-		panel_Info.add(txtChucVu);
+		JLabel lbChucVu = new JLabel("Chức vụ: ");
+		lbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lbChucVu.setBounds(10, 321, 190, 30);
+		panel_Info.add(lbChucVu);
+		
+		cbChucVu = new JComboBox<String>();
+		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		cbChucVu.setBounds(200, 321, 300, 30);
+		cbChucVu.addItem("Nhân viên thu ngân");
+		cbChucVu.addItem("Nhân viên phục vụ");
+		cbChucVu.addItem("Nhân viên kế toán");
+		panel_Info.add(cbChucVu);
 		
 		btnTaoTaikhoan = new JButton("Tạo");
 		btnTaoTaikhoan.setBackground(new Color(255, 204, 102));
@@ -177,6 +180,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		
 		btnDong.addActionListener(this);
 		btnTaoTaikhoan.addActionListener(this);
+		
 
 	}
 	@Override
@@ -190,12 +194,13 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 			Date ns = new Date(ngaysinh.getDate().getTime());
 			String sdt = txtSDT.getText();
 			String cmnd = txtCMND.getText();
-			String chucvu = txtChucVu.getText();
+			String chucvu = (String) cbChucVu.getSelectedItem();
 			NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,chucvu);
 			try {
 				if (dao_Nhanvien.themNhanVien(nv)) {
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
 					this.dispose();
+					
 				}else {
 					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
 					
@@ -207,11 +212,6 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 		if(o.equals(btnDong)) {
 			this.dispose();
 		}
-	}
-	
-	public static void main(String[] args) throws SQLException {		
-		FormThemNhanVien frm = new FormThemNhanVien();
-		frm.setVisible(true);
 	}
 	
 }

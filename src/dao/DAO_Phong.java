@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -185,26 +184,6 @@ public class DAO_Phong {
 		return n > 0;
 	}
 	
-//	public void getPhongTheoHoaDonNgay(Date ngay){
-//		try {
-//			ConnectDB.getInstance();
-//			Connection con = ConnectDB.getCon();
-//			String sql="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, thoiGianTheoPhut=DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa) FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon where HoaDon.ngayLap ='"+ ngay +"' and HoaDon.trangThai like N'Đã thanh toán'";
-//			PreparedStatement ps = con.prepareStatement(sql);	
-//			ResultSet rs = ps.executeQuery();
-//			while(rs.next()) {
-//				String maPhong=rs.getString(1);
-//				String tenPhong=rs.getString(2);
-//				float giaPhong=rs.getFloat(3);
-//				int thoiGian=rs.getInt(4);
-//				
-//			}
-//		}
-//			catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		int i=0;
-//		
-//	}
-//	
+	
+	
 }

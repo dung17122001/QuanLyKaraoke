@@ -11,7 +11,6 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
 import entity.KhachHang;
-import entity.LoaiPhong;
 
 public class DAO_KhachHang {
 
@@ -222,35 +221,6 @@ public class DAO_KhachHang {
 			e.printStackTrace();
 		}
 		return false;
-	}
-	
-	public KhachHang getKhachHangTheoMa(String maKhachHang) {
-		KhachHang kh=new KhachHang();
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getCon();
-		try {
-			String sql = "select * from KhachHang where maKhachHang = '" + maKhachHang + "'";
-			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-				String maKH = rs.getString(1);
-				String ten = rs.getString(2);
-				String diachi = rs.getString(3);
-				String phone = rs.getString(4);
-				String cmnd = rs.getString(5);
-				kh.setMaKhachHang(maKH);
-				kh.setTenKhachHang(ten);
-				kh.setDiaChi(diachi);
-				kh.setSoCMND(cmnd);
-				kh.setSoDienThoai(phone);
-				
-			}
-		}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
-		return kh;	
 	}
 }
 
