@@ -9,7 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
-import dao.DAO_Phong;
+import dao.DaoPhong;
 import dao.DaoLoaiPhong;
 import entity.LoaiPhong;
 import entity.Phong;
@@ -42,7 +42,7 @@ public class FormTimPhong extends JPanel implements ActionListener{
 	private JComboBox<String> cbTrinhTrang;
 	private JButton btnTimKiem;
 	private JButton btnReset;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 

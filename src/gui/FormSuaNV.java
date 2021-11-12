@@ -26,7 +26,7 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 import connect.ConnectDB;
-import dao.DAO_NhanVien;
+import dao.DaoNhanVien;
 import entity.NhanVien;
 
 public class FormSuaNV extends JFrame implements ActionListener{
@@ -190,7 +190,7 @@ public class FormSuaNV extends JFrame implements ActionListener{
 		btnCapNhat.addActionListener(this);
 				
 		// Load thông tin nhân viên
-		DAO_NhanVien dao_Nhanvien = new DAO_NhanVien();
+		DaoNhanVien dao_Nhanvien = new DaoNhanVien();
 		try {
 				NhanVien nv = dao_Nhanvien.getNhanvienByMaNhanVien(maNhanVien);
 				txtmaNV.setText(nv.getMaNhanVien());
@@ -218,7 +218,7 @@ public class FormSuaNV extends JFrame implements ActionListener{
 				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn xác nhận muốn thay đổi thông tin nhân viên này?",
 						"Chú ý", JOptionPane.YES_NO_OPTION);
 				if (xacnhan == JOptionPane.YES_OPTION) {
-					DAO_NhanVien dao_Nhanvien = new DAO_NhanVien();
+					DaoNhanVien dao_Nhanvien = new DaoNhanVien();
 					String tennv = txtTenNV.getText();
 					String gt = (String) cbGioitinh.getSelectedItem();
 					Date ns = new Date(ngaysinh.getDate().getTime());

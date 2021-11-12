@@ -28,7 +28,7 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 import connect.ConnectDB;
-import dao.DAO_NhanVien;
+import dao.DaoNhanVien;
 import entity.NhanVien;
 
 public class FormThemNhanVien extends JFrame implements ActionListener{
@@ -187,7 +187,7 @@ public class FormThemNhanVien extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnTaoTaikhoan)) {
-			DAO_NhanVien dao_Nhanvien = new DAO_NhanVien();
+			DaoNhanVien dao_Nhanvien = new DaoNhanVien();
 			String ma = txtID.getText();
 			String ten = txtTenNV.getText();
 			String gt = (String) cbGioitinh.getSelectedItem();

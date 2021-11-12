@@ -38,8 +38,8 @@ import javax.swing.table.TableModel;
 import com.toedter.calendar.JDateChooser;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
-import dao.DAO_Phong;
+import dao.DaoKhachHang;
+import dao.DaoPhong;
 import dao.DaoChiTietDDP;
 import dao.DaoDonDatPhong;
 import dao.DaoLoaiPhong;
@@ -61,7 +61,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 	private JDateChooser ngayDat;
 	private JButton btnDatPhong;
 	private JButton btnLuu;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DefaultTableModel dfCTPhong;
 	private JTable tablePhongCT;
@@ -72,7 +72,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 	private PhatSinhMa ma=new PhatSinhMa();
 	private DaoDonDatPhong daoDonDatPhong=new DaoDonDatPhong();
 	private DaoChiTietDDP daoChiTietDDP=new DaoChiTietDDP();
-	private DAO_KhachHang daoKhachHang=new DAO_KhachHang();
+	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private String maDon;
 	private String makh;
 	private JLabel lbTenKhachHang;

@@ -3,7 +3,7 @@ package entity;
 import java.util.Objects;
 
 import connect.ConnectDB;
-import dao.DAO_DichVu;
+import dao.DaoDichVu;
 
 
 public class DichVu {
@@ -13,7 +13,7 @@ public class DichVu {
 	private double giaTien;
 	private LoaiDichVu LoaiDichVu;
 	
-	public DichVu(String maDichVu, String tenDichVu, double giaTien, LoaiDichVu loaiDichVu) {
+	public DichVu(String maDichVu, String tenDichVu, double giaTien, entity.LoaiDichVu loaiDichVu) {
 		super();
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
@@ -79,6 +79,8 @@ public class DichVu {
 		DichVu other = (DichVu) obj;
 		return Objects.equals(maDichVu, other.maDichVu);
 	}
+
+
 
 	
 	

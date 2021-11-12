@@ -46,7 +46,7 @@ import javax.swing.table.TableColumnModel;
 
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
+import dao.DaoKhachHang;
 
 public class FormTimKiemKH extends JFrame implements ActionListener, MouseListener{
 
@@ -63,7 +63,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 	private JButton btnCapNhat;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private DAO_KhachHang dao = new DAO_KhachHang();
+	private DaoKhachHang dao = new DaoKhachHang();
 	private JRadioButton rTen, rSDT, rDiaChi, rCmnd, rMa;
 	private JComboBox<String> cbChucVu;
 	
@@ -79,7 +79,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 			e.printStackTrace();
 		}
 				
-		DAO_KhachHang dao_khachhang = new DAO_KhachHang(); 
+		DaoKhachHang dao_khachhang = new DaoKhachHang(); 
 				
 		JPanel pnTimKiem = new JPanel();
 		pnTimKiem.setBackground(Color.WHITE);
@@ -473,7 +473,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 		
 	}
 	public void reloadData() {
-		DAO_KhachHang dao_khachhang = new DAO_KhachHang();
+		DaoKhachHang dao_khachhang = new DaoKhachHang();
 		try {
 			tableModel.setRowCount(0);
 			dao_khachhang.loadData("select * from KhachHang ", tableModel);

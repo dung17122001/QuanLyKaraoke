@@ -30,8 +30,8 @@ import com.toedter.calendar.JDateChooser;
 import com.toedter.components.JTitlePanel;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
-import dao.DAO_Phong;
+import dao.DaoKhachHang;
+import dao.DaoPhong;
 import dao.DaoCTHoaDonDichVu;
 import dao.DaoCTHoaDonPhong;
 import dao.DaoDichVu;
@@ -68,11 +68,11 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	private JButton btnTinhGio;
 	private JComboBox<String> cbLoaiDV;
 	private JComboBox<String> cbTenDV;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
 	private DaoDichVu daoDichVu=new DaoDichVu();
-	private DAO_KhachHang daoKhachHang=new DAO_KhachHang();
+	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
 	private DaoCTHoaDonDichVu daoCTHoaDonDichVu=new DaoCTHoaDonDichVu();

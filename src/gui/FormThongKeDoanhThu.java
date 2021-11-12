@@ -22,8 +22,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
-import dao.DAO_DichVu;
-import dao.DAO_Phong;
+import dao.DaoPhong;
 import dao.DaoDichVu;
 import dao.DaoHoaDon;
 
@@ -42,7 +41,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	private JTable tableHangHoa;
 	private JButton btnThongKe;
 	private JButton btnInThongKe;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoDichVu daoDichVu=new DaoDichVu();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private JComboBox<String> cbThoiGian;

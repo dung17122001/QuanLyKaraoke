@@ -5,16 +5,56 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import entity.DichVu;
 import entity.LoaiDichVu;
-import entity.LoaiPhong;
-import entity.Phong;
 
 public class DaoDichVu {
 	public DaoDichVu() {
 		
+	}
+	
+	public void loadData(String sql, DefaultTableModel tableModel) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			vector.add(rs.getString("maDichVu")); 
+			vector.add(rs.getString("tenDichVu")); 
+			vector.add(rs.getString("giaTien")); 
+			vector.add(rs.getString("tenLoaiDV"));
+			tableModel.addRow(vector);
+		}
+	}
+	public ArrayList<DichVu> getTatCaDichVu(){
+		ArrayList<DichVu> dsDV= new ArrayList<DichVu>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="Select *from DichVu";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maDV=rs.getString(1);
+				String tenDV=rs.getString(2);
+				float giaDV=rs.getFloat(3);
+				String maLoaiDV=rs.getString(4);
+				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
+				DichVu dv=new DichVu(maDV, tenDV, giaDV,ldv);
+				dsDV.add(dv);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return dsDV;	
 	}
 	public ArrayList<DichVu> getDichVuTheoLoai(String tenLoai){
 		ArrayList<DichVu> dsDV= new ArrayList<DichVu>();
@@ -73,13 +113,13 @@ public class DaoDichVu {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();
-			String sql="select * from [dbo].[DichVu] where maDichVu = '"+ maDV +"'";
+			String sql="select * from DichVu where maDichVu = '"+ maDV +"'";
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				String madv=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				double giaTien=rs.getDouble(3);
+				float giaTien=rs.getFloat(3);
 				String maLoaiDV=rs.getString(4);
 				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
 				dv.setMaDichVu(madv);

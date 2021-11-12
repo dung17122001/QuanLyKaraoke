@@ -11,11 +11,10 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import entity.LoaiPhong;
-import entity.NhanVien;
 import entity.Phong;
 
-public class DAO_Phong {
-	public DAO_Phong() {
+public class DaoPhong {
+	public DaoPhong() {
 	}
 	public void getDuLieuPhong(String sql, DefaultTableModel tableModel) throws SQLException {
 		ConnectDB.getInstance();

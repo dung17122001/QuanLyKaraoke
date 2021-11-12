@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
-import dao.DAO_Phong;
+import dao.DaoPhong;
 import dao.DaoLoaiPhong;
 import entity.LoaiPhong;
 import entity.Phong;
@@ -43,7 +43,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
 	private JTextField txtTenPhong;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private JComboBox<String> cbLoaiPhong;
 	private JComboBox<String> cbTrinhTrang;

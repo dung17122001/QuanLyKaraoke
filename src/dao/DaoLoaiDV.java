@@ -35,4 +35,26 @@ public class DaoLoaiDV {
 		
 		return dsLDV;	
 	}
+
+	public LoaiDichVu getDichVuTheoMa(String maLoai) {
+		LoaiDichVu ldv=new LoaiDichVu();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="select * from [dbo].[LoaiDichVu] where [maLoaiDV] = N'" + maLoai + "'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maLoaiDV=rs.getString(1);
+				String tenLoai=rs.getString(2);
+				ldv.setMaLoai(maLoaiDV);
+				ldv.setTenLoaiDV(tenLoai);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return ldv;	
+	}
 }

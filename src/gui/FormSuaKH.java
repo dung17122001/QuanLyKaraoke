@@ -26,7 +26,7 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
+import dao.DaoKhachHang;
 import entity.KhachHang;
 
 public class FormSuaKH extends JFrame implements ActionListener{
@@ -156,7 +156,7 @@ public class FormSuaKH extends JFrame implements ActionListener{
 		btnSua.addActionListener(this);
 
 		// Load thông tin khach hang
-				DAO_KhachHang dao_khachhang = new DAO_KhachHang();
+				DaoKhachHang dao_khachhang = new DaoKhachHang();
 				try {
 						KhachHang kh = dao_khachhang.getKhachHangByMaKhachHang(maKhachHang);
 						txtMaKH.setText(kh.getMaKhachHang());
@@ -182,7 +182,7 @@ public class FormSuaKH extends JFrame implements ActionListener{
 			int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn xác nhận muốn thay đổi thông tin khách hàng này?",
 					"Chú ý", JOptionPane.YES_NO_OPTION);
 			if (xacnhan == JOptionPane.YES_OPTION) {
-				DAO_KhachHang dao_khachhang = new DAO_KhachHang();
+				DaoKhachHang dao_khachhang = new DaoKhachHang();
 				String tenkh = txtTenKH.getText();
 				String diachi = txtDiaChi.getText();
 				String sdt = txtSDT.getText();

@@ -12,8 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
-import dao.DAO_Phong;
+import dao.DaoKhachHang;
+import dao.DaoPhong;
 import dao.DaoCTHoaDonDichVu;
 import dao.DaoCTHoaDonPhong;
 import dao.DaoDichVu;
@@ -52,11 +52,11 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 	public static DefaultTableModel dfHangHoa;
 	private JTable tableHangHoa;
 	private JTextField txtTimKiem;
-	private DAO_Phong daoPhong=new DAO_Phong();
+	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
 	private DaoDichVu daoDichVu=new DaoDichVu();
-	private DAO_KhachHang daoKhachHang=new DAO_KhachHang();
+	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
 	private DaoCTHoaDonDichVu daoCTHoaDonDichVu=new DaoCTHoaDonDichVu();

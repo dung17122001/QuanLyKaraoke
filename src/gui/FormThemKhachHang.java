@@ -26,7 +26,7 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
+import dao.DaoKhachHang;
 import entity.KhachHang;
 
 public class FormThemKhachHang extends JFrame implements ActionListener{
@@ -154,7 +154,7 @@ public class FormThemKhachHang extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnTaoTaikhoan)) {
-			DAO_KhachHang dao_khachhang = new DAO_KhachHang ();
+			DaoKhachHang dao_khachhang = new DaoKhachHang ();
 			String ma = txtId.getText();
 			String ten = txtTenKH.getText();
 			String diachi = txtDiaChi.getText();

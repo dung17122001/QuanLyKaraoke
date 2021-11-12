@@ -18,6 +18,11 @@ public class LoaiDichVu {
 	}
 
 
+	public LoaiDichVu() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public String toString() {
 		return "LoaiDichVu [maLoai=" + maLoai + ", tenLoaiDV=" + tenLoaiDV + "]";

@@ -35,7 +35,7 @@ import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
 import entity.KhachHang;
-import dao.DAO_KhachHang;
+import dao.DaoKhachHang;
 
 public class FormQLKhachHang extends JPanel implements ActionListener, MouseListener {
 
@@ -51,7 +51,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	private JTextField txtDiachi;
 	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
-	private DAO_KhachHang dao = new DAO_KhachHang();
+	private DaoKhachHang dao = new DaoKhachHang();
 	
 	public FormQLKhachHang() {
 		setBounds(0, 0, 1366,620);
@@ -63,7 +63,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 			e.printStackTrace();
 		}
 		
-		DAO_KhachHang dao_khachhang = new DAO_KhachHang(); 
+		DaoKhachHang dao_khachhang = new DaoKhachHang(); 
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -329,7 +329,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	}
 
 	public void reloadData() {
-		DAO_KhachHang dao_khachhang = new DAO_KhachHang();
+		DaoKhachHang dao_khachhang = new DaoKhachHang();
 		try {
 			tableModel.setRowCount(0);
 			dao_khachhang.loadData("select * from KhachHang ", tableModel);

@@ -37,7 +37,7 @@ import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
 import entity.NhanVien;
-import dao.DAO_NhanVien;
+import dao.DaoNhanVien;
 
 public class FormQLNhanVien extends JPanel implements ActionListener, MouseListener {
 
@@ -55,7 +55,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JComboBox<String> cbChucVu;
 	private JTextField txtSdt;
 	private DefaultTableModel tableModel;
-	private DAO_NhanVien dao = new DAO_NhanVien();
+	private DaoNhanVien dao = new DaoNhanVien();
 	
 	public FormQLNhanVien() {
 		setBounds(0, 0, 1366, 620);
@@ -68,7 +68,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 			e.printStackTrace();
 		}
 		
-		DAO_NhanVien dao_nhanvien = new DAO_NhanVien(); 
+		DaoNhanVien dao_nhanvien = new DaoNhanVien(); 
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -405,7 +405,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	}
 
 	public void reloadData() {
-		DAO_NhanVien dao_nhanvien = new DAO_NhanVien();
+		DaoNhanVien dao_nhanvien = new DaoNhanVien();
 		try {
 			tableModel.setRowCount(0);
 			dao_nhanvien.loadData("select * from NhanVien ", tableModel);

@@ -46,7 +46,7 @@ import javax.swing.table.TableColumnModel;
 
 
 import connect.ConnectDB;
-import dao.DAO_NhanVien;
+import dao.DaoNhanVien;
 
 public class FormTimKiemNV extends JPanel implements ActionListener, MouseListener{
 
@@ -60,7 +60,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 	private JButton btnCapNhat;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private DAO_NhanVien dao = new DAO_NhanVien();
+	private DaoNhanVien dao = new DaoNhanVien();
 	private JComboBox<String> cbChucVu;
 	
 	public FormTimKiemNV() {
@@ -75,7 +75,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 			e.printStackTrace();
 		}
 				
-		DAO_NhanVien dao_nhanvien = new DAO_NhanVien(); 
+		DaoNhanVien dao_nhanvien = new DaoNhanVien(); 
 				
 		JPanel pnTimKiem = new JPanel();
 		pnTimKiem.setBackground(Color.WHITE);
@@ -437,7 +437,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 		
 	}
 	public void reloadData() {
-		DAO_NhanVien dao_nhanvien = new DAO_NhanVien();
+		DaoNhanVien dao_nhanvien = new DaoNhanVien();
 		try {
 			tableModel.setRowCount(0);
 			dao_nhanvien.loadData("select * from NhanVien ", tableModel);

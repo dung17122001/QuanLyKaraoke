@@ -27,7 +27,7 @@ import java.awt.Dimension;
 import javax.swing.JComboBox;
 
 import connect.ConnectDB;
-import dao.DAO_DichVu;
+import dao.DaoDichVu;
 import entity.DichVu;
 
 public class FormThemDichVu extends JFrame implements ActionListener{
@@ -131,22 +131,7 @@ public class FormThemDichVu extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnTao)) {
-			DAO_DichVu dao_dichvu = new DAO_DichVu();
-			String ma = txtMaDV.getText();
-			String ten = txtTenDV.getText();
-			String gia = txtGiaDV.getText();
-			DichVu dv =new DichVu(ma,ten,gia, null);
-			try {
-				if (dao_dichvu.themDichVu(dv)) {
-					JOptionPane.showMessageDialog(this, "Thêm thành công");
-					this.dispose();
-				}else {
-					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
-					
-				}
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			this.dispose();
 		}
 		if(o.equals(btnDong)) {
 			this.dispose();

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import connect.ConnectDB;
-import dao.DAO_KhachHang;
+import dao.DaoKhachHang;
 
 public class KhachHang {
 

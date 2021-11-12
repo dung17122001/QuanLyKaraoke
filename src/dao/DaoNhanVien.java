@@ -12,9 +12,9 @@ import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
 import entity.NhanVien;
 
-public class DAO_NhanVien {
+public class DaoNhanVien {
 
-	public DAO_NhanVien() {
+	public DaoNhanVien() {
 
 	}
 	public void loadData(String sql, DefaultTableModel tableModel) throws SQLException {
