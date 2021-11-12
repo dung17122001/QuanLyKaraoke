@@ -86,4 +86,23 @@ public class PhatSinhMa {
 		}
 		return makh;
 	}
+	
+	public String maHoaDon() {
+		String mahd="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('HD', RIGHT(CONCAT('000',ISNULL(right(max(maHoaDon),3),0) + 1),3)) from dbo.HoaDon where maHoaDon like N'HD%' ";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			mahd = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return mahd;
+	}
 }

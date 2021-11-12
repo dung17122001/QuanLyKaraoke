@@ -184,6 +184,76 @@ public class DAO_Phong {
 		return n > 0;
 	}
 	
+	public Phong getPhongTheoMa(String ma){
+		Phong p=new Phong();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="Select *from Phong where maPhong ='"+ma+"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maPhong=rs.getString(1);
+				String tenPhong=rs.getString(2);
+				String trinhTrang=rs.getString(3);
+				float giaPhong=rs.getFloat(4);
+				String maLoaiPhong=rs.getString(5);
+				LoaiPhong lp=new LoaiPhong(maLoaiPhong);
+				p.setMaPhong(maPhong);
+				p.setTenPhong(tenPhong);
+				p.setGiaPhong(giaPhong);
+				p.setTinhTrang(trinhTrang);
+				p.setLoaiPhong(lp);
+				
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return p;	
+	}
 	
+	public boolean updateTrinhTrangPhong(String maPhong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement(
+					"update [dbo].[Phong] set trinhTrang=N'Đang sử dụng' where maPhong='"+maPhong+"'");
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean updatePhongThanhTrong(String maPhong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement(
+					"update [dbo].[Phong] set trinhTrang=N'Trống' where tenPhong='"+maPhong+"'");
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	
 }

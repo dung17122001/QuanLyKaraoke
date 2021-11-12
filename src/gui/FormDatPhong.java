@@ -6,6 +6,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
 import javax.swing.border.EtchedBorder;
@@ -24,9 +26,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.TableModel;
@@ -34,9 +38,17 @@ import javax.swing.table.TableModel;
 import com.toedter.calendar.JDateChooser;
 
 import connect.ConnectDB;
+import dao.DAO_KhachHang;
 import dao.DAO_Phong;
+import dao.DaoChiTietDDP;
+import dao.DaoDonDatPhong;
 import dao.DaoLoaiPhong;
+import dao.PhatSinhMa;
+import entity.ChiTietDDP;
+import entity.DonDatPhong;
+import entity.KhachHang;
 import entity.LoaiPhong;
+import entity.NhanVien;
 import entity.Phong;
 
 public class FormDatPhong extends JPanel implements ActionListener, MouseListener{
@@ -57,8 +69,15 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 	private JComboBox<Integer> cbPhut;
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	private DecimalFormat df = new DecimalFormat("# ### ");
+	private PhatSinhMa ma=new PhatSinhMa();
+	private DaoDonDatPhong daoDonDatPhong=new DaoDonDatPhong();
+	private DaoChiTietDDP daoChiTietDDP=new DaoChiTietDDP();
+	private DAO_KhachHang daoKhachHang=new DAO_KhachHang();
+	private String maDon;
+	private String makh;
+	private JLabel lbTenKhachHang;
 
-	public FormDatPhong() {
+	public FormDatPhong(){
 		
 		setBounds(0, 0, 1352, 565);
 		setLayout(null);
@@ -147,7 +166,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		panelDDP.setLayout(null);
 		scrollCT=new JScrollPane(tablePhongCT,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 //		scrollPhong.setBorder(BorderFactory.createTitledBorder("Thông tin phòng"));
-		scrollCT.setBounds(10, 66, 673, 364);
+		scrollCT.setBounds(10, 126, 673, 334);
 		scrollCT.setBackground(new Color(248,248,248));
 		panelDDP.add(scrollCT);
 		
@@ -160,8 +179,20 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		btnLuu = new JButton("Lưu đơn đặt phòng");
 		btnLuu.setBackground(Color.ORANGE);
 		btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnLuu.setBounds(280, 470, 186, 30);
+		btnLuu.setBounds(280, 477, 186, 30);
 		panelDDP.add(btnLuu);
+		
+		JLabel lbTenKH = new JLabel("Tên khách hàng:");
+		lbTenKH.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbTenKH.setBounds(21, 65, 136, 30);
+		panelDDP.add(lbTenKH);
+		
+		lbTenKhachHang = new JLabel("");
+		lbTenKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbTenKhachHang.setBounds(146, 65, 207, 30);
+		panelDDP.add(lbTenKhachHang);
+		
+		
 		
 //		Thêm sự kiện
 		btnDatPhong.addActionListener(this);
@@ -174,16 +205,19 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 			e.printStackTrace();
 		}
 		
+		//Lấy tên khách hàng đã thêm mới nhất
+		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
+		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
+		
+		//lấy giờ hiện tại cho cbbox giờ và phút
+		cbGio.setSelectedItem(Calendar.getInstance().getTime().getHours());
+		cbPhut.setSelectedItem(Calendar.getInstance().getTime().getMinutes());
+		
 //		thêm dữ liệu vào table
 //		ThemDuLieuVaoTable();
 		LoadTatCaPhong();
 		
 	}
-	public static void main(String[] args) {
-		FormDatPhong f=new FormDatPhong();
-		f.setVisible(true);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
@@ -198,15 +232,50 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 			});
 		}
 		if(o.equals(btnLuu)) {
-			int i = tablePhong.getSelectedRow();
-			Date d = new Date(ngayDat.getDate().getTime());
-			LoaiPhong lp=daoLoaiPhong.getLoaiPhongTheoTen(dfPhong.getValueAt(i, 4).toString());
-			Phong p=new Phong(dfPhong.getValueAt(i, 0).toString(), dfPhong.getValueAt(i, 1).toString(), 
-					dfPhong.getValueAt(i, 2).toString(),Double.parseDouble(dfPhong.getValueAt(i, 3).toString()) ,lp );
+			themDonDatPhong();
+			for(int i=0;i<tablePhongCT.getRowCount();i++)
+			ThemVaoCTDDP(i);
 			
+			JOptionPane.showMessageDialog(this, "Lưu đơn đặt phòng thành công");
 		}
 		
 	}
+	
+//	private void themKH() throws SQLException {
+//		makh=ma.maKhachHangVuaThem();
+//		String tenkh=txtTenKH.getText();
+//		String sdt=txtSDT.getText();
+//		KhachHang khachHang=new KhachHang(makh, tenkh, sdt);
+//		daoKhachHang.themKhachHang(khachHang);
+//	}
+	
+	private void themDonDatPhong() {
+		
+//		String tenkh=txtTenKH.getText();
+//		String sdt=txtSDT.getText();
+//		KhachHang khachHang=new KhachHang(makh, tenkh, sdt);
+		makh=ma.maKhachHangVuaThem();
+		KhachHang kh=daoKhachHang.getKhachHangTheoMa(makh);
+		
+		String manv="NV001";//sau nay lay tu form dang nhap
+		NhanVien nv=new NhanVien(manv);
+		
+		maDon=ma.maDonDatPhong();
+		Date date=new Date(ngayDat.getDate().getTime());
+		DonDatPhong donDatPhong=new DonDatPhong(maDon, date, kh, nv);
+		daoDonDatPhong.themDonDatPhong(donDatPhong);
+		
+	}
+	
+	private void ThemVaoCTDDP(int vt) {
+		Phong p=new Phong(dfCTPhong.getValueAt(vt, 0).toString());
+		Time time= new Time((int)cbGio.getSelectedItem(), (int) cbPhut.getSelectedItem(), 0);
+		ChiTietDDP chiTietDDP=new ChiTietDDP(maDon, time, p);
+
+		daoChiTietDDP.themChiTietDDP(chiTietDDP);
+
+	}
+	
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -23,6 +23,15 @@ public class NhanVien implements Serializable{
 	private String soCMND;
 	private String chucVu;
 	
+	public NhanVien() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public NhanVien(String maNhanVien) {
+		super();
+		this.maNhanVien = maNhanVien;
+	}
+
 	public NhanVien(String maNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String dienThoai,
 			String soCMND, String chucVu) {
 		

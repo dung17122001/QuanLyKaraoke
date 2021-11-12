@@ -1,28 +1,26 @@
 package entity;
 
-import java.util.Date;
+
+import java.sql.Date;
+import java.util.Objects;
 
 public class DonDatPhong {
 
 	private String maDonDatPhong;
 	private Date thoiGianDat;
-	private String maPhong;
-	private String maKhachHang;
-	private String maNhanVien;
+	private KhachHang khachHang;
+	private NhanVien nhanVien;
 	
-	public DonDatPhong(String maDonDatPhong, Date thoiGianDat, String maPhong, String maKhachHang, String maNhanVien) {
+	public DonDatPhong() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public DonDatPhong(String maDonDatPhong, Date thoiGianDat, KhachHang khachHang, NhanVien nhanVien) {
 		super();
 		this.maDonDatPhong = maDonDatPhong;
 		this.thoiGianDat = thoiGianDat;
-		this.maPhong = maPhong;
-		this.maKhachHang = maKhachHang;
-		this.maNhanVien = maNhanVien;
-	}
-
-	@Override
-	public String toString() {
-		return "DonDatPhong [maDonDatPhong=" + maDonDatPhong + ", thoiGianDat=" + thoiGianDat + ", maPhong=" + maPhong
-				+ ", maKhachHang=" + maKhachHang + ", maNhanVien=" + maNhanVien + "]";
+		this.khachHang = khachHang;
+		this.nhanVien = nhanVien;
 	}
 
 	public String getMaDonDatPhong() {
@@ -41,40 +39,25 @@ public class DonDatPhong {
 		this.thoiGianDat = thoiGianDat;
 	}
 
-	public String getMaPhong() {
-		return maPhong;
+	public KhachHang getKhachHang() {
+		return khachHang;
 	}
 
-	public void setMaPhong(String maPhong) {
-		this.maPhong = maPhong;
+	public void setKhachHang(KhachHang khachHang) {
+		this.khachHang = khachHang;
 	}
 
-	public String getMaKhachHang() {
-		return maKhachHang;
+	public NhanVien getNhanVien() {
+		return nhanVien;
 	}
 
-	public void setMaKhachHang(String maKhachHang) {
-		this.maKhachHang = maKhachHang;
-	}
-
-	public String getMaNhanVien() {
-		return maNhanVien;
-	}
-
-	public void setMaNhanVien(String maNhanVien) {
-		this.maNhanVien = maNhanVien;
+	public void setNhanVien(NhanVien nhanVien) {
+		this.nhanVien = nhanVien;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((maDonDatPhong == null) ? 0 : maDonDatPhong.hashCode());
-		result = prime * result + ((maKhachHang == null) ? 0 : maKhachHang.hashCode());
-		result = prime * result + ((maNhanVien == null) ? 0 : maNhanVien.hashCode());
-		result = prime * result + ((maPhong == null) ? 0 : maPhong.hashCode());
-		result = prime * result + ((thoiGianDat == null) ? 0 : thoiGianDat.hashCode());
-		return result;
+		return Objects.hash(maDonDatPhong);
 	}
 
 	@Override
@@ -86,33 +69,14 @@ public class DonDatPhong {
 		if (getClass() != obj.getClass())
 			return false;
 		DonDatPhong other = (DonDatPhong) obj;
-		if (maDonDatPhong == null) {
-			if (other.maDonDatPhong != null)
-				return false;
-		} else if (!maDonDatPhong.equals(other.maDonDatPhong))
-			return false;
-		if (maKhachHang == null) {
-			if (other.maKhachHang != null)
-				return false;
-		} else if (!maKhachHang.equals(other.maKhachHang))
-			return false;
-		if (maNhanVien == null) {
-			if (other.maNhanVien != null)
-				return false;
-		} else if (!maNhanVien.equals(other.maNhanVien))
-			return false;
-		if (maPhong == null) {
-			if (other.maPhong != null)
-				return false;
-		} else if (!maPhong.equals(other.maPhong))
-			return false;
-		if (thoiGianDat == null) {
-			if (other.thoiGianDat != null)
-				return false;
-		} else if (!thoiGianDat.equals(other.thoiGianDat))
-			return false;
-		return true;
+		return Objects.equals(maDonDatPhong, other.maDonDatPhong);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "DonDatPhong [maDonDatPhong=" + maDonDatPhong + ", thoiGianDat=" + thoiGianDat + ", khachHang="
+				+ khachHang + ", nhanVien=" + nhanVien + "]";
+	}
+
 	
 }

@@ -1,36 +1,34 @@
 package entity;
 
-import java.util.Date;
+
+import java.sql.Date;
+import java.util.Objects;
 
 public class HoaDon {
 	
 	private String maHoaDon;
 	private Date ngayLap;
 	private String trangThai;
-	private String gioVao;
-	private String gioRa;
-	private Phong Phong;
-	private NhanVien NhanVien;
 	private KhachHang KhachHang;
+	private NhanVien NhanVien;
 	
-	public HoaDon(String maHoaDon, Date ngayLap, String trangThai, String gioVao, String gioRa, entity.Phong phong,
-			entity.NhanVien nhanVien, entity.KhachHang khachHang) {
+	public HoaDon() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public HoaDon(String maHoaDon, Date ngayLap, String trangThai, entity.KhachHang khachHang,
+			entity.NhanVien nhanVien) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.ngayLap = ngayLap;
 		this.trangThai = trangThai;
-		this.gioVao = gioVao;
-		this.gioRa = gioRa;
-		Phong = phong;
-		NhanVien = nhanVien;
 		KhachHang = khachHang;
+		NhanVien = nhanVien;
 	}
-
-	@Override
-	public String toString() {
-		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayLap=" + ngayLap + ", trangThai=" + trangThai + ", gioVao="
-				+ gioVao + ", gioRa=" + gioRa + ", Phong=" + Phong + ", NhanVien=" + NhanVien + ", KhachHang="
-				+ KhachHang + "]";
+	
+	public HoaDon(String maHoaDon) {
+		super();
+		this.maHoaDon = maHoaDon;
 	}
 
 	public String getMaHoaDon() {
@@ -57,28 +55,12 @@ public class HoaDon {
 		this.trangThai = trangThai;
 	}
 
-	public String getGioVao() {
-		return gioVao;
+	public KhachHang getKhachHang() {
+		return KhachHang;
 	}
 
-	public void setGioVao(String gioVao) {
-		this.gioVao = gioVao;
-	}
-
-	public String getGioRa() {
-		return gioRa;
-	}
-
-	public void setGioRa(String gioRa) {
-		this.gioRa = gioRa;
-	}
-
-	public Phong getPhong() {
-		return Phong;
-	}
-
-	public void setPhong(Phong phong) {
-		Phong = phong;
+	public void setKhachHang(KhachHang khachHang) {
+		KhachHang = khachHang;
 	}
 
 	public NhanVien getNhanVien() {
@@ -89,27 +71,9 @@ public class HoaDon {
 		NhanVien = nhanVien;
 	}
 
-	public KhachHang getKhachHang() {
-		return KhachHang;
-	}
-
-	public void setKhachHang(KhachHang khachHang) {
-		KhachHang = khachHang;
-	}
-
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((KhachHang == null) ? 0 : KhachHang.hashCode());
-		result = prime * result + ((NhanVien == null) ? 0 : NhanVien.hashCode());
-		result = prime * result + ((Phong == null) ? 0 : Phong.hashCode());
-		result = prime * result + ((gioRa == null) ? 0 : gioRa.hashCode());
-		result = prime * result + ((gioVao == null) ? 0 : gioVao.hashCode());
-		result = prime * result + ((maHoaDon == null) ? 0 : maHoaDon.hashCode());
-		result = prime * result + ((ngayLap == null) ? 0 : ngayLap.hashCode());
-		result = prime * result + ((trangThai == null) ? 0 : trangThai.hashCode());
-		return result;
+		return Objects.hash(maHoaDon);
 	}
 
 	@Override
@@ -121,49 +85,14 @@ public class HoaDon {
 		if (getClass() != obj.getClass())
 			return false;
 		HoaDon other = (HoaDon) obj;
-		if (KhachHang == null) {
-			if (other.KhachHang != null)
-				return false;
-		} else if (!KhachHang.equals(other.KhachHang))
-			return false;
-		if (NhanVien == null) {
-			if (other.NhanVien != null)
-				return false;
-		} else if (!NhanVien.equals(other.NhanVien))
-			return false;
-		if (Phong == null) {
-			if (other.Phong != null)
-				return false;
-		} else if (!Phong.equals(other.Phong))
-			return false;
-		if (gioRa == null) {
-			if (other.gioRa != null)
-				return false;
-		} else if (!gioRa.equals(other.gioRa))
-			return false;
-		if (gioVao == null) {
-			if (other.gioVao != null)
-				return false;
-		} else if (!gioVao.equals(other.gioVao))
-			return false;
-		if (maHoaDon == null) {
-			if (other.maHoaDon != null)
-				return false;
-		} else if (!maHoaDon.equals(other.maHoaDon))
-			return false;
-		if (ngayLap == null) {
-			if (other.ngayLap != null)
-				return false;
-		} else if (!ngayLap.equals(other.ngayLap))
-			return false;
-		if (trangThai == null) {
-			if (other.trangThai != null)
-				return false;
-		} else if (!trangThai.equals(other.trangThai))
-			return false;
-		return true;
+		return Objects.equals(maHoaDon, other.maHoaDon);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "HoaDon [maHoaDon=" + maHoaDon + ", ngayLap=" + ngayLap + ", trangThai=" + trangThai + ", KhachHang="
+				+ KhachHang + ", NhanVien=" + NhanVien + "]";
+	}
 	
 	
 	

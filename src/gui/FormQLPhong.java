@@ -78,6 +78,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		txtMaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtMaPhong.setBounds(130, 27, 244, 30);
 		panelThongTinPhong.add(txtMaPhong);
+		txtMaPhong.setEnabled(false);
 		txtMaPhong.setColumns(10);
 		
 		JLabel lbGiaPhong = new JLabel("Giá phòng: ");

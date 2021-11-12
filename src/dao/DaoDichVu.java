@@ -54,10 +54,38 @@ public class DaoDichVu {
 				String tenDichVu=rs.getString(2);
 				double giaTien=rs.getDouble(3);
 				String maLoaiDV=rs.getString(4);
+				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
 				dv.setMaDichVu(maDV);
 				dv.setTenDichVu(tenDichVu);
 				dv.setGiaTien(giaTien);
-				dv.setMaDichVu(maLoaiDV);
+				dv.setLoaiDichVu(loaiDichVu);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return dv;	
+	}
+	
+	public DichVu getDichVuTheoMa(String maDV) {
+		DichVu dv=new DichVu();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="select * from [dbo].[DichVu] where maDichVu = '"+ maDV +"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String madv=rs.getString(1);
+				String tenDichVu=rs.getString(2);
+				double giaTien=rs.getDouble(3);
+				String maLoaiDV=rs.getString(4);
+				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
+				dv.setMaDichVu(madv);
+				dv.setTenDichVu(tenDichVu);
+				dv.setGiaTien(giaTien);
+				dv.setLoaiDichVu(loaiDichVu);
 			}
 		}
 			catch (SQLException e) {

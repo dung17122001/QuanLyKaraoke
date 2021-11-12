@@ -9,13 +9,13 @@ import connect.ConnectDB;
 import dao.DAO_KhachHang;
 
 public class KhachHang {
-	
+
 	private String maKhachHang;
 	private String tenKhachHang;
 	private String diaChi;
 	private String soDienThoai;
 	private String soCMND;
-	
+
 	public KhachHang(String maKhachHang, String tenKhachHang, String diaChi, String soDienThoai, String soCMND) {
 		super();
 		this.maKhachHang = maKhachHang;
@@ -24,7 +24,9 @@ public class KhachHang {
 		this.soDienThoai = soDienThoai;
 		this.soCMND = soCMND;
 	}
-
+	public KhachHang() {
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public String toString() {
 		return "KhachHang [maKhachHang=" + maKhachHang + ", tenKhachHang=" + tenKhachHang + ", diaChi=" + diaChi
@@ -119,6 +121,6 @@ public class KhachHang {
 			return false;
 		return true;
 	}
-	
-	
+
+
 }

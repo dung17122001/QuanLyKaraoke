@@ -152,7 +152,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmThemDonDatPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLPhong.add(mntmThemDonDatPhong);
 		
-		mntmTimKiemHoaDon = new JMenuItem("Tìm kiếm");
+		mntmTimKiemHoaDon = new JMenuItem("Thanh toán");
 		mntmTimKiemHoaDon.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemHoaDon.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLHoaDon.add(mntmTimKiemHoaDon);
