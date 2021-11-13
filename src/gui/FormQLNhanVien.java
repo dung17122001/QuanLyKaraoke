@@ -50,7 +50,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JTextField txtTenNv;
 	private JTextField txtID;
 	private JTextField txtNgaySinh;
-	private JTextField txtGioitinh;
+	private JComboBox<String> cbGioitinh;;
 	private JTextField txtCmnd;
 	private JComboBox<String> cbChucVu;
 	private JTextField txtSdt;
@@ -104,11 +104,12 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		lbGt.setBounds(955, 24, 96, 38);
 		pnTTNV.add(lbGt);
 		
-		txtGioitinh = new JTextField();
-		txtGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGioitinh.setBounds(1055, 30, 190, 30);
-		pnTTNV.add(txtGioitinh);
-		txtGioitinh.setColumns(10);
+		cbGioitinh = new JComboBox<String>();
+		cbGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbGioitinh.addItem("Nam");
+		cbGioitinh.addItem("Nữ");
+		cbGioitinh.setBounds(1055, 30, 190, 30);
+		pnTTNV.add(cbGioitinh);
 		
 		JLabel lbNs = new JLabel("Ngày sinh:");
 		lbNs.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -329,7 +330,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		int i = table.getSelectedRow();
 		txtID.setText(tableModel.getValueAt(i, 0).toString());
 		txtTenNv.setText(tableModel.getValueAt(i, 1).toString());
-		txtGioitinh.setText(tableModel.getValueAt(i, 2).toString());
+		cbGioitinh.setSelectedItem(tableModel.getValueAt(i, 2).toString());
 		txtNgaySinh.setText(tableModel.getValueAt(i, 3).toString());
 		txtSdt.setText(tableModel.getValueAt(i, 4).toString());
 		txtCmnd.setText(tableModel.getValueAt(i, 5).toString());

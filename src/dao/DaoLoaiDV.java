@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import connect.ConnectDB;
 import entity.LoaiDichVu;
-import entity.LoaiPhong;
 
 public class DaoLoaiDV {
 	public DaoLoaiDV() {
@@ -42,6 +41,27 @@ public class DaoLoaiDV {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();
 			String sql="select * from [dbo].[LoaiDichVu] where [maLoaiDV] = N'" + maLoai + "'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maLoaiDV=rs.getString(1);
+				String tenLoai=rs.getString(2);
+				ldv.setMaLoai(maLoaiDV);
+				ldv.setTenLoaiDV(tenLoai);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return ldv;	
+	}
+	public LoaiDichVu getLoaiDichVuTheoTen(String tenDichVu) {
+		LoaiDichVu ldv=new LoaiDichVu();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="select * from [dbo].[LoaiDichVu] where [tenLoaiDV] like N'" + tenDichVu + "'";
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {

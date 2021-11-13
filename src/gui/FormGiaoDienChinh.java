@@ -53,7 +53,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
 	private JMenuItem mntmSuaDV;
-	private JMenuItem mntmDatDV;
 	private JMenuItem mntmTimKiemDV;
 	private JMenu mnQLPhong;
 	private JMenuItem mntmCapNhatPhong;
@@ -328,16 +327,14 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 			changeScreen(new FormQLKhachHang());
 		}
 		if(o.equals(mntmTimKiemKH)) {
-			FormTimKiemKH formThemNV = new FormTimKiemKH();
-			formThemNV.setVisible(true);
+			changeScreen(new FormTimKiemKH());
 		}
 		if(o.equals(mntmSuaDV)) {
 			changeScreen(new FormQLDichVu());
 		}
 		
 		if(o.equals(mntmTimKiemDV)) {
-			FormTimKiemDV formThemNV = new FormTimKiemDV();
-			formThemNV.setVisible(true);
+			changeScreen(new FormTimKiemDV());
 		}
 
 		if(o.equals(mntmCapNhatPhong)) {

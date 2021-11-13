@@ -48,24 +48,19 @@ import javax.swing.table.TableColumnModel;
 import connect.ConnectDB;
 import dao.DaoKhachHang;
 
-public class FormTimKiemKH extends JFrame implements ActionListener, MouseListener{
+public class FormTimKiemKH extends JPanel implements ActionListener, MouseListener{
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTextField txtTimMaKH;
 	private JTextField txtTimTenKH;
 	private JTextField txtTimSdtKH;
 	private JTextField txtTimSocmKH;
 	private JTextField txtTimDiaChi;
-	private JPanel panel_Info;
 	private JButton btnTimKiem;
-	private JButton btnDong;
 	private JButton btnCapNhat;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private DaoKhachHang dao = new DaoKhachHang();
-	private JRadioButton rTen, rSDT, rDiaChi, rCmnd, rMa;
-	private JComboBox<String> cbChucVu;
 	
 	public FormTimKiemKH() {
 		
@@ -84,98 +79,72 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 		JPanel pnTimKiem = new JPanel();
 		pnTimKiem.setBackground(Color.WHITE);
 		pnTimKiem.setBorder(new TitledBorder(null, "THÔNG TIN TÌM KIẾM", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnTimKiem.setBounds(0,0, 1366,310);
+		pnTimKiem.setBounds(0,0, 1366,210);
 		pnTimKiem.setLayout(null);
 		add(pnTimKiem);
 		
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblMaKH.setBounds(300, 20, 300, 30);
+		lblMaKH.setBounds(50, 20, 300, 30);
 		pnTimKiem.add(lblMaKH);
 
 		txtTimMaKH = new JTextField();
 		txtTimMaKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimMaKH.setBounds(650, 20, 300, 30);
+		txtTimMaKH.setBounds(300, 20, 300, 30);
 		pnTimKiem.add(txtTimMaKH);
 		txtTimMaKH.setColumns(10);
 		
-		rMa = new JRadioButton();
-		rMa.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rMa.setBackground(Color.WHITE);
-		rMa.setBounds(950, 20, 20, 30);
-		pnTimKiem.add(rMa);
 	    
         JLabel lblTenKH = new JLabel("Tên khách hàng:");
         lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblTenKH.setBounds(300, 70, 300, 30);
+        lblTenKH.setBounds(50, 70, 300, 30);
         pnTimKiem.add(lblTenKH);
 
 		txtTimTenKH = new JTextField();
 		txtTimTenKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimTenKH.setBounds(650, 70, 300, 30);
+		txtTimTenKH.setBounds(300, 70, 300, 30);
 		pnTimKiem.add(txtTimTenKH);
 		txtTimTenKH.setColumns(10);
-		
-		rTen = new JRadioButton();
-		rTen.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rTen.setBackground(Color.WHITE);
-		rTen.setBounds(950, 70, 20, 30);
-		pnTimKiem.add(rTen);
-		
+	
         JLabel lblDiaChi = new JLabel("Địa chỉ:");
         lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblDiaChi.setBounds(300, 120, 300, 30);
+        lblDiaChi.setBounds(50, 120, 300, 30);
         pnTimKiem.add(lblDiaChi);
 
         txtTimDiaChi = new JTextField();
         txtTimDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        txtTimDiaChi.setBounds(650, 120, 300, 30);
+        txtTimDiaChi.setBounds(300, 120, 300, 30);
 		pnTimKiem.add(txtTimDiaChi);
 		txtTimDiaChi.setColumns(10);
 	    
-		rDiaChi = new JRadioButton();
-		rDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rDiaChi.setBackground(Color.WHITE);
-		rDiaChi.setBounds(950, 120, 300, 30);
-		pnTimKiem.add(rDiaChi);
 		
         JLabel lblSdt = new JLabel("Số điện thoại:");
         lblSdt.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblSdt.setBounds(300, 170, 300, 30);
+        lblSdt.setBounds(700, 20, 300, 30);
         pnTimKiem.add(lblSdt);
 
 		txtTimSdtKH = new JTextField();
 		txtTimSdtKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimSdtKH.setBounds(650, 170, 300, 30);
+		txtTimSdtKH.setBounds(950, 20, 300, 30);
 		pnTimKiem.add(txtTimSdtKH);
 		txtTimSdtKH.setColumns(10);
         
-		rSDT = new JRadioButton();
-		rSDT.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rSDT.setBackground(Color.WHITE);
-		rSDT.setBounds(950, 170, 300, 30);
-		pnTimKiem.add(rSDT);
 		
         JLabel lblCmnd = new JLabel("CMND:");
         lblCmnd.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblCmnd.setBounds(300, 220, 300, 30);
+        lblCmnd.setBounds(700, 70, 300, 30);
         pnTimKiem.add(lblCmnd);
 
 		txtTimSocmKH = new JTextField();
 		txtTimSocmKH .setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimSocmKH .setBounds(650, 220, 300, 30);
+		txtTimSocmKH .setBounds(950, 70, 300, 30);
 		pnTimKiem.add(txtTimSocmKH );
 		txtTimSocmKH .setColumns(10);
 		
-		rCmnd = new JRadioButton();
-		rCmnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		rCmnd.setBackground(Color.WHITE);
-		rCmnd.setBounds(950, 220, 300, 30);
-		pnTimKiem.add(rCmnd);
 		
         JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
-		pnChucNang.setBounds(0,310, 1366,50);
+		pnChucNang.setBounds(0,210, 1366,50);
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
@@ -183,7 +152,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 		btnTimKiem.setForeground(SystemColor.controlText);
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(250, 5, 180, 40);
+		btnTimKiem.setBounds(450, 5, 180, 40);
 		btnTimKiem.setFocusable(false);
 		pnChucNang.add(btnTimKiem);
 		
@@ -191,7 +160,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 		btnCapNhat.setForeground(SystemColor.controlText);
 		btnCapNhat.setBackground(new Color(255, 204, 102));
 		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnCapNhat.setBounds(600, 5, 180, 40);
+		btnCapNhat.setBounds(800, 5, 180, 40);
 		btnCapNhat.setFocusable(false);
 		pnChucNang.add(btnCapNhat);
 		btnCapNhat.addActionListener(new ActionListener() {
@@ -202,25 +171,15 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 			}
 		});
 		
-		btnDong = new JButton("Thoát");
-		btnDong.setForeground(SystemColor.controlText);
-		btnDong.setBackground(new Color(255, 204, 102));
-		btnDong.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnDong.setBounds(1000, 5, 180, 40);
-		btnDong.setFocusable(false);
-		pnChucNang.add(btnDong);
-		
-		btnDong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		btnDong.addActionListener(this);
 		btnTimKiem.addActionListener(this);
 		btnCapNhat.addActionListener(this);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
-		panel.setBounds(0, 360, 1366, 820);
+		panel.setBounds(0, 260, 1366, 420);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -231,7 +190,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 		panel.add(lblDSKH);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1350, 350);
+		scrollPane.setBounds(0, 30, 1350, 280);
 		panel.add(scrollPane);
 		
 		String[] header = {"Mã KH", "Tên KH","Địa chỉ", "Điện thoại", "CMND"};
@@ -329,12 +288,6 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 			e.printStackTrace();
 		}
 		
-		rMa.addActionListener(this);
-		rTen.addActionListener(this);
-		rSDT.addActionListener(this);
-		rCmnd.addActionListener(this);
-		rDiaChi.addActionListener(this);
-		
 	}
 	public void actionPerformed(ActionEvent e) {
 		
@@ -346,7 +299,7 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 			String timkiemsdt = txtTimSdtKH.getText().toLowerCase().trim();
 			String timsocmnd = txtTimSocmKH.getText().toLowerCase().trim();
 			//tim theo ma 
-			if (rMa.isSelected()) {
+			
 				if (!timkiemma.equals("")) {
 					tableModel.setRowCount(0);
 					try {
@@ -356,97 +309,64 @@ public class FormTimKiemKH extends JFrame implements ActionListener, MouseListen
 					}
 					txtTimMaKH.setText("");
 				} else {
-					JOptionPane.showMessageDialog(this, "Mã KH gồm NVxxx! \n Tìm kiếm gần đúng", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					txtTimMaKH.requestFocus();
-					return;
-				}
-			}
-			
-			//tim theo ten 
-			if (rTen.isSelected()) {
-				if (!timkiemten.equals("")) {
-					tableModel.setRowCount(0);
-					try {
-						dao.loadData("select * from KhachHang where tenKhachHang like N'%" + timkiemten + "%'", tableModel);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
+					//tim theo ten 
+					
+					if (!timkiemten.equals("")) {
+						tableModel.setRowCount(0);
+						try {
+							dao.loadData("select * from KhachHang where tenKhachHang like N'%" + timkiemten + "%'", tableModel);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						txtTimTenKH.setText("");
+					} else {
+						//tim theo dia chi
+						
+						if (!timkiemdc.equals("")) {
+							tableModel.setRowCount(0);
+							try {
+								dao.loadData("select * from KhachHang where diaChi like N'%" + timkiemdc + "%'", tableModel);
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+							txtTimDiaChi.setText("");
+						} else {
+							//tim theo sdt 
+							
+							if (!timkiemsdt.equals("")) {
+								tableModel.setRowCount(0);
+								try {
+									dao.loadData("select * from KhachHang where soDienThoai like N'%" + timkiemsdt + "%'", tableModel);
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+								txtTimSdtKH.setText("");
+							} else {
+								//tim theo soCMND 
+								
+								if (!timsocmnd.equals("")) {
+									tableModel.setRowCount(0);
+									try {
+										dao.loadData("select * from KhachHang where soCMND like N'%" + timsocmnd + "%'", tableModel);
+									} catch (SQLException e1) {
+										e1.printStackTrace();
+									}
+									txtTimSocmKH.setText("");
+								} else {
+									JOptionPane.showMessageDialog(this, "Số cmnd khách hàng gồm xxxxxxxxx ! \n Tìm kiếm gần đúng", "Lỗi",
+											JOptionPane.ERROR_MESSAGE);
+									txtTimSocmKH.requestFocus();
+									return;
+								}
+							
+							}
+						}
 					}
-					txtTimTenKH.setText("");
-				} else {
-					JOptionPane.showMessageDialog(this, "Tên khách hàng gồm họ+tên ! \n Tìm kiếm gần đúng", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					txtTimTenKH.requestFocus();
-					return;
 				}
 			
-		}
-			
-			//tim theo dia chi
-			if (rDiaChi.isSelected()) {
-				if (!timkiemdc.equals("")) {
-					tableModel.setRowCount(0);
-					try {
-						dao.loadData("select * from KhachHang where diaChi like N'%" + timkiemdc + "%'", tableModel);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					txtTimDiaChi.setText("");
-				} else {
-					JOptionPane.showMessageDialog(this, "Địa chỉ khách hàng gồm xxx... ! \n Tìm kiếm gần đúng", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					txtTimDiaChi.requestFocus();
-					return;
-				}
-			
-		}
-			//tim theo sdt 
-			if (rSDT.isSelected()) {
-				if (!timkiemsdt.equals("")) {
-					tableModel.setRowCount(0);
-					try {
-						dao.loadData("select * from KhachHang where soDienThoai like N'%" + timkiemsdt + "%'", tableModel);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					txtTimSdtKH.setText("");
-				} else {
-					JOptionPane.showMessageDialog(this, "Số điện thoại khách hàng gồm 0xxxxxxxxx ! \n Tìm kiếm gần đúng", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					txtTimSdtKH.requestFocus();
-					return;
-				}
-			
-		}
-			
-			//tim theo soCMND 
-			if (rCmnd.isSelected()) {
-				if (!timsocmnd.equals("")) {
-					tableModel.setRowCount(0);
-					try {
-						dao.loadData("select * from KhachHang where soCMND like N'%" + timsocmnd + "%'", tableModel);
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					txtTimSocmKH.setText("");
-				} else {
-					JOptionPane.showMessageDialog(this, "Số cmnd khách hàng gồm xxxxxxxxx ! \n Tìm kiếm gần đúng", "Lỗi",
-							JOptionPane.ERROR_MESSAGE);
-					txtTimSocmKH.requestFocus();
-					return;
-				}
-			
-		}
-		}
-		if(o.equals(btnDong)) {
-			this.dispose();
 		}
 	}
 
-	public static void main(String[] args) throws SQLException {		
-		FormTimKiemNV frm = new FormTimKiemNV();
-		frm.setVisible(true);
-	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub

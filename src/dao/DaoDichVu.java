@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
 import entity.DichVu;
 import entity.LoaiDichVu;
+import entity.Phong;
 
 public class DaoDichVu {
 	public DaoDichVu() {
@@ -133,5 +134,48 @@ public class DaoDichVu {
 			}
 		
 		return dv;	
+	}
+	public boolean themDichVu(DichVu dv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("insert into DichVu VALUES(?,?,?,?) ");
+			ps.setString(1, dv.getMaDichVu());
+			ps.setString(2, dv.getTenDichVu());
+			ps.setDouble(3, dv.getGiaTien());
+			ps.setString(4, dv.getLoaiDichVu().getMaLoai());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	public boolean xoaDichVu(String maDV) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("delete DichVu where maDichVu = ?");
+			ps.setString(1, maDV);
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 }

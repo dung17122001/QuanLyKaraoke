@@ -38,6 +38,8 @@ import javax.swing.table.TableColumnModel;
 import connect.ConnectDB;
 import entity.DichVu;
 import entity.LoaiDichVu;
+import entity.LoaiPhong;
+import entity.Phong;
 import dao.DaoDichVu;
 import dao.DaoLoaiDV;
 
@@ -77,23 +79,23 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		
 		JLabel lbMadv = new JLabel("Mã DV: ");
 		lbMadv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbMadv.setBounds(10, 30, 96, 38);
+		lbMadv.setBounds(210, 30, 96, 38);
 		pnTTNV.add(lbMadv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(115, 30, 190, 30);
+		txtID.setBounds(315, 30, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
 		
 		JLabel lbGiadv = new JLabel("Giá dịch vụ:");
 		lbGiadv .setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGiadv .setBounds(10, 80, 96, 38);
+		lbGiadv .setBounds(210, 80, 96, 38);
 		pnTTNV.add(lbGiadv );
 		
 		txtGiaDV = new JTextField();
 		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGiaDV.setBounds(115, 80, 190, 30);
+		txtGiaDV.setBounds(315, 80, 190, 30);
 		pnTTNV.add(txtGiaDV);
 		txtGiaDV.setColumns(10);
 		
@@ -101,23 +103,23 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		
 		JLabel lbTendv = new JLabel("Tên DV:");
 		lbTendv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTendv.setBounds(405, 30, 96, 38);
+		lbTendv.setBounds(605, 30, 96, 38);
 		pnTTNV.add(lbTendv);
 		
 		txtTenDV = new JTextField();
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenDV.setBounds(516, 30, 190, 30);
+		txtTenDV.setBounds(716, 30, 190, 30);
 		pnTTNV.add(txtTenDV);
 		txtTenDV.setColumns(10);
 		
 		JLabel lbLoaidv = new JLabel("Loại DV:");
 		lbLoaidv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbLoaidv.setBounds(405, 80, 96, 38);
+		lbLoaidv.setBounds(605, 80, 96, 38);
 		pnTTNV.add(lbLoaidv);
 		
 		cbLoaiDV = new JComboBox<String>();
 		cbLoaiDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbLoaiDV.setBounds(516, 80, 190, 30);
+		cbLoaiDV.setBounds(716, 80, 190, 30);
 		pnTTNV.add(cbLoaiDV);
 		
 		JPanel pnChucNang = new JPanel();
@@ -150,7 +152,7 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
 		
-		btnCapNhat= new JButton("Tải lại");
+		btnCapNhat= new JButton("Xóa trắng");
 		btnCapNhat.setForeground(SystemColor.controlText);
 		btnCapNhat.setBackground(new Color(255, 255, 153));
 		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
@@ -320,17 +322,43 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnThem)) {
-			FormThemDichVu formThemDV = new FormThemDichVu ();
-			formThemDV.setVisible(true);
+			String maDV=txtID.getText();
+			String tenDV=txtTenDV.getText();
+			Double giaDV=Double.parseDouble(txtGiaDV.getText());
+			String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
+			
+			
+			LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
+			DichVu dv=new DichVu(maDV, tenDV, giaDV, ldv);
+			
+				if (daoDichVu.themDichVu(dv)) {
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				} else
+					JOptionPane.showMessageDialog(this, "Lỗi");
 		}
-		if(o.equals(btnSua)) {
-			int i = table.getSelectedRow();
-			if (i != -1) {
-				FormSuaDV formSua = new FormSuaDV();
-				formSua.setVisible(true);	
+		if(o.equals(btnXoa)) {
+			String maDV=txtID.getText();
+			if (table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn dịch vụ cần xóa");
 			} else {
-				JOptionPane.showMessageDialog(this, "Vui lòng chọn dịch vụ cần cập nhật thông tin");
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa dịch vụ này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoDichVu.xoaDichVu(maDV);
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Đã xóa");
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
 			}
+		}
+		if(o.equals(btnCapNhat)) {
+			XoaTrang();
 		}
 	}
 	
@@ -355,4 +383,14 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtID.setText("");
+		txtGiaDV.setText("");
+		txtTenDV.setText("");
+	}
 }
