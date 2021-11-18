@@ -206,7 +206,7 @@ public class DaoKhachHang {
 		}
 		return kh;
 	}
-	//xoa nhan vien
+	//xoa khachhang
 	public boolean delKhachHang(String maKhachHang) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();

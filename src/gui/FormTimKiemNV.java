@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -46,7 +47,10 @@ import javax.swing.table.TableColumnModel;
 
 
 import connect.ConnectDB;
+import dao.DaoChucVu;
 import dao.DaoNhanVien;
+import entity.ChucVu;
+import entity.NhanVien;
 
 public class FormTimKiemNV extends JPanel implements ActionListener, MouseListener{
 
@@ -60,8 +64,10 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 	private JButton btnCapNhat;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	private DaoNhanVien dao = new DaoNhanVien();
 	private JComboBox<String> cbChucVu;
+	
+	private DaoNhanVien dao = new DaoNhanVien();
+	private DaoChucVu daoCV= new DaoChucVu();
 	
 	public FormTimKiemNV() {
 		
@@ -75,7 +81,6 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 			e.printStackTrace();
 		}
 				
-		DaoNhanVien dao_nhanvien = new DaoNhanVien(); 
 				
 		JPanel pnTimKiem = new JPanel();
 		pnTimKiem.setBackground(Color.WHITE);
@@ -148,9 +153,6 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 		cbChucVu = new JComboBox<String>();
 		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		cbChucVu.setBounds(930, 160, 300, 30);
-		cbChucVu.addItem("Nhân viên thu ngân");
-		cbChucVu.addItem("Nhân viên phục vụ");
-		cbChucVu.addItem("Nhân viên kế toán");
 		pnTimKiem.add(cbChucVu);
 		
         JPanel pnChucNang = new JPanel();
@@ -178,7 +180,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				reloadData();
+				LoadTatCaNhanVien();
 			}
 		});
 		
@@ -292,13 +294,15 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		//Add thông tin vào bảng
+		/*Add thông tin vào bảng
 		try {
 			dao_nhanvien.loadData("select * from NhanVien ", tableModel); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		*/
+		LoadTatCaNhanVien();
+		ThemDuLieuVaoCbLoaiCV();
 	}
 	public void actionPerformed(ActionEvent e) {
 		
@@ -315,7 +319,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 				if (!timkiemma.equals("")) {
 					tableModel.setRowCount(0);
 					try {
-						dao.loadData("select * from NhanVien where maNhanVien like N'%" + timkiemma + "%'", tableModel);
+						dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where maNhanVien like N'%" + timkiemma + "%'", tableModel);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -326,7 +330,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 					if (!timkiemten.equals("")) {
 						tableModel.setRowCount(0);
 						try {
-							dao.loadData("select * from NhanVien where tenNhanVien like N'%" + timkiemten + "%'", tableModel);
+							dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where tenNhanVien like N'%" + timkiemten + "%'", tableModel);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -337,7 +341,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 						if (!timkiemns.equals("")) {
 							tableModel.setRowCount(0);
 							try {
-								dao.loadData("select * from NhanVien where ngaySinh like N'%" + timkiemns + "%'", tableModel);
+								dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where ngaySinh like N'%" + timkiemns + "%'", tableModel);
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
@@ -348,7 +352,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 							if (!timkiemsdt.equals("")) {
 								tableModel.setRowCount(0);
 								try {
-									dao.loadData("select * from NhanVien where dienThoai like N'%" + timkiemsdt + "%'", tableModel);
+									dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where dienThoai like N'%" + timkiemsdt + "%'", tableModel);
 								} catch (SQLException e1) {
 									e1.printStackTrace();
 								}
@@ -359,7 +363,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 								if (!timsocmnd.equals("")) {
 									tableModel.setRowCount(0);
 									try {
-										dao.loadData("select * from NhanVien where soCMND like N'%" + timsocmnd + "%'", tableModel);
+										dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu  where soCMND like N'%" + timsocmnd + "%'", tableModel);
 									} catch (SQLException e1) {
 										e1.printStackTrace();
 									}
@@ -370,7 +374,7 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 									if (!timchucvu.equals("")) {
 										tableModel.setRowCount(0);
 										try {
-											dao.loadData("select * from NhanVien where chucVu like N'%" + timchucvu + "%'", tableModel);
+											dao.loadData("select NhanVien.maNhanVien,NhanVien.tenNhanVien,NhanVien.gioiTinh,NhanVien.ngaySinh,NhanVien.dienThoai,NhanVien.soCMND,ChucVu.tenChucVu from NhanVien INNER JOIN ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where tenChucVu like N'%" + timchucvu + "%'", tableModel);
 										} catch (SQLException e1) {
 											e1.printStackTrace();
 										}
@@ -385,31 +389,30 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 					}
 					return;
 				}
-			
-			
-	
-			
-				
-			
 		
-			
-			
-			
-		
-			
-			
-		
-			
-			
-			
-		
-			
-			
 			
 		}
 		}
 	
-
+	public void LoadTatCaNhanVien() {
+		ArrayList<NhanVien> dsnv=new ArrayList<NhanVien>();
+		dsnv=dao.getalltbNhanVien();
+		for(NhanVien nv:dsnv) {
+			ChucVu lcv=new ChucVu();
+			lcv=daoCV.getChucVuTheoMa(nv.getChucVu().getMaChucVu());
+			tableModel.addRow(new Object[] {
+					nv.getMaNhanVien(),nv.getTenNhanVien(),nv.getGioiTinh(),nv.getNgaySinh(),nv.getDienThoai(),nv.getSoCMND(),lcv.getTenChucVu()
+			});
+		}
+		
+	}
+	public void ThemDuLieuVaoCbLoaiCV() {
+		ArrayList<ChucVu> dsCV=new ArrayList<ChucVu>();
+		dsCV=daoCV.getTatCaLoaiCV();
+		for(ChucVu lcv: dsCV) {
+			cbChucVu.addItem(lcv.getTenChucVu());
+		}
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {

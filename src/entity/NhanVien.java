@@ -21,7 +21,7 @@ public class NhanVien implements Serializable{
 	private Date ngaySinh;
 	private String dienThoai;
 	private String soCMND;
-	private String chucVu;
+	private ChucVu ChucVu;
 	
 	public NhanVien() {
 		// TODO Auto-generated constructor stub
@@ -32,9 +32,11 @@ public class NhanVien implements Serializable{
 		this.maNhanVien = maNhanVien;
 	}
 
+	
+
+
 	public NhanVien(String maNhanVien, String tenNhanVien, String gioiTinh, Date ngaySinh, String dienThoai,
-			String soCMND, String chucVu) {
-		
+			String soCMND, entity.ChucVu chucVu) {
 		super();
 		this.maNhanVien = maNhanVien;
 		this.tenNhanVien = tenNhanVien;
@@ -42,10 +44,8 @@ public class NhanVien implements Serializable{
 		this.ngaySinh = ngaySinh;
 		this.dienThoai = dienThoai;
 		this.soCMND = soCMND;
-		this.chucVu = chucVu;
-
+		ChucVu = chucVu;
 	}
-
 
 	public String getMaNhanVien() {
 		return maNhanVien;
@@ -97,22 +97,24 @@ public class NhanVien implements Serializable{
 		this.soCMND = soCMND;
 	}
 
-	public String getChucVu() {
-		return chucVu;
-	}
-
-	public void setChucVu(String chucVu) {
-		this.chucVu = chucVu;
-	}
+	
 
 	
 
+
+	public ChucVu getChucVu() {
+		return ChucVu;
+	}
+
+	public void setChucVu(ChucVu chucVu) {
+		ChucVu = chucVu;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((chucVu == null) ? 0 : chucVu.hashCode());
+		result = prime * result + ((ChucVu == null) ? 0 : ChucVu.hashCode());
 		result = prime * result + ((dienThoai == null) ? 0 : dienThoai.hashCode());
 		result = prime * result + ((gioiTinh == null) ? 0 : gioiTinh.hashCode());
 		result = prime * result + ((maNhanVien == null) ? 0 : maNhanVien.hashCode());
@@ -121,7 +123,6 @@ public class NhanVien implements Serializable{
 		result = prime * result + ((tenNhanVien == null) ? 0 : tenNhanVien.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -132,10 +133,10 @@ public class NhanVien implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		NhanVien other = (NhanVien) obj;
-		if (chucVu == null) {
-			if (other.chucVu != null)
+		if (ChucVu == null) {
+			if (other.ChucVu != null)
 				return false;
-		} else if (!chucVu.equals(other.chucVu))
+		} else if (!ChucVu.equals(other.ChucVu))
 			return false;
 		if (dienThoai == null) {
 			if (other.dienThoai != null)
@@ -170,6 +171,7 @@ public class NhanVien implements Serializable{
 		return true;
 	}
 
+	
 
 
 	

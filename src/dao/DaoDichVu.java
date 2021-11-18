@@ -158,6 +158,29 @@ public class DaoDichVu {
 		}
 		return n > 0;
 	}
+	public boolean suaDichVu(DichVu dv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement(
+					"update DichVu set tenDichVu=?, giaTien=?, tenLoaiDV? where maDichVu=?");
+			ps.setString(1, dv.getTenDichVu());
+			ps.setDouble(2, dv.getGiaTien());
+			ps.setString(3, dv.getLoaiDichVu().getTenLoaiDV());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	public boolean xoaDichVu(String maDV) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();

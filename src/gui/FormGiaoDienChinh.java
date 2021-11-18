@@ -49,6 +49,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenu mnQLKhachHang;
 	private JMenuItem mntmSuaNV;
 	private JMenuItem mntmTimKiemNV;
+	private JMenuItem mntmChucVu;
 	private JMenuItem mntmSuaKH;
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
@@ -78,13 +79,18 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		
 		mntmSuaNV = new JMenuItem("Cập nhật nhân viên");
 		mntmSuaNV.setIcon(new ImageIcon("img\\sua.png"));
-		mntmSuaNV.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		mntmSuaNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmSuaNV);
 		
 		mntmTimKiemNV = new JMenuItem("Tìm kiếm");
 		mntmTimKiemNV.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmTimKiemNV);
+		
+		mntmChucVu = new JMenuItem("Chức vụ");
+		mntmChucVu.setIcon(new ImageIcon("img\\sua.png"));
+		mntmChucVu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnQLNhanVien.add(mntmChucVu);
 		
 		mnQLKhachHang = new JMenu("Khách Hàng");
 		mnQLKhachHang.setIcon(new ImageIcon("img\\img\\icon1.png"));
@@ -191,6 +197,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemKH.addActionListener(this);
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
+		mntmChucVu.addActionListener(this);
 		//mntmDatDV.addActionListener(this);
 		
 		contentPane = new JPanel();
@@ -321,6 +328,10 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		}
 		if(o.equals(mntmTimKiemNV)) {
 			changeScreen(new FormTimKiemNV());
+			
+		}
+		if(o.equals(mntmChucVu)) {
+			changeScreen(new FormThemCV());
 			
 		}
 		if(o.equals(mntmSuaKH)) {

@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
+import entity.ChucVu;
 import entity.NhanVien;
 
 public class DaoNhanVien {
@@ -30,7 +31,7 @@ public class DaoNhanVien {
 			vector.add(rs.getDate("ngaySinh")); 
 			vector.add(rs.getString("dienThoai")); 
 			vector.add(rs.getString("soCMND")); 
-			vector.add(rs.getString("chucVu")); 
+			vector.add(rs.getString("tenChucVu")); 
 			tableModel.addRow(vector);
 		}
 	}
@@ -45,14 +46,15 @@ public class DaoNhanVien {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				String manv=rs.getString("maNhanVien");
-				String tennv=rs.getString("tenNhanVien");
-				String gt=rs.getString("gioiTinh");
-				Date ns=rs.getDate("ngaySinh");
-				String dt=rs.getString("dienThoai");
-				String socm=rs.getString("soCMND");
-				String cv=rs.getString("chucVu");
-				NhanVien nv= new NhanVien(manv,tennv,gt,ns,dt,socm,cv);
+				String manv=rs.getString(1);
+				String tennv=rs.getString(2);
+				String gt=rs.getString(3);
+				Date ns=rs.getDate(4);
+				String dt=rs.getString(5);
+				String socm=rs.getString(6);
+				String maChucVu=rs.getString(7);
+				ChucVu lcv=new ChucVu(maChucVu);
+				NhanVien nv= new NhanVien(manv,tennv,gt,ns,dt,socm,lcv);
 				dsnhanvien.add(nv);
 			}
 		}
@@ -68,14 +70,14 @@ public class DaoNhanVien {
 		PreparedStatement ps = null;
 		int n = 0;
 		try {
-			ps = con.prepareStatement("insert into NhanVien(maNhanVien, tenNhanVien, gioiTinh, ngaySinh,dienThoai,soCMND, chucVu) VALUES(?,?,?,?,?,?,?)");
+			ps = con.prepareStatement("insert into NhanVien(maNhanVien, tenNhanVien, gioiTinh, ngaySinh,dienThoai,soCMND, maChucVu) VALUES(?,?,?,?,?,?,?)");
 			ps.setString(1, nv.getMaNhanVien());
 			ps.setString(2, nv.getTenNhanVien());
 			ps.setString(3, nv.getGioiTinh());
 			ps.setDate(4, nv.getNgaySinh());
 			ps.setString(5, nv.getDienThoai());
 			ps.setString(6, nv.getSoCMND());
-			ps.setString(7, nv.getChucVu());
+			ps.setString(7, nv.getChucVu().getMaChucVu());
 			n = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,13 +97,13 @@ public class DaoNhanVien {
 		PreparedStatement ps = null;
 		int n = 0;
 		try {
-			ps = con.prepareStatement("update NhanVien set tenNhanVien=?, gioiTinh=?, ngaySinh=?, dienThoai=?, soCMND=?, chucVu=?  where maNhanVien=?");
+			ps = con.prepareStatement("update NhanVien set tenNhanVien=?, gioiTinh=?, ngaySinh=?, dienThoai=?, soCMND=?, maChucVu=?  where maNhanVien=?");
 			ps.setString(1, nv.getTenNhanVien());
 			ps.setString(2, nv.getGioiTinh());
 			ps.setDate(3, nv.getNgaySinh());
 			ps.setString(4, nv.getDienThoai());
 			ps.setString(5, nv.getSoCMND());
-			ps.setString(6, nv.getChucVu());
+			ps.setString(6, nv.getChucVu().getMaChucVu());
 			ps.setString(7, nv.getMaNhanVien());
 			n = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -133,7 +135,8 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
@@ -155,7 +158,8 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
@@ -177,7 +181,8 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
@@ -199,7 +204,8 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
@@ -221,18 +227,19 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
 	/*
 	 tìm nhân viên theo chuc vu NhanVien
 	 */
-	public NhanVien getNhanvienByChucVuNhanVien(String chucVu) throws SQLException {
+	public NhanVien getNhanvienByChucVuNhanVien(String maChucVu) throws SQLException {
 		NhanVien nv = null;
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
-		String sql = "select * from NhanVien where chucVu = '" + chucVu + "'";
+		String sql = "select * from NhanVien where maChucVu = '" + maChucVu + "'";
 		PreparedStatement ps = con.prepareStatement(sql);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
@@ -243,7 +250,8 @@ public class DaoNhanVien {
 			String phone = rs.getString(5);
 			String cmnd = rs.getString(6);
 			String chucvu = rs.getString(7);
-			nv = new NhanVien(maNV, ten, gt, ns, phone, cmnd,chucvu);
+			ChucVu lcv=new ChucVu();
+			nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
 		}
 		return nv;
 	}
@@ -263,8 +271,5 @@ public class DaoNhanVien {
 		}
 		return false;
 	}
-	public boolean delCongNhan(String text) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 }

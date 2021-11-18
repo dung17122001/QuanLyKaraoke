@@ -47,7 +47,24 @@ public class PhatSinhMa {
 		}
 		return maddp;
 	}
-	
+	public String maDichVu() {
+		String madv="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('DV', RIGHT(CONCAT('000',ISNULL(right(max(maDichVu),3),0) + 1),3)) from [dbo].[DichVu] where maDichVu like N'DV%'";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			madv = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return madv;
+	}
 	public String maKhachHang() {
 		String makh="";
 		try {

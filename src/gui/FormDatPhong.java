@@ -206,7 +206,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		}
 		
 		//Lấy tên khách hàng đã thêm mới nhất
-		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
+		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHang());
 		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
 		
 		//lấy giờ hiện tại cho cbbox giờ và phút

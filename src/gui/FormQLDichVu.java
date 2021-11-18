@@ -338,6 +338,36 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 				} else
 					JOptionPane.showMessageDialog(this, "Lỗi");
 		}
+		if(o.equals(btnSua)) {
+			
+			if (table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn dịch vụ cần sửa");
+			} else {
+				String maDV=txtID.getText();
+				String tenDV=txtTenDV.getText();
+				Double giaDV=Double.parseDouble(txtGiaDV.getText());
+				String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
+				
+				
+				LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
+				DichVu dv=new DichVu(maDV, tenDV, giaDV, ldv);
+				
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa dịch vụ này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoDichVu.suaDichVu(dv);
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Đã sửa");
+					XoaTrang();
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
+			}
+			
+		}
 		if(o.equals(btnXoa)) {
 			String maDV=txtID.getText();
 			if (table.getSelectedRow() == -1) {

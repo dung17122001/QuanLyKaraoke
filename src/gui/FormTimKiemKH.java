@@ -353,9 +353,8 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 									}
 									txtTimSocmKH.setText("");
 								} else {
-									JOptionPane.showMessageDialog(this, "Số cmnd khách hàng gồm xxxxxxxxx ! \n Tìm kiếm gần đúng", "Lỗi",
+									JOptionPane.showMessageDialog(this, "Nhập thông tin cần tìm", "Lỗi",
 											JOptionPane.ERROR_MESSAGE);
-									txtTimSocmKH.requestFocus();
 									return;
 								}
 							
