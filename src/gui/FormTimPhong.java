@@ -29,11 +29,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 
 public class FormTimPhong extends JPanel implements ActionListener{
-
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel dfPhong;
 	private JTable tablePhong;
@@ -135,11 +131,11 @@ public class FormTimPhong extends JPanel implements ActionListener{
 		}
 		
 //		thêm dữ liệu vào table
-//		ThemDuLieuVaoTable();
+		loadTatCaPhong();
+		
 		
 //		Thêm dữ liệu vào combobox loại phòng
 		ThemDuLieuVaoCBLoaiPhong();
-		
 		
 	}
 
@@ -147,26 +143,13 @@ public class FormTimPhong extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(cbLoaiPhong)) {
-			clearTable();
-			LoadTatCaPhongTheoDieuKien();
-//			try {
-//				daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong"
-//				+ " where LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem() + "' and Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem()+"' ", dfPhong);
-//			} catch (SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+//			clearTable();
+//			LoadTatCaPhongTheoDieuKien();
+			
 		}
 		if(o.equals(cbTrinhTrang)) {
-		clearTable();
-		LoadTatCaPhongTheoDieuKien();
-//			try {
-//				daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong"
-//				+ " ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem()+"' and LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem() + "'", dfPhong);
-//			} catch (SQLException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+//		clearTable();
+//		LoadTatCaPhongTheoDieuKien();
 		}
 		if(o.equals(btnTimKiem)) {
 			if(txtTimKiem.getText().equals(""))
@@ -174,9 +157,6 @@ public class FormTimPhong extends JPanel implements ActionListener{
 			else {
 				clearTable();
 				HienThiPhongTheoThongTinTimKiem();
-//					daoPhong.getDuLieuPhong("SELECT Phong.maPhong, Phong.tenPhong, LoaiPhong.tenLoai, Phong.giaPhong, Phong.trinhTrang FROM Phong INNER JOIN LoaiPhong"
-//					+ " ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where (Phong.trinhTrang like N'"+cbTrinhTrang.getSelectedItem().toString()+"' and LoaiPhong.tenLoai like N'" + cbLoaiPhong.getSelectedItem().toString() + "') "
-//					+ "and (Phong.maPhong=N'"+ txtTimKiem.getText() +"' or Phong.tenPhong=N'"+ txtTimKiem.getText() +"')"+ "", dfPhong);
 				int i=dfPhong.getRowCount();
 				if(i==0)
 					JOptionPane.showMessageDialog(this, "Không có phòng nào khớp với thông tin tìm kiếm");
@@ -185,6 +165,7 @@ public class FormTimPhong extends JPanel implements ActionListener{
 		}
 		if(o.equals(btnReset)) {
 			clearTable();
+			loadTatCaPhong();
 		}
 		
 	}
@@ -220,6 +201,17 @@ public class FormTimPhong extends JPanel implements ActionListener{
 	public void HienThiPhongTheoThongTinTimKiem() {
 		ArrayList<Phong> dsp=new ArrayList<Phong>();
 		dsp=daoPhong.getPhongTheoThongTinTimKiem(cbTrinhTrang.getSelectedItem().toString(),cbLoaiPhong.getSelectedItem().toString(),txtTimKiem.getText());
+		for(Phong p:dsp) {
+			LoaiPhong lp=new LoaiPhong();
+			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());
+			dfPhong.addRow(new Object[] {
+					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
+			});
+		}
+	}
+	public void loadTatCaPhong() {
+		ArrayList<Phong> dsp=new ArrayList<Phong>();
+		dsp=daoPhong.getTatCaPhong();
 		for(Phong p:dsp) {
 			LoaiPhong lp=new LoaiPhong();
 			lp=daoLoaiPhong.getLoaiPhongTheoMa(p.getLoaiPhong().getMaLoaiPhong());

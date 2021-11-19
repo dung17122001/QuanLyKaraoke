@@ -414,29 +414,33 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		if(o.equals(btnThemDV)) {
 			int i=tableHoaDon.getSelectedRow();
 			int count=0;
-			for(int j=0;j<tableHangHoa.getRowCount();j++) {
-				if(cbTenDV.getSelectedItem().toString().equals(dfHangHoa.getValueAt(j, 2).toString())) {
+			if(dfHoaDon.getValueAt(i, 4).equals("Chờ thanh toán")) {
+				for(int j=0;j<tableHangHoa.getRowCount();j++) {
+					if(cbTenDV.getSelectedItem().toString().equals(dfHangHoa.getValueAt(j, 2).toString())) {
+						DichVu dv=daoDichVu.getDichVuTheoTen(cbTenDV.getSelectedItem().toString());
+						daoHoaDon.capNhatSoLuongDV(dfHoaDon.getValueAt(i, 0).toString(),dv.getMaDichVu() ,(int) txtSL.getValue());
+						JOptionPane.showMessageDialog(this, "Dịch vụ này đã có và số lượng đã được cộng thêm");
+						clearTableChiTietHoaDon();
+						daoHoaDon.LayThongTinPhongTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+						daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+						break;
+					}
+					count++;
+				}
+				if(count==tableHangHoa.getRowCount()) {
 					DichVu dv=daoDichVu.getDichVuTheoTen(cbTenDV.getSelectedItem().toString());
-					daoHoaDon.capNhatSoLuongDV(dfHoaDon.getValueAt(i, 0).toString(),dv.getMaDichVu() ,(int) txtSL.getValue());
-					JOptionPane.showMessageDialog(this, "Dịch vụ này đã có và số lượng đã được cộng thêm");
+					HoaDon hd=new HoaDon(dfHoaDon.getValueAt(i, 0).toString());
+					ChiTietHoaDonDichVu ctdhdv=new ChiTietHoaDonDichVu(hd, dv, (int)txtSL.getValue());
+					daoCTHoaDonDichVu.themChiTietHDDichVu(ctdhdv);
+					JOptionPane.showMessageDialog(this, "Đã thêm dịch vụ vào hóa đơn");
 					clearTableChiTietHoaDon();
 					daoHoaDon.LayThongTinPhongTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 					daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-					break;
 				}
-				count++;
 			}
-			if(count==tableHangHoa.getRowCount()) {
-				DichVu dv=daoDichVu.getDichVuTheoTen(cbTenDV.getSelectedItem().toString());
-				HoaDon hd=new HoaDon(dfHoaDon.getValueAt(i, 0).toString());
-				ChiTietHoaDonDichVu ctdhdv=new ChiTietHoaDonDichVu(hd, dv, (int)txtSL.getValue());
-				daoCTHoaDonDichVu.themChiTietHDDichVu(ctdhdv);
-				JOptionPane.showMessageDialog(this, "Đã thêm dịch vụ vào hóa đơn");
-				clearTableChiTietHoaDon();
-				daoHoaDon.LayThongTinPhongTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-				daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+			else {
+				JOptionPane.showMessageDialog(this, "Hóa đơn đã được thanh toán nên không được phép thêm");
 			}
-			
 			
 		}
 		if(o.equals(btnKetThuc)) {
@@ -455,17 +459,26 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		}
 		if(o.equals(btnThanhToan)) {
 			int i=tableHoaDon.getSelectedRow();
-			tienNhan=Double.parseDouble(txtTienNhan.getText());
-			if(tienNhan>tongTien) {
-				tienThoi=tienNhan-tongTien;
-				txtTienThoi.setText(tien.format(tienThoi));
-				daoHoaDon.capNhatTrangThaiHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-				daoPhong.updatePhongThanhTrong(dfHoaDon.getValueAt(i, 1).toString());
-				JOptionPane.showMessageDialog(this, "Hóa đơn đã được thanh toán");
-			}
+			if(tableHoaDon.getSelectedRow()==-1)
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn cần thanh toán");
+			else if(txtTongTien.getText().equals(""))
+				JOptionPane.showMessageDialog(this, "Vui lòng xác nhận trả phòng trước khi thanh toán");
+			else if(txtTienNhan.getText().equals(""))
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập số tiền khách đã đưa");
 			else {
-				JOptionPane.showMessageDialog(this, "Tiền nhận phải lớn hơn tổng tiền của hóa đơn");
+				tienNhan=Double.parseDouble(txtTienNhan.getText());
+				if(tienNhan>tongTien) {
+					tienThoi=tienNhan-tongTien;
+					txtTienThoi.setText(tien.format(tienThoi));
+					daoHoaDon.capNhatTrangThaiHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+					daoPhong.updatePhongThanhTrong(dfHoaDon.getValueAt(i, 1).toString());
+					JOptionPane.showMessageDialog(this, "Hóa đơn đã được thanh toán");
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Tiền nhận phải lớn hơn tổng tiền của hóa đơn");
+				}
 			}
+			
 		}
 		if(o.equals(btnTimKiem)) {
 			clearTableHoaDon();

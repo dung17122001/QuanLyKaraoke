@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -22,13 +23,14 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
-import dao.DaoPhong;
 import dao.DaoDichVu;
 import dao.DaoHoaDon;
+import dao.DaoPhong;
 
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 
 public class FormThongKeDoanhThu extends JPanel implements ActionListener{
@@ -45,7 +47,9 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	private DaoDichVu daoDichVu=new DaoDichVu();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private JComboBox<String> cbThoiGian;
-	
+	public static double tongTienPhong=0.0,tongTienDV=0.0;
+	private double tongDoanhThu=0.0;
+	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -64,12 +68,12 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		
 		JLabel lbThoiGian = new JLabel("Thời gian cần thống kê:");
 		lbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbThoiGian.setBounds(43, 17, 198, 30);
+		lbThoiGian.setBounds(43, 34, 198, 30);
 		panel_1.add(lbThoiGian);
 		
 		cbThoiGian = new JComboBox<String>();
 		cbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbThoiGian.setBounds(268, 17, 314, 30);
+		cbThoiGian.setBounds(273, 34, 314, 30);
 		cbThoiGian.addItem("Hôm nay");
 		cbThoiGian.addItem("Tuần này");
 		cbThoiGian.addItem("Tháng này");
@@ -163,21 +167,79 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnThongKe)) {
+			clearTable();
 			if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
+				tongTienPhong=0.0;
+				tongTienDV=0.0;
+				tongDoanhThu=0.0;
 				daoHoaDon.ThongKeDoanhThuPhongTheoNgay();
+				txtPhong.setText(tien.format(tongTienPhong));
+				daoHoaDon.ThongKeDoanhThuDichVuTheoNgay();
+				txtDichVu.setText(tien.format(tongTienDV));
+				tongDoanhThu=tongTienDV+tongTienPhong;
+				txtDoanhThu.setText(tien.format(tongDoanhThu));
+				int i=tableHangHoa.getRowCount();
+				if(i==0) {
+					JOptionPane.showMessageDialog(this, "Không có thông tin nào được tìm thấy");
+				}
 			}
 			if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
-				
+				tongTienPhong=0.0;
+				tongTienDV=0.0;
+				tongDoanhThu=0.0;
+				clearTable();
+				daoHoaDon.ThongKeDoanhThuPhongTheoTuan();
+				txtPhong.setText(tien.format(tongTienPhong));
+				daoHoaDon.ThongKeDoanhThuDichVuTheoTuan();
+				txtDichVu.setText(tien.format(tongTienDV));
+				tongDoanhThu=tongTienDV+tongTienPhong;
+				txtDoanhThu.setText(tien.format(tongDoanhThu));
+				int i=tableHangHoa.getRowCount();
+				if(i==0) {
+					JOptionPane.showMessageDialog(this, "Không có thông tin nào được tìm thấy");
+				}
 			}
 			if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
-				
+				tongTienPhong=0.0;
+				tongTienDV=0.0;
+				tongDoanhThu=0.0;
+				clearTable();
+				daoHoaDon.ThongKeDoanhThuPhongTheoThang();
+				txtPhong.setText(tien.format(tongTienPhong));
+				daoHoaDon.ThongKeDoanhThuDichVuTheoThang();
+				txtDichVu.setText(tien.format(tongTienDV));
+				tongDoanhThu=tongTienDV+tongTienPhong;
+				txtDoanhThu.setText(tien.format(tongDoanhThu));
+				int i=tableHangHoa.getRowCount();
+				if(i==0) {
+					JOptionPane.showMessageDialog(this, "Không có thông tin nào được tìm thấy");
+				}
 			}
 			if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
-				
+				tongTienPhong=0.0;
+				tongTienDV=0.0;
+				tongDoanhThu=0.0;
+				clearTable();
+				daoHoaDon.ThongKeDoanhThuPhongTheoNam();
+				txtPhong.setText(tien.format(tongTienPhong));
+				daoHoaDon.ThongKeDoanhThuDichVuTheoNam();
+				txtDichVu.setText(tien.format(tongTienDV));
+				tongDoanhThu=tongTienDV+tongTienPhong;
+				txtDoanhThu.setText(tien.format(tongDoanhThu));
+				int i=tableHangHoa.getRowCount();
+				if(i==0) {
+					JOptionPane.showMessageDialog(this, "Không có thông tin nào được tìm thấy");
+				}
 			}
 		}
 		if(o.equals(btnInThongKe)) {
 			
+		}
+	}
+	
+	private void clearTable() {
+		while (tableHangHoa.getRowCount() > 0) {
+			dfHangHoa.removeRow(0);
 		}
 	}
 }

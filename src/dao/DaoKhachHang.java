@@ -280,5 +280,27 @@ public class DaoKhachHang {
 		
 		return kh;	
 	}
+	public KhachHang getKhachHangBangSDTHoacCMND(String text){
+		KhachHang kh = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		try {
+			String sql = "select * from KhachHang where soDienThoai = '" + text + "' or soCMND='"+text+"'";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				String maKH = rs.getString(1);
+				String ten = rs.getString(2);
+				String diachi = rs.getString(3);
+				String phone = rs.getString(4);
+				String cmnd = rs.getString(5);
+				kh = new KhachHang(maKH, ten, diachi, phone, cmnd);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return kh;
+	}
 }
 
