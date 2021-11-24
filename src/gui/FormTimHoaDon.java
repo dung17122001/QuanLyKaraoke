@@ -525,7 +525,6 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		}
 	}
 	
-//	String maHoaDon,String ngayLap,String hoTenKh,String namSinh,String soDT,String diaChi,String soLuong,String tongTien,String tenNhanVien,String tienThoi
 	public void setDuLieuFrmInHd() {
 		FrmXuatHD.clearTable();
 		int i=tableHoaDon.getSelectedRow();
@@ -549,3 +548,4 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		daoHoaDon.LayThongTinDichVuTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 	}
 }
+

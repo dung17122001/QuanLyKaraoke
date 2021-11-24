@@ -157,20 +157,13 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		btnXoa.setFocusable(false);
 		pnChucNang.add(btnXoa);
 		
-		btnCapNhat= new JButton("Tải lại");
+		btnCapNhat= new JButton("Xóa trắng");
 		btnCapNhat.setForeground(SystemColor.controlText);
 		btnCapNhat.setBackground(new Color(255, 255, 153));
 		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
 		btnCapNhat.setBounds(950, 10, 150, 30);
 		btnCapNhat.setFocusable(false);
 		pnChucNang.add(btnCapNhat);
-		btnCapNhat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				reloadData();
-			}
-		});
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -341,15 +334,48 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnThem)) {
-			FormThemKhachHang formThemKH = new FormThemKhachHang();
-			formThemKH.setVisible(true);
+			String ma = txtID.getText();
+			String ten = txtTenKh.getText();
+			String diachi = txtDiachi.getText();
+			String sdt = txtSdt.getText();
+			String cmnd = txtCmnd.getText();
+			KhachHang kh =new KhachHang(ma,ten,diachi,sdt,cmnd);
+			try {
+				if (dao.themKhachHang(kh)) {
+					clearTable();
+					reloadData();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				}else {
+					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 		if(o.equals(btnSua)) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
-				FormSuaKH formSua = new FormSuaKH(txtID.getText());
-				formSua.setVisible(true);	
-			} else {
+				String ma = txtID.getText();
+				String ten = txtTenKh.getText();
+				String diachi = txtDiachi.getText();
+				String sdt = txtSdt.getText();
+				String cmnd = txtCmnd.getText();
+				KhachHang kh =new KhachHang(ma,ten,diachi,sdt,cmnd);
+				try {
+					if (dao.suaThongtinKhachHang(kh)) {
+						clearTable();
+						reloadData();
+						JOptionPane.showMessageDialog(this, "Sửa thành công");
+					} else {
+						JOptionPane.showMessageDialog(this, "Lỗi");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			
+		}
+			else {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần cập nhật thông tin");
 			}
 		}
@@ -376,6 +402,23 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 			} else
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng để xóa");
 		}
+		if(o.equals(btnCapNhat)) {
+			XoaTrang();
+		}
+	}
+
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtID.setText("");
+		txtTenKh.setText("");
+		txtDiachi.setText("");
+		txtSdt.setText("");
+		txtCmnd.setText("");
+		
 	}
 
 }

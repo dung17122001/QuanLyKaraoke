@@ -200,13 +200,13 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		lbSoLuongDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lbSoLuongDV.setBounds(375, 33, 87, 30);
 		panelDichVu.add(lbSoLuongDV);
-		
+
 		//SpinnerModel spinnerModel = new SpinnerNumberModel(1, 1, 100, 1);
-        spinner = new JSpinner();//spinnerModel
-        spinner = new JSpinner();
-        spinner.setValue(1);
-        spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        spinner.setBounds(448, 34, 50, 30);
+		spinner = new JSpinner();//spinnerModel
+		spinner = new JSpinner();
+		spinner.setValue(1);
+		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		spinner.setBounds(448, 34, 50, 30);
 		panelDichVu.add(spinner);
 
 		JLabel lbThongTinHD = new JLabel("Thông tin hóa đơn");
@@ -246,7 +246,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			cbPhut.addItem(i);
 		}
 		panel.add(cbPhut);
-		
+
 		txtTimKH = new JTextField();
 		txtTimKH.setForeground(Color.GRAY);
 		txtTimKH.setFont(new Font("Tahoma", Font.PLAIN, 10));
@@ -254,18 +254,18 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		panel.add(txtTimKH);
 		txtTimKH.setText("Nhập số điện thoại hoặc số CMND của khách hàng");
 		txtTimKH.setColumns(10);
-		
+
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setBackground(Color.ORANGE);
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTimKiem.setBounds(416, 19, 146, 30);
 		panel.add(btnTimKiem);
-		
+
 		JLabel lbDT = new JLabel("Số điện thoại:");
 		lbDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lbDT.setBounds(373, 10, 104, 30);
 		panelChiTietHD.add(lbDT);
-		
+
 		lbSDT = new JLabel("");
 		lbSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lbSDT.setBounds(476, 10, 179, 30);
@@ -296,20 +296,20 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		ThemDuLieuVaoCBLoaiDichVu();
 
 		//Lấy tên khách hàng đã thêm mới nhất
-//		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
-//		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
-		
-		
+		//		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
+		//		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
+
+
 		//lấy giờ hiện tại cho cbbox giờ và phút
 		cbGio.setSelectedItem(Calendar.getInstance().getTime().getHours());
 		cbPhut.setSelectedItem(Calendar.getInstance().getTime().getMinutes());
 		//mặc định khách hàng vừa thêm vào
 		khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
-		
+
 		//Hiển thị thông tin khách hàng
 		lbTenKhachHang.setText(khachHang.getTenKhachHang());
 		lbSDT.setText(khachHang.getSoDienThoai());
-		
+
 	}
 
 	@Override
@@ -327,7 +327,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			}
 			else
 				lbTenKhachHang.setText(khachHang.getTenKhachHang());
-				lbSDT.setText(khachHang.getSoDienThoai());
+			lbSDT.setText(khachHang.getSoDienThoai());
 		}
 		if(o.equals(cbLoaiDV)) {
 			cbTenDV.removeAllItems();
@@ -348,7 +348,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			}
 			else 
 				JOptionPane.showMessageDialog(this, "Phòng này đang được sử dụng, vui lòng chọn phòng khác");
-			
+
 		}
 		if(o.equals(btnThemDV)) {
 			DichVu dv=new DichVu();
@@ -447,7 +447,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			daoCTHoaDonPhong.themChiTietHDPhong(cthdp);
 			daoPhong.updateTrinhTrangPhong(p.getMaPhong());
 		}
-		
+
 	}
 	private void ThemVaoCTHDDichVu(int vt) {
 		DichVu dv=daoDichVu.getDichVuTheoMa(dfDichVu.getValueAt(vt, 1).toString());
@@ -456,7 +456,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			ChiTietHoaDonDichVu cthddv=new ChiTietHoaDonDichVu(hoaDon, dv, soLuong);
 			daoCTHoaDonDichVu.themChiTietHDDichVu(cthddv);
 		}
-		
+
 	}
 	private void clearTablePhong() {
 		while (tablePhong.getRowCount() > 0) {
@@ -468,5 +468,6 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			dfDichVu.removeRow(0);
 		}
 	}
-	
 }
+
+
