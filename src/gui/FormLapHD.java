@@ -7,6 +7,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.BorderFactory;
@@ -27,6 +30,7 @@ import dao.DaoPhong;
 import dao.DaoCTHoaDonDichVu;
 import dao.DaoCTHoaDonPhong;
 import dao.DaoDichVu;
+import dao.DaoDonDatPhong;
 import dao.DaoHoaDon;
 import dao.DaoLoaiDV;
 import dao.DaoLoaiPhong;
@@ -70,6 +74,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
 	private DaoCTHoaDonDichVu daoCTHoaDonDichVu=new DaoCTHoaDonDichVu();
+	private DaoDonDatPhong daoDonDatPhong=new DaoDonDatPhong();
 	private int stt=1;
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 	private PhatSinhMa ma=new PhatSinhMa();
@@ -80,7 +85,8 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	private JSpinner spinner;
 	private JTextField txtTimKH;
 	private KhachHang khachHang;
-	private JLabel lbTenKhachHang;
+	private JLabel lbTenKhachHang,lbSDT;
+	private FrmXuatHD frmXuatHD;
 
 	public FormLapHD() {
 
@@ -126,17 +132,13 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 
 		btnThemPhong = new JButton("Thêm phòng vào hóa đơn");
 		btnThemPhong.setBackground(Color.ORANGE);
-		btnThemPhong.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnThemPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThemPhong.setBounds(184, 266, 222, 30);
 		panelPhong.add(btnThemPhong);
 
 
 		JPanel panelChiTietHD = new JPanel();
-		panelChiTietHD.setBounds(665, 40, 677, 431);
+		panelChiTietHD.setBounds(665, 42, 677, 429);
 		panel.add(panelChiTietHD);
 
 		String []headerDV= {"STT","Mã hàng hóa","Tên hàng hóa","Đơn giá","Số lượng","Thành tiền"};
@@ -210,7 +212,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		JLabel lbThongTinHD = new JLabel("Thông tin hóa đơn");
 		lbThongTinHD.setForeground(Color.BLUE);
 		lbThongTinHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbThongTinHD.setBounds(969, 10, 218, 30);
+		lbThongTinHD.setBounds(970, 14, 218, 30);
 		panel.add(lbThongTinHD);
 
 		btnTinhGio = new JButton("Bắt đầu tính giờ");
@@ -258,6 +260,16 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTimKiem.setBounds(416, 19, 146, 30);
 		panel.add(btnTimKiem);
+		
+		JLabel lbDT = new JLabel("Số điện thoại:");
+		lbDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbDT.setBounds(373, 10, 104, 30);
+		panelChiTietHD.add(lbDT);
+		
+		lbSDT = new JLabel("");
+		lbSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbSDT.setBounds(476, 10, 179, 30);
+		panelChiTietHD.add(lbSDT);
 
 		//	Thêm sự kiện
 		btnThemDV.addActionListener(this);
@@ -284,8 +296,9 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		ThemDuLieuVaoCBLoaiDichVu();
 
 		//Lấy tên khách hàng đã thêm mới nhất
-		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
-		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
+//		KhachHang lbkh=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
+//		lbTenKhachHang.setText(""+lbkh.getTenKhachHang());
+		
 		
 		//lấy giờ hiện tại cho cbbox giờ và phút
 		cbGio.setSelectedItem(Calendar.getInstance().getTime().getHours());
@@ -295,6 +308,8 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		
 		//Hiển thị thông tin khách hàng
 		lbTenKhachHang.setText(khachHang.getTenKhachHang());
+		lbSDT.setText(khachHang.getSoDienThoai());
+		
 	}
 
 	@Override
@@ -305,12 +320,14 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			clearTableDichVu();
 			khachHang=daoKhachHang.getKhachHangBangSDTHoacCMND(txtTimKH.getText());
 			if(khachHang==null) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng này");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng này, kết quả trả về khách hàng vừa thêm");
 				khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
 				lbTenKhachHang.setText(khachHang.getTenKhachHang());
+				lbSDT.setText(khachHang.getSoDienThoai());
 			}
 			else
 				lbTenKhachHang.setText(khachHang.getTenKhachHang());
+				lbSDT.setText(khachHang.getSoDienThoai());
 		}
 		if(o.equals(cbLoaiDV)) {
 			cbTenDV.removeAllItems();
@@ -402,6 +419,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	}
 
 	public void LoadTatCaPhong() {
+		//daoDonDatPhong.updateTrangThaiPhong();
 		ArrayList<Phong> dsp=new ArrayList<Phong>();
 		dsp=daoPhong.getTatCaPhong();
 		for(Phong p:dsp) {
@@ -450,4 +468,5 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			dfDichVu.removeRow(0);
 		}
 	}
+	
 }

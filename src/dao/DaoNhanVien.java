@@ -11,7 +11,9 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 import connect.ConnectDB;
 import entity.ChucVu;
+import entity.LoaiPhong;
 import entity.NhanVien;
+import entity.Phong;
 
 public class DaoNhanVien {
 
@@ -272,4 +274,32 @@ public class DaoNhanVien {
 		return false;
 	}
 	
+	public NhanVien getNVTheoHD(String mahd){
+		NhanVien nv = null;
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="SELECT NhanVien.*\r\n"
+					+ "FROM     HoaDon INNER JOIN\r\n"
+					+ "                  NhanVien ON HoaDon.maNhanVien = NhanVien.maNhanVien where maHoaDon=N'"+mahd+"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maNV = rs.getString(1);
+				String ten = rs.getString(2);
+				String gt = rs.getString(3);
+				Date ns = rs.getDate(4);
+				String phone = rs.getString(5);
+				String cmnd = rs.getString(6);
+				String chucvu = rs.getString(7);
+				ChucVu lcv=new ChucVu();
+				nv= new NhanVien(maNV,ten,gt,ns,phone,cmnd,lcv);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return nv;	
+	}
 }

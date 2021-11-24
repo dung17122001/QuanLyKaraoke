@@ -143,6 +143,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		tableHangHoa.setRowHeight(20);
 		tableHangHoa.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
 		tableHangHoa.getTableHeader().setBackground(new Color(255, 204, 102));
+		//tableHangHoa.getColumnModel().getColumn(0).setPreferredWidth(20);
 		JScrollPane scrollHangHoa;
 		panelThongKe.setLayout(null);
 		scrollHangHoa=new JScrollPane(tableHangHoa,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -19,6 +19,7 @@ import entity.Phong;
 import gui.FormThongKeDoanhThu;
 import gui.FormThongKeKhachHang;
 import gui.FormTimHoaDon;
+import gui.FrmXuatHD;
 
 
 public class DaoHoaDon {
@@ -362,6 +363,32 @@ public class DaoHoaDon {
 		}
 	}
 	
+	//in
+	public void LayThongTinPhongTuHoaDonChoHoaDon(String maHD) {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat df=new DecimalFormat("###.0");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT ChiTietHoaDonPhong.maPhong, Phong.tenPhong, Phong.giaPhong\r\n"
+					+ "FROM     ChiTietHoaDonPhong INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong\r\n"
+					+ "where maHoaDon='"+maHD+"'";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			Object [] ds = null;
+			int i=1;
+			while(rs.next()) {
+				ds = new Object [] {i++,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),df.format(FormTimHoaDon.gioDaHat)+" h",tien.format(rs.getDouble(3)*FormTimHoaDon.gioDaHat)}; 
+				FrmXuatHD.tableModel.addRow(ds);
+				
+			}
+			FrmXuatHD.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void LayThongTinDichVuTuHoaDon(String maHD) {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		try {
@@ -377,6 +404,29 @@ public class DaoHoaDon {
 			while(rs.next()) {
 				ds = new Object [] {i++,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))}; 
 				FormTimHoaDon.dfHangHoa.addRow(ds);
+				
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//in
+	public void LayThongTinDichVuTuHoaDonChoHoaDon(String maHD) {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien, ChiTietHoaDonDichVu.soLuong, thanhtien=soLuong*giaTien\r\n"
+					+ "FROM     ChiTietHoaDonDichVu INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu where maHoaDon='"+maHD+"'";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			Object [] ds = null;
+			int i=FrmXuatHD.stt;
+			while(rs.next()) {
+				ds = new Object [] {i++,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))}; 
+				FrmXuatHD.tableModel.addRow(ds);
 				
 			}
 		}catch (SQLException e) {

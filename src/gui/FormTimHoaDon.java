@@ -20,11 +20,13 @@ import dao.DaoDichVu;
 import dao.DaoHoaDon;
 import dao.DaoLoaiDV;
 import dao.DaoLoaiPhong;
+import dao.DaoNhanVien;
 import entity.ChiTietHoaDonDichVu;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.LoaiDichVu;
+import entity.NhanVien;
 
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
@@ -32,11 +34,15 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.border.TitledBorder;
@@ -60,6 +66,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
 	private DaoCTHoaDonDichVu daoCTHoaDonDichVu=new DaoCTHoaDonDichVu();
+	private DaoNhanVien daoNhanVien=new DaoNhanVien();
 	public static int stt=1;
 	private JComboBox<String> cbLoaiDV;
 	private JComboBox<String> cbTenDV;
@@ -71,10 +78,12 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 	private JSpinner txtSL;
 	public static Time gioVao;
 	private Time gioRa;
-	private JButton btnThemDV,btnKetThuc,btnThanhToan,btnTimKiem;
+	private JButton btnThemDV,btnKetThuc,btnThanhToan,btnTimKiem,btnInHoaDon;
 	private double tienPhong=0.0,tienDV=0.0,tongTien=0.0,tienNhan=0.0,tienThoi=0.0;
 	public static Double gioDaHat=0.0;
 	private DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	private FrmXuatHD frmXuatHD= new FrmXuatHD();
 
 	public FormTimHoaDon() {
 		setBounds(0, 0, 1352, 565);
@@ -233,7 +242,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		btnThanhToan.setBounds(1115, 29, 152, 30);
 		panelChiTiet.add(btnThanhToan);
 		
-		JButton btnInHoaDon = new JButton("In hóa đơn");
+		btnInHoaDon = new JButton("In hóa đơn");
 		btnInHoaDon.setBackground(Color.ORANGE);
 		btnInHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInHoaDon.setBounds(1115, 82, 152, 30);
@@ -488,6 +497,13 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 				JOptionPane.showMessageDialog(this, "Không có hóa đơn nào được tìm thấy");
 		}
 		
+		if(o.equals(btnInHoaDon)) {
+			setDuLieuFrmInHd();
+			this.frmXuatHD.setVisible(true);
+			frmXuatHD.setLocationRelativeTo(null);
+			frmXuatHD.printInHoaDon();
+		}
+		
 	}
 	
 	public void ThemDuLieuVaoCBLoaiDichVu() {
@@ -507,5 +523,29 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		while (tableHoaDon.getRowCount() > 0) {
 			dfHoaDon.removeRow(0);
 		}
+	}
+	
+//	String maHoaDon,String ngayLap,String hoTenKh,String namSinh,String soDT,String diaChi,String soLuong,String tongTien,String tenNhanVien,String tienThoi
+	public void setDuLieuFrmInHd() {
+		FrmXuatHD.clearTable();
+		int i=tableHoaDon.getSelectedRow();
+		KhachHang khachHang=daoKhachHang.getKhachHangTheoTen(dfHoaDon.getValueAt(i, 2).toString());
+		NhanVien nv=daoNhanVien.getNVTheoHD(dfHoaDon.getValueAt(i, 0).toString());
+		Calendar c1 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        
+		FrmXuatHD.lblNgayLap1.setText(simpleDateFormat.format(c1.getTime()));
+		FrmXuatHD.lblMaHD.setText(dfHoaDon.getValueAt(i, 0).toString());
+		FrmXuatHD.lblTenKH1.setText(khachHang.getTenKhachHang());
+		FrmXuatHD.lblDCKH1.setText(khachHang.getDiaChi());
+		FrmXuatHD.lblsdtkh1.setText(khachHang.getSoDienThoai());
+		FrmXuatHD.lblTongTien.setText(""+txtTongTien.getText());
+		FrmXuatHD.lblTienNhan.setText(tien.format(tienNhan));
+		FrmXuatHD.lblTienThoi.setText(txtTienThoi.getText());
+		FrmXuatHD.lbTenNV.setText(nv.getTenNhanVien());
+		FrmXuatHD.lbSoCMND.setText(khachHang.getSoCMND());
+		daoHoaDon.LayThongTinPhongTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+		daoHoaDon.LayThongTinDichVuTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 	}
 }
