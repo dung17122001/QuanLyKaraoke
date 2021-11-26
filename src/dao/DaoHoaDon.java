@@ -62,7 +62,7 @@ public class DaoHoaDon {
 					+ "where HoaDon.ngayLap ='"+LocalDate.now()+"' and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				double giaTien=0.0;
@@ -72,6 +72,7 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +96,7 @@ public class DaoHoaDon {
 							+ "group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				double giaTien=0.0;
@@ -103,8 +104,8 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
-				
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,7 +121,7 @@ public class DaoHoaDon {
 					+ "where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				double giaTien=0.0;
@@ -130,6 +131,7 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +147,7 @@ public class DaoHoaDon {
 					+ "where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				double giaTien=0.0;
@@ -155,6 +157,7 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -174,13 +177,14 @@ public class DaoHoaDon {
 					+ " group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))}; 
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -209,13 +213,15 @@ public class DaoHoaDon {
 					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
+			FormThongKeDoanhThu.stt=i;
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -242,13 +248,14 @@ public class DaoHoaDon {
 					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -275,13 +282,14 @@ public class DaoHoaDon {
 					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=1;
+			int i=FormThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
+			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -541,6 +549,7 @@ public class DaoHoaDon {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),gio.format(rs.getDouble(5)/60),tien.format(tongTien)}; 
 				FormThongKeKhachHang.dfKhachHang.addRow(ds);
 			}
+			FormThongKeKhachHang.sokh=i-1;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -579,6 +588,7 @@ public class DaoHoaDon {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),gio.format(rs.getDouble(5)/60),tien.format(tongTien)}; 
 				FormThongKeKhachHang.dfKhachHang.addRow(ds);
 			}
+			FormThongKeKhachHang.sokh=i-1;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -617,6 +627,7 @@ public class DaoHoaDon {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),gio.format(rs.getDouble(5)/60),tien.format(tongTien)}; 
 				FormThongKeKhachHang.dfKhachHang.addRow(ds);
 			}
+			FormThongKeKhachHang.sokh=i-1;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -655,6 +666,7 @@ public class DaoHoaDon {
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),gio.format(rs.getDouble(5)/60),tien.format(tongTien)}; 
 				FormThongKeKhachHang.dfKhachHang.addRow(ds);
 			}
+			FormThongKeKhachHang.sokh=i-1;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

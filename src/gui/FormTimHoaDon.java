@@ -138,7 +138,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		panelDV.add(txtSL);
 		
 		JPanel pnCTHD = new JPanel();
-		pnCTHD.setBounds(689, 10, 653, 377);
+		pnCTHD.setBounds(689, 0, 653, 387);
 		panel.add(pnCTHD);
 		pnCTHD.setLayout(null);
 		
@@ -151,34 +151,34 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		JScrollPane scrollHangHoa;
 		scrollHangHoa=new JScrollPane(tableHangHoa,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollHangHoa.setBorder(BorderFactory.createTitledBorder("Thông tin hóa đơn"));
-		scrollHangHoa.setBounds(10, 84, 633,293);
+		scrollHangHoa.setBounds(10, 66, 633,311);
 		scrollHangHoa.setBackground(new Color(248,248,248));
 		pnCTHD.add(scrollHangHoa);
 		
 		JLabel lbHoaDon = new JLabel("Thông tin hóa đơn");
 		lbHoaDon.setForeground(Color.BLUE);
 		lbHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbHoaDon.setBounds(243, 10, 217, 30);
+		lbHoaDon.setBounds(250, 8, 217, 30);
 		pnCTHD.add(lbHoaDon);
 		
 		JLabel lbTenKH = new JLabel("Tên khách hàng:");
 		lbTenKH.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTenKH.setBounds(10, 48, 130, 30);
+		lbTenKH.setBounds(10, 37, 130, 30);
 		pnCTHD.add(lbTenKH);
 		
 		lbTenKhachHang = new JLabel("");
 		lbTenKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTenKhachHang.setBounds(137, 48, 170, 30);
+		lbTenKhachHang.setBounds(136, 37, 170, 30);
 		pnCTHD.add(lbTenKhachHang);
 		
 		lbDT = new JLabel("Số điện thoại:");
 		lbDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbDT.setBounds(348, 50, 112, 30);
+		lbDT.setBounds(343, 37, 112, 30);
 		pnCTHD.add(lbDT);
 		
 		lbSDT = new JLabel("");
 		lbSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSDT.setBounds(470, 48, 173, 30);
+		lbSDT.setBounds(465, 37, 173, 30);
 		pnCTHD.add(lbSDT);
 		
 		JPanel panelChiTiet = new JPanel();

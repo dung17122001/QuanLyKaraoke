@@ -270,6 +270,9 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 			else if(dfPhong.getValueAt(i, 4).toString().equals("Đang sử dụng")&&da.toString().equals(LocalDate.now().toString())) {
 				JOptionPane.showMessageDialog(this, "Phòng này hiện tại đang được sử dụng");
 			}
+			else if(da.toString().equals("")) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập ngày muốn đặt");
+			}
 			else {
 				Date d = new Date(ngayDat.getDate().getTime());
 				Phong p=daoPhong.getPhongTheoMa(dfPhong.getValueAt(i, 0).toString());

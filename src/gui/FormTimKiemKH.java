@@ -163,13 +163,6 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnCapNhat.setBounds(800, 5, 180, 40);
 		btnCapNhat.setFocusable(false);
 		pnChucNang.add(btnCapNhat);
-		btnCapNhat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				reloadData();
-			}
-		});
 		
 		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -361,8 +354,10 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 							}
 						}
 					}
-				}
-			
+				}		
+		}
+		if(o.equals(btnCapNhat)) {
+			reloadData();
 		}
 	}
 

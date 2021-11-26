@@ -39,6 +39,7 @@ import connect.ConnectDB;
 import entity.DichVu;
 import entity.LoaiDichVu;
 import dao.DaoDichVu;
+import dao.DaoKhachHang;
 import dao.DaoLoaiDV;
 
 public class FormTimKiemDV extends JPanel implements ActionListener, MouseListener {
@@ -141,7 +142,6 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
 		panel.setBounds(0, 260, 1366, 420);
@@ -158,14 +158,14 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 		scrollPane.setBounds(0, 30, 1350, 280);
 		panel.add(scrollPane);
 		
-		String[] header = {"Mã DV", "Tên DV","Giá dịch vụ","Loại dịch vụ"};
+		String[] header = {"Mã DV", "Tên DV","Đơn vị","Giá dịch vụ","Loại dịch vụ"};
 		tableModel = new DefaultTableModel(header, 0){
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-					false, false, false,false
+					false, false, false,false,false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -265,11 +265,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int i = table.getSelectedRow();
-		txtID.setText(tableModel.getValueAt(i, 0).toString());
-		txtTenDV.setText(tableModel.getValueAt(i, 1).toString());
-		txtGiaDV.setText(tableModel.getValueAt(i, 2).toString());
-		cbLoaiDV.setSelectedItem(tableModel.getValueAt(i, 3).toString());
+		// TODO Auto-generated method stub
 	}
 	
 	@Override
@@ -300,10 +296,65 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnTimKiem)) {
+			String timkiemma = txtID.getText().toLowerCase().trim();
+			String timkiemten = txtTenDV.getText().toLowerCase().trim();
+			String timkiemgia = txtGiaDV.getText().toLowerCase().trim();
+			String timtenloaidv =(String) cbLoaiDV.getSelectedItem();
 			
+			//tim theo ma
+			if (!timkiemma.equals("")) {
+				tableModel.setRowCount(0);
+				try {
+					daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where maDichVu like N'%" + timkiemma + "%'", tableModel);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				txtID.setText("");
+			} else {
+				//tim theo ten 
+				
+				if (!timkiemten.equals("")) {
+					tableModel.setRowCount(0);
+					try {
+						daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where tenDichVu like N'%" + timkiemten + "%'", tableModel);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					txtTenDV.setText("");
+				} else {
+					//timkiemgia
+					
+					if (!timkiemten.equals("")) {
+						tableModel.setRowCount(0);
+						try {
+							daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where giaTien like N'%" + timkiemgia + "%'", tableModel);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+						txtGiaDV.setText("");
+					} else {
+						//timtenloaidv
+						
+						if (!timtenloaidv.equals("")) {
+							tableModel.setRowCount(0);
+							try {
+								daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where tenLoaiDV like N'%" + timtenloaidv + "%'", tableModel);
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							}
+							cbLoaiDV.setToolTipText("");
+						} else {
+							
+							return;
+					}
+				return;
+					}
+			}
+		}
 		}
 		if(o.equals(btnCapNhat)) {
-			
+			clearTable();
+			LoadTatCaDichVu();
 		}
 	}
 	
@@ -314,7 +365,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 			LoaiDichVu ldv=new LoaiDichVu();
 			ldv=daoLoaiDV.getDichVuTheoMa(dv.getLoaiDichVu().getMaLoai());
 			tableModel.addRow(new Object[] {
-					dv.getMaDichVu(),dv.getTenDichVu(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
+					dv.getMaDichVu(),dv.getTenDichVu(),dv.getDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
 			});
 		}
 		
@@ -325,6 +376,11 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 		dsldv=daoLoaiDV.getTatCaLoaiDV();
 		for(LoaiDichVu ldv: dsldv) {
 			cbLoaiDV.addItem(ldv.getTenLoaiDV());
+		}
+	}
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
 		}
 	}
 

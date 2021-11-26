@@ -97,7 +97,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		panelThongKe.setBounds(10, 176, 1332, 379);
 		panel.add(panelThongKe);
 		
-		String []header= {"STT","Mã nhân viên","Tên nhân viên","Số hóa đơn đã lập","Ngày lập","Tổng tiền hóa đơn"};
+		String []header= {"STT","Mã nhân viên","Tên nhân viên","Số điện thoại","Số hóa đơn đã lập","Tổng tiền hóa đơn"};
 		dfNhanVien=new DefaultTableModel(header,0);
 		tableNhanVien=new JTable(dfNhanVien);
 		tableNhanVien.setRowHeight(20);

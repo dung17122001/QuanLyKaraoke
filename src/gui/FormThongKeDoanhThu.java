@@ -50,6 +50,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	public static double tongTienPhong=0.0,tongTienDV=0.0;
 	private double tongDoanhThu=0.0;
 	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+	public static int stt=1;
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -173,6 +174,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				daoHoaDon.ThongKeDoanhThuPhongTheoNgay();
 				txtPhong.setText(tien.format(tongTienPhong));
 				daoHoaDon.ThongKeDoanhThuDichVuTheoNgay();
@@ -188,6 +190,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoTuan();
 				txtPhong.setText(tien.format(tongTienPhong));
@@ -204,6 +207,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoThang();
 				txtPhong.setText(tien.format(tongTienPhong));
@@ -220,6 +224,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoNam();
 				txtPhong.setText(tien.format(tongTienPhong));

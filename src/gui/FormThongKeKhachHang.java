@@ -24,12 +24,13 @@ import java.awt.event.ActionEvent;
 public class FormThongKeKhachHang extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtPhong;
+	private JTextField txtKhachHang;
 	public static DefaultTableModel dfKhachHang;
 	private JTable tableKhachHang;
 	private JButton btnThongKe,btnInThongKe;
 	private JComboBox<String> cbThoiGian ;
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
+	public static int sokh;
 
 	public FormThongKeKhachHang() {
 		setBounds(0, 0, 1352, 565);
@@ -83,11 +84,11 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		lbKhachHang.setBounds(49, 71, 193, 30);
 		panel_2.add(lbKhachHang);
 
-		txtPhong = new JTextField();
-		txtPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPhong.setBounds(281, 72, 294, 30);
-		panel_2.add(txtPhong);
-		txtPhong.setColumns(10);
+		txtKhachHang = new JTextField();
+		txtKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtKhachHang.setBounds(281, 72, 294, 30);
+		panel_2.add(txtKhachHang);
+		txtKhachHang.setColumns(10);
 
 		JPanel panelThongKe = new JPanel();
 		panelThongKe.setBounds(10, 176, 1332, 379);
@@ -99,6 +100,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		tableKhachHang.setRowHeight(20);
 		tableKhachHang.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 15));
 		tableKhachHang.getTableHeader().setBackground(new Color(255, 204, 102));
+		tableKhachHang.getColumnModel().getColumn(4).setPreferredWidth(300);
 		JScrollPane scrollKhachHang;
 		panelThongKe.setLayout(null);
 		scrollKhachHang=new JScrollPane(tableKhachHang,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -125,18 +127,22 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 			if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
 				clearTable();
 				daoHoaDon.ThongKeKhachHangTheoNgay();
+				txtKhachHang.setText(""+sokh);
 			}
 			if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
 				clearTable();
 				daoHoaDon.ThongKeKhachHangTheoTuan();
+				txtKhachHang.setText(""+sokh);
 			}
 			if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
 				clearTable();
 				daoHoaDon.ThongKeKhachHangTheoThang();
+				txtKhachHang.setText(""+sokh);
 			}
 			if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
 				clearTable();
 				daoHoaDon.ThongKeKhachHangTheoNam();
+				txtKhachHang.setText(""+sokh);
 			}
 		}
 

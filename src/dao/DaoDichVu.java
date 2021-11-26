@@ -28,6 +28,7 @@ public class DaoDichVu {
 			Vector<Object> vector = new Vector<Object>();
 			vector.add(rs.getString("maDichVu")); 
 			vector.add(rs.getString("tenDichVu")); 
+			vector.add(rs.getString("donVi")); 
 			vector.add(rs.getString("giaTien")); 
 			vector.add(rs.getString("tenLoaiDV"));
 			tableModel.addRow(vector);
@@ -44,10 +45,11 @@ public class DaoDichVu {
 			while(rs.next()) {
 				String maDV=rs.getString(1);
 				String tenDV=rs.getString(2);
-				float giaDV=rs.getFloat(3);
-				String maLoaiDV=rs.getString(4);
+				String donVi=rs.getString(3);
+				float giaDV=rs.getFloat(4);
+				String maLoaiDV=rs.getString(5);
 				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
-				DichVu dv=new DichVu(maDV, tenDV, giaDV,ldv);
+				DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV,ldv);
 				dsDV.add(dv);
 			}
 		}
@@ -62,16 +64,17 @@ public class DaoDichVu {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();
-			String sql="SELECT * FROM DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where LoaiDichVu.tenLoai like N'"+ tenLoai +"'";
+			String sql="SELECT * FROM DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where LoaiDichVu.tenLoaiDV like N'"+ tenLoai +"'";
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				String maDichVu=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				double giaTien=rs.getDouble(3);
-				String maLoaiDV=rs.getString(4);
+				String donVi=rs.getString(3);
+				double giaTien=rs.getDouble(4);
+				String maLoaiDV=rs.getString(5);
 				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
-				DichVu dv=new DichVu(maDichVu, tenDichVu, giaTien, ldv);
+				DichVu dv=new DichVu(maDichVu, tenDichVu,donVi, giaTien, ldv);
 				dsDV.add(dv);
 			}
 		}
@@ -93,11 +96,13 @@ public class DaoDichVu {
 			while(rs.next()) {
 				String maDV=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				double giaTien=rs.getDouble(3);
-				String maLoaiDV=rs.getString(4);
+				String donVi=rs.getString(3);
+				double giaTien=rs.getDouble(4);
+				String maLoaiDV=rs.getString(5);
 				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
 				dv.setMaDichVu(maDV);
 				dv.setTenDichVu(tenDichVu);
+				dv.setDonVi(donVi);
 				dv.setGiaTien(giaTien);
 				dv.setLoaiDichVu(loaiDichVu);
 			}
@@ -120,11 +125,13 @@ public class DaoDichVu {
 			while(rs.next()) {
 				String madv=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				float giaTien=rs.getFloat(3);
-				String maLoaiDV=rs.getString(4);
+				String donVi=rs.getString(3);
+				double giaTien=rs.getDouble(4);
+				String maLoaiDV=rs.getString(5);
 				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
 				dv.setMaDichVu(madv);
 				dv.setTenDichVu(tenDichVu);
+				dv.setDonVi(donVi);
 				dv.setGiaTien(giaTien);
 				dv.setLoaiDichVu(loaiDichVu);
 			}
@@ -141,11 +148,12 @@ public class DaoDichVu {
 		PreparedStatement ps = null;
 		int n = 0;
 		try {
-			ps = con.prepareStatement("insert into DichVu VALUES(?,?,?,?) ");
+			ps = con.prepareStatement("insert into DichVu VALUES(?,?,?,?,?) ");
 			ps.setString(1, dv.getMaDichVu());
 			ps.setString(2, dv.getTenDichVu());
-			ps.setDouble(3, dv.getGiaTien());
-			ps.setString(4, dv.getLoaiDichVu().getMaLoai());
+			ps.setString(3, dv.getTenDichVu());
+			ps.setDouble(4, dv.getGiaTien());
+			ps.setString(5, dv.getLoaiDichVu().getMaLoai());
 			n = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -165,10 +173,12 @@ public class DaoDichVu {
 		int n = 0;
 		try {
 			ps = con.prepareStatement(
-					"update DichVu set tenDichVu=?, giaTien=?, tenLoaiDV? where maDichVu=?");
+					"update DichVu set tenDichVu=?, donVi=? ,giaTien=?, maLoaiDV=? where maDichVu=?");
 			ps.setString(1, dv.getTenDichVu());
-			ps.setDouble(2, dv.getGiaTien());
-			ps.setString(3, dv.getLoaiDichVu().getTenLoaiDV());
+			ps.setString(2, dv.getDonVi());
+			ps.setDouble(3, dv.getGiaTien());
+			ps.setString(4, dv.getLoaiDichVu().getMaLoai());
+			ps.setString(5, dv.getMaDichVu());
 			n = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
