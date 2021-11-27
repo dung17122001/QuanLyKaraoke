@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.table.TableModel;
 
 import com.toedter.calendar.JDateChooser;
@@ -219,7 +221,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		btnTimKiem.setBounds(420, 37, 147, 30);
 		panel.add(btnTimKiem);
 
-
+		setTableAlternateRow();//tô màu  table
 
 		//		Thêm sự kiện
 		btnDatPhong.addActionListener(this);
@@ -256,9 +258,11 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng này");
 				khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
 				lbTenKhachHang.setText(khachHang.getTenKhachHang());
+				lbSDT.setText(khachHang.getSoDienThoai());
 			}
 			else
 				lbTenKhachHang.setText(khachHang.getTenKhachHang());
+				lbSDT.setText(khachHang.getSoDienThoai());
 		}
 		if(o.equals(btnDatPhong)) {
 			int i = tablePhong.getSelectedRow();
@@ -269,6 +273,9 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 			
 			else if(dfPhong.getValueAt(i, 4).toString().equals("Đang sử dụng")&&da.toString().equals(LocalDate.now().toString())) {
 				JOptionPane.showMessageDialog(this, "Phòng này hiện tại đang được sử dụng");
+			}
+			else if(da.toString().equals("")) {
+				JOptionPane.showMessageDialog(this, "Vui lòng nhập ngày muốn đặt");
 			}
 			else {
 				Date d = new Date(ngayDat.getDate().getTime());
@@ -289,15 +296,15 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 
 	private void themDonDatPhong() {
 
-		makh=ma.maKhachHangVuaThem();
-		KhachHang kh=daoKhachHang.getKhachHangTheoMa(makh);
+//		makh=ma.maKhachHangVuaThem();
+//		KhachHang kh=daoKhachHang.getKhachHangTheoMa(makh);
 
 		String manv="NV001";//sau nay lay tu form dang nhap
 		NhanVien nv=new NhanVien(manv);
 
 		maDon=ma.maDonDatPhong();
 		Date date=new Date(ngayDat.getDate().getTime());
-		DonDatPhong donDatPhong=new DonDatPhong(maDon, date, kh, nv);
+		DonDatPhong donDatPhong=new DonDatPhong(maDon, date, khachHang, nv);
 		daoDonDatPhong.themDonDatPhong(donDatPhong);
 
 	}
@@ -368,5 +375,11 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
 		lbTenKhachHang.setText(""+khachHang.getTenKhachHang());
 		lbSDT.setText(""+khachHang.getSoDienThoai());
+	}
+	
+	public void setTableAlternateRow() {
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
 	}
 }

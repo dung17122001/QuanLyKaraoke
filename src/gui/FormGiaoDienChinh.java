@@ -65,7 +65,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenu mnQLThongKe;
 	private JMenuItem mntmThongKeDoanhThu;
 	private JMenuItem mntmThongKeKH;
-	private JMenuItem mntmThongKeNV;
+	private JMenuItem mntmThongKeNV,mntmLoaiPhong;
 	
 	public FormGiaoDienChinh(){
 		
@@ -137,6 +137,11 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmCapNhatPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLPhong.add(mntmCapNhatPhong);
 		
+		mntmLoaiPhong = new JMenuItem("Cập nhật loại phòng");
+		mntmLoaiPhong.setIcon(new ImageIcon("img\\sua.png"));
+		mntmLoaiPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnQLPhong.add(mntmLoaiPhong);
+		
 		mntmTimPhong = new JMenuItem("Tìm kiếm");
 		mntmTimPhong.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimPhong.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -198,6 +203,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemNV.addActionListener(this);
 		mntmTimPhong.addActionListener(this);
 		mntmChucVu.addActionListener(this);
+		mntmLoaiPhong.addActionListener(this);
 		//mntmDatDV.addActionListener(this);
 		
 		contentPane = new JPanel();
@@ -372,7 +378,9 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		if(o.equals(mntmThongKeNV)) {
 			changeScreen(new FormThongKeNV());
 		}
+		if(o.equals(mntmLoaiPhong)) {
+			changeScreen(new FormLoaiPhong());
+		}
 		
 	}
-	
 }

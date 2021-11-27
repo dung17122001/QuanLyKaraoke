@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 
 import javax.swing.JTextField;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
@@ -172,6 +174,9 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		btnReset.setBounds(304, 113, 120, 30);
 		panel_1.add(btnReset);
 		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		//tô màu table
+		setTableAlternateRow();
 		
 		//Thêm sự kiện
 		tablePhong.addMouseListener(this);
@@ -346,5 +351,11 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		txtGiaPhong.setText("");
 		txtMaPhong.setText("");
 		txtTenPhong.setText("");
+	}
+	
+	public void setTableAlternateRow() {
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
 	}
 }

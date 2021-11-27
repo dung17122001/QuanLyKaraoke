@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -213,6 +214,36 @@ public class DaoPhong {
 		return p;	
 	}
 	
+	public Phong getPhongTheoTen(String ma){
+		Phong p=new Phong();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="Select *from Phong where tenPhong ='"+ma+"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maPhong=rs.getString(1);
+				String tenPhong=rs.getString(2);
+				String trinhTrang=rs.getString(3);
+				float giaPhong=rs.getFloat(4);
+				String maLoaiPhong=rs.getString(5);
+				LoaiPhong lp=new LoaiPhong(maLoaiPhong);
+				p.setMaPhong(maPhong);
+				p.setTenPhong(tenPhong);
+				p.setGiaPhong(giaPhong);
+				p.setTinhTrang(trinhTrang);
+				p.setLoaiPhong(lp);
+				
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return p;	
+	}
+	
 	public boolean updateTrinhTrangPhong(String maPhong) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
@@ -253,6 +284,37 @@ public class DaoPhong {
 			}
 		}
 		return n > 0;
+	}
+	
+	public ArrayList<Phong> getPhongTuDonDatPhong(String sdt){
+		ArrayList<Phong> dsphong= new ArrayList<Phong>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="SELECT Phong.*\r\n"
+					+ "FROM     Phong INNER JOIN\r\n"
+					+ "                  ChiTietDonDatPhong ON Phong.maPhong = ChiTietDonDatPhong.maPhong INNER JOIN\r\n"
+					+ "                  DonDatPhong INNER JOIN\r\n"
+					+ "                  KhachHang ON DonDatPhong.maKhachHang = KhachHang.maKhachHang ON ChiTietDonDatPhong.maDonDatPhong = DonDatPhong.maDonDatPhong\r\n"
+					+ "				  where soDienThoai=N'"+sdt+"' and ngayDat='"+LocalDate.now()+"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maPhong=rs.getString(1);
+				String tenPhong=rs.getString(2);
+				String trinhTrang=rs.getString(3);
+				float giaPhong=rs.getFloat(4);
+				String maLoaiPhong=rs.getString(5);
+				LoaiPhong lp=new LoaiPhong(maLoaiPhong);
+				Phong p=new Phong(maPhong, tenPhong, trinhTrang,giaPhong, lp);
+				dsphong.add(p);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return dsphong;	
 	}
 	
 }

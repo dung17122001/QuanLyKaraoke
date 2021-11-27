@@ -16,6 +16,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -50,6 +52,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	public static double tongTienPhong=0.0,tongTienDV=0.0;
 	private double tongDoanhThu=0.0;
 	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+	public static int stt=1;
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -152,6 +155,8 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		scrollHangHoa.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollHangHoa);
 		
+		setTableAlternateRow();
+		
 //		kết nối database
 		try {
 			ConnectDB.getInstance().connect();
@@ -173,6 +178,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				daoHoaDon.ThongKeDoanhThuPhongTheoNgay();
 				txtPhong.setText(tien.format(tongTienPhong));
 				daoHoaDon.ThongKeDoanhThuDichVuTheoNgay();
@@ -188,6 +194,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoTuan();
 				txtPhong.setText(tien.format(tongTienPhong));
@@ -204,6 +211,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoThang();
 				txtPhong.setText(tien.format(tongTienPhong));
@@ -220,6 +228,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 				tongTienPhong=0.0;
 				tongTienDV=0.0;
 				tongDoanhThu=0.0;
+				stt=1;
 				clearTable();
 				daoHoaDon.ThongKeDoanhThuPhongTheoNam();
 				txtPhong.setText(tien.format(tongTienPhong));
@@ -242,5 +251,10 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		while (tableHangHoa.getRowCount() > 0) {
 			dfHangHoa.removeRow(0);
 		}
+	}
+	public void setTableAlternateRow() {
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
 	}
 }

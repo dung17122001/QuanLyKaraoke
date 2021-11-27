@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -123,6 +125,9 @@ public class FormTimPhong extends JPanel implements ActionListener{
 		cbLoaiPhong.addActionListener(this);
 		cbTrinhTrang.addActionListener(this);
 		
+		//tô màu table
+		setTableAlternateRow();
+		
 //		kết nối database
 		try {
 			ConnectDB.getInstance().connect();
@@ -219,5 +224,10 @@ public class FormTimPhong extends JPanel implements ActionListener{
 					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
 			});
 		}
+	}
+	public void setTableAlternateRow() {
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
 	}
 }

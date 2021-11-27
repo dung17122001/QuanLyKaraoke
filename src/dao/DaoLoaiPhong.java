@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import connect.ConnectDB;
 import entity.LoaiPhong;
+import entity.Phong;
 
 public class DaoLoaiPhong {
 	public DaoLoaiPhong() {
@@ -83,5 +84,73 @@ public class DaoLoaiPhong {
 			}
 		
 		return lp;	
+	}
+	
+	public boolean themLoaiPhong(LoaiPhong p) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("insert into LoaiPhong VALUES(?,?,?) ");
+			ps.setString(1, p.getMaLoaiPhong());
+			ps.setString(2, p.getTenLoai());
+			ps.setString(3, p.getMoTa());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean SuaPhong(LoaiPhong p) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement(
+					"update LoaiPhong set tenLoai=?, moTa=? where maLoaiPhong=?");
+			ps.setString(1, p.getTenLoai());
+			ps.setString(2, p.getMoTa());
+			ps.setString(3, p.getMaLoaiPhong());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean xoaLoaiPhong(String maPhong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("delete LoaiPhong where maLoaiPhong = ?");
+			ps.setString(1, maPhong);
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 }

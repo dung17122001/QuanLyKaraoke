@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
@@ -97,7 +99,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		panelThongKe.setBounds(10, 176, 1332, 379);
 		panel.add(panelThongKe);
 		
-		String []header= {"STT","Mã nhân viên","Tên nhân viên","Số hóa đơn đã lập","Ngày lập","Tổng tiền hóa đơn"};
+		String []header= {"STT","Mã nhân viên","Tên nhân viên","Số điện thoại","Số hóa đơn đã lập","Tổng tiền hóa đơn"};
 		dfNhanVien=new DefaultTableModel(header,0);
 		tableNhanVien=new JTable(dfNhanVien);
 		tableNhanVien.setRowHeight(20);
@@ -110,11 +112,18 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		scrollNhanVien.setBounds(0, 0, 1332, 369);
 		scrollNhanVien.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollNhanVien);
+		
+		setTableAlternateRow();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void setTableAlternateRow() {
+		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
+		if (defaults.get("Table.alternateRowColor") == null)
+			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
 	}
 }
