@@ -54,6 +54,7 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 	private JTextField txtGiaDV;
 	private JTextField txtID;
 	private JTextField txtTenDV;
+	private JTextField txtDonViTinh;
 	private JComboBox<String> cbLoaiDV;
 	private DefaultTableModel tableModel;
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
@@ -79,47 +80,56 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		
 		JLabel lbMadv = new JLabel("Mã DV: ");
 		lbMadv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbMadv.setBounds(210, 30, 96, 38);
+		lbMadv.setBounds(310, 30, 96, 38);
 		pnTTNV.add(lbMadv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(315, 30, 190, 30);
+		txtID.setBounds(415, 30, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
-		
-		JLabel lbGiadv = new JLabel("Giá dịch vụ:");
-		lbGiadv .setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGiadv .setBounds(210, 80, 96, 38);
-		pnTTNV.add(lbGiadv );
-		
-		txtGiaDV = new JTextField();
-		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGiaDV.setBounds(315, 80, 190, 30);
-		pnTTNV.add(txtGiaDV);
-		txtGiaDV.setColumns(10);
-		
-		
-		
+	
 		JLabel lbTendv = new JLabel("Tên DV:");
 		lbTendv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTendv.setBounds(605, 30, 96, 38);
+		lbTendv.setBounds(705, 30, 96, 38);
 		pnTTNV.add(lbTendv);
 		
 		txtTenDV = new JTextField();
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenDV.setBounds(716, 30, 190, 30);
+		txtTenDV.setBounds(815, 30, 190, 30);
 		pnTTNV.add(txtTenDV);
 		txtTenDV.setColumns(10);
 		
+		JLabel lbDonViTinh = new JLabel("Đơn vị tính:");
+		lbDonViTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbDonViTinh.setBounds(310, 80, 96, 38);
+		pnTTNV.add(lbDonViTinh);
+		
+		txtDonViTinh = new JTextField();
+		txtDonViTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDonViTinh.setBounds(415, 80, 190, 30);
+		pnTTNV.add(txtDonViTinh);
+		txtDonViTinh.setColumns(10);
+		
+		JLabel lbGiadv = new JLabel("Giá dịch vụ:");
+		lbGiadv .setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbGiadv .setBounds(705, 80, 96, 38);
+		pnTTNV.add(lbGiadv );
+		
+		txtGiaDV = new JTextField();
+		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtGiaDV.setBounds(815, 80, 190, 30);
+		pnTTNV.add(txtGiaDV);
+		txtGiaDV.setColumns(10);
+		
 		JLabel lbLoaidv = new JLabel("Loại DV:");
 		lbLoaidv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbLoaidv.setBounds(605, 80, 96, 38);
+		lbLoaidv.setBounds(310, 130, 96, 38);
 		pnTTNV.add(lbLoaidv);
 		
 		cbLoaiDV = new JComboBox<String>();
 		cbLoaiDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbLoaiDV.setBounds(716, 80, 190, 30);
+		cbLoaiDV.setBounds(415, 130, 190, 30);
 		pnTTNV.add(cbLoaiDV);
 		
 		JPanel pnChucNang = new JPanel();
@@ -176,14 +186,14 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
-		String[] header = {"Mã DV", "Tên DV","Giá dịch vụ","Loại dịch vụ"};
+		String[] header = {"Mã DV", "Tên DV","Đơn vị tính","Giá dịch vụ","Loại dịch vụ"};
 		tableModel = new DefaultTableModel(header, 0){
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-					false, false, false,false
+					false, false, false,false,false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -271,6 +281,8 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 			e.printStackTrace();
 		}
 		*/
+		
+		//Add thông tin vào bảng
 		LoadTatCaDichVu();
 		ThemDuLieuVaoCbLoaiDV();
 		
@@ -290,8 +302,9 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		int i = table.getSelectedRow();
 		txtID.setText(tableModel.getValueAt(i, 0).toString());
 		txtTenDV.setText(tableModel.getValueAt(i, 1).toString());
-		txtGiaDV.setText(tableModel.getValueAt(i, 2).toString());
-		cbLoaiDV.setSelectedItem(tableModel.getValueAt(i, 3).toString());
+		txtDonViTinh.setText(tableModel.getValueAt(i,2).toString());
+		txtGiaDV.setText(tableModel.getValueAt(i, 3).toString());
+		cbLoaiDV.setSelectedItem(tableModel.getValueAt(i, 4).toString());
 	}
 	
 	@Override
@@ -324,12 +337,13 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		if(o.equals(btnThem)) {
 			String maDV=txtID.getText();
 			String tenDV=txtTenDV.getText();
+			String donVi=txtDonViTinh.getText();
 			Double giaDV=Double.parseDouble(txtGiaDV.getText());
 			String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
 			
 			
 			LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
-			DichVu dv=new DichVu(maDV, tenDV, giaDV, ldv);
+			DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
 			
 				if (daoDichVu.themDichVu(dv)) {
 					clearTable();
@@ -345,12 +359,12 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 			} else {
 				String maDV=txtID.getText();
 				String tenDV=txtTenDV.getText();
+				String donVi=txtDonViTinh.getText();
 				Double giaDV=Double.parseDouble(txtGiaDV.getText());
 				String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
-				
-				
+			
 				LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
-				DichVu dv=new DichVu(maDV, tenDV, giaDV, ldv);
+				DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
 				
 				int tl;
 				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa dịch vụ này không ?", "Cảnh báo",
@@ -399,7 +413,7 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 			LoaiDichVu ldv=new LoaiDichVu();
 			ldv=daoLoaiDV.getDichVuTheoMa(dv.getLoaiDichVu().getMaLoai());
 			tableModel.addRow(new Object[] {
-					dv.getMaDichVu(),dv.getTenDichVu(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
+					dv.getMaDichVu(),dv.getTenDichVu(),dv.getDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
 			});
 		}
 		

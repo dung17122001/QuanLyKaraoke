@@ -94,6 +94,7 @@ public class DaoChucVu {
 		
 		return lcv;	
 	}
+	//THÊM
 	public boolean themChucVu(ChucVu cv) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
@@ -115,7 +116,7 @@ public class DaoChucVu {
 		}
 		return n > 0;
 	}
-	//xoa nhan vien
+	//xoa
 		public boolean delChucVu(String maChucVu) throws SQLException {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();

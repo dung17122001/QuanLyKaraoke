@@ -345,6 +345,11 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 					clearTable();
 					reloadData();
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
+					int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có muốn lập hóa đơn cho khách hàng này", "Chú ý",
+							JOptionPane.YES_NO_OPTION);
+					if (xacnhan == JOptionPane.YES_OPTION) {
+						FormGiaoDienChinh.changeScreen(new FormLapHD());
+					}
 				}else {
 					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
 				}
@@ -420,5 +425,4 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		txtCmnd.setText("");
 		
 	}
-
 }

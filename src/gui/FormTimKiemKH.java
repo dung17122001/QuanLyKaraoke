@@ -47,6 +47,7 @@ import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
 import dao.DaoKhachHang;
+import entity.KhachHang;
 
 public class FormTimKiemKH extends JPanel implements ActionListener, MouseListener{
 
@@ -57,7 +58,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 	private JTextField txtTimSocmKH;
 	private JTextField txtTimDiaChi;
 	private JButton btnTimKiem;
-	private JButton btnCapNhat;
+	private JButton btnCapNhat,btnLapHoaDon,btnDatPhong;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private DaoKhachHang dao = new DaoKhachHang();
@@ -152,7 +153,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnTimKiem.setForeground(SystemColor.controlText);
 		btnTimKiem.setBackground(new Color(255, 204, 102));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnTimKiem.setBounds(450, 5, 180, 40);
+		btnTimKiem.setBounds(143, 5, 180, 40);
 		btnTimKiem.setFocusable(false);
 		pnChucNang.add(btnTimKiem);
 		
@@ -160,22 +161,33 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnCapNhat.setForeground(SystemColor.controlText);
 		btnCapNhat.setBackground(new Color(255, 204, 102));
 		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 26));
-		btnCapNhat.setBounds(800, 5, 180, 40);
+		btnCapNhat.setBounds(450, 5, 180, 40);
 		btnCapNhat.setFocusable(false);
 		pnChucNang.add(btnCapNhat);
-		btnCapNhat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				reloadData();
-			}
-		});
 		
 		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
+		btnDatPhong = new JButton("Đặt phòng");
+		btnDatPhong.setForeground(Color.BLACK);
+		btnDatPhong.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnDatPhong.setFocusable(false);
+		btnDatPhong.setBackground(new Color(255, 204, 102));
+		btnDatPhong.setBounds(750, 5, 180, 40);
+		pnChucNang.add(btnDatPhong);
+		
+		btnLapHoaDon = new JButton("Lập hóa đơn");
+		btnLapHoaDon.setForeground(Color.BLACK);
+		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 26));
+		btnLapHoaDon.setFocusable(false);
+		btnLapHoaDon.setBackground(new Color(255, 204, 102));
+		btnLapHoaDon.setBounds(1052, 5, 205, 40);
+		pnChucNang.add(btnLapHoaDon);
+		
 		btnTimKiem.addActionListener(this);
 		btnCapNhat.addActionListener(this);
+		btnLapHoaDon.addActionListener(this);
+		btnDatPhong.addActionListener(this);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -361,8 +373,47 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 							}
 						}
 					}
+				}		
+		}
+		if(o.equals(btnCapNhat)) {
+			reloadData();
+		}
+		if(o.equals(btnDatPhong)) {
+			int i=table.getSelectedRow();
+			if(i==-1) {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần đặt phòng");
+			}
+			else {
+				
+				try {
+					FormGiaoDienChinh.changeScreen(new FormDatPhong());
+					FormDatPhong.khachHang=dao.getKhachHangByMaKhachHang(tableModel.getValueAt(i, 0).toString());
+					//KhachHang kh=dao.getKhachHangByMaKhachHang(tableModel.getValueAt(i, 0).toString());
+					FormDatPhong.lbTenKhachHang.setText(FormDatPhong.khachHang.getTenKhachHang());
+					FormDatPhong.lbSDT.setText(FormDatPhong.khachHang.getSoDienThoai());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
 				}
+			}
 			
+		}
+		if(o.equals(btnLapHoaDon)) {
+			int i=table.getSelectedRow();
+			if(i==-1) {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần lập hóa đơn");
+			}
+			else {
+				try {
+					FormGiaoDienChinh.changeScreen(new FormLapHD());
+					FormLapHD.khachHang=dao.getKhachHangByMaKhachHang(tableModel.getValueAt(i, 0).toString());
+					//KhachHang kh=dao.getKhachHangByMaKhachHang(tableModel.getValueAt(i, 0).toString());
+					FormLapHD.lbTenKhachHang.setText(FormLapHD.khachHang.getTenKhachHang());
+					FormLapHD.lbSDT.setText(FormLapHD.khachHang.getSoDienThoai());
+					
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 		}
 	}
 

@@ -176,13 +176,6 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 		btnCapNhat.setBounds(800, 5, 180, 40);
 		btnCapNhat.setFocusable(false);
 		pnChucNang.add(btnCapNhat);
-		btnCapNhat.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LoadTatCaNhanVien();
-			}
-		});
 		
 		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -389,10 +382,14 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 					}
 					return;
 				}
+		}
+	
+		if(o.equals(btnCapNhat)) {
+			clearTable();
+			LoadTatCaNhanVien();
+		}
 		
-			
-		}
-		}
+	}
 	
 	public void LoadTatCaNhanVien() {
 		ArrayList<NhanVien> dsnv=new ArrayList<NhanVien>();
@@ -411,6 +408,11 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 		dsCV=daoCV.getTatCaLoaiCV();
 		for(ChucVu lcv: dsCV) {
 			cbChucVu.addItem(lcv.getTenChucVu());
+		}
+	}
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
 		}
 	}
 	
@@ -438,14 +440,5 @@ public class FormTimKiemNV extends JPanel implements ActionListener, MouseListen
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
-	public void reloadData() {
-		DaoNhanVien dao_nhanvien = new DaoNhanVien();
-		try {
-			tableModel.setRowCount(0);
-			dao_nhanvien.loadData("select * from NhanVien ", tableModel);
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
 	}
 }

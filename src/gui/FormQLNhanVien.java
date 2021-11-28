@@ -318,13 +318,15 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		/*/Add thông tin vào bảng
+		/*//Add thông tin vào bảng
 		try {
 			dao_nhanvien.loadData("select * from NhanVien ", tableModel); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		*/
+		
+		//Add thông tin vào bảng
 		LoadTatCaNhanVien();
 		ThemDuLieuVaoCbLoaiCV();
 		

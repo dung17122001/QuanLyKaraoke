@@ -43,7 +43,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private static final long serialVersionUID = -1554680235689968471L;
 	private JPanel contentPane;
 	private JLabel txtUsername;
-	private JPanel panel_Manage;
+	private static JPanel panel_Manage;
 	private JMenuBar menuBar;
 	private JMenu mnQLNhanVien;
 	private JMenu mnQLKhachHang;
@@ -55,6 +55,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenu mnQlDichVu;
 	private JMenuItem mntmSuaDV;
 	private JMenuItem mntmTimKiemDV;
+	private JMenuItem mntmThemLDV;
 	private JMenu mnQLPhong;
 	private JMenuItem mntmCapNhatPhong;
 	private JMenuItem mntmTimPhong;
@@ -121,12 +122,12 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimKiemDV.setIcon(new ImageIcon("img\\timkiem.png"));
 		mntmTimKiemDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmTimKiemDV);
-		/*
-		mntmDatDV = new JMenuItem("Đặt dịch vụ");
-		mntmDatDV.setIcon(new ImageIcon("img\\them.jpg"));
-		mntmDatDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmDatDV);
-		*/
+		
+		mntmThemLDV = new JMenuItem("Loại dịch vụ");
+		mntmThemLDV.setIcon(new ImageIcon("img\\sua.png"));
+		mntmThemLDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnQlDichVu.add(mntmThemLDV);
+		
 		mnQLPhong = new JMenu("Phòng");
 		mnQLPhong.setIcon(new ImageIcon("img\\icon3.png"));
 		mnQLPhong.setFont(new Font("Times New Roman", Font.PLAIN, 25));
@@ -205,6 +206,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmChucVu.addActionListener(this);
 		mntmLoaiPhong.addActionListener(this);
 		//mntmDatDV.addActionListener(this);
+		mntmThemLDV.addActionListener(this);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 0));
@@ -281,7 +283,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		panel_Manage.setLayout(null);
 		
 	}
-	public void changeScreen(JPanel newScreen) {
+	public static void changeScreen(JPanel newScreen) {
 
 		panel_Manage.removeAll();
 		panel_Manage.add(newScreen);
@@ -290,7 +292,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 
 	}
 
-	public static void main(String[] args) throws SQLException, UnsupportedLookAndFeelException {	
+	public static void main(String[] args) throws SQLException {	
 		FormGiaoDienChinh frm = new FormGiaoDienChinh();
 		frm.setVisible(true);
 	}
@@ -353,7 +355,10 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		if(o.equals(mntmTimKiemDV)) {
 			changeScreen(new FormTimKiemDV());
 		}
-
+		
+		if(o.equals(mntmThemLDV)) {
+			changeScreen(new FormThemLoaiDV());
+		}
 		if(o.equals(mntmCapNhatPhong)) {
 			changeScreen(new FormQLPhong());
 		}

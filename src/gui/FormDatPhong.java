@@ -78,9 +78,9 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private String maDon;
 	private String makh;
-	private JLabel lbTenKhachHang,lbSDT;
+	public static JLabel lbTenKhachHang,lbSDT;
 	private JTextField txtTimKH;
-	private KhachHang khachHang;
+	public static KhachHang khachHang=new KhachHang();
 
 	public FormDatPhong(){
 

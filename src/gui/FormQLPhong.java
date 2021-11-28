@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import dao.DaoPhong;
+import dao.PhatSinhMa;
 import dao.DaoLoaiPhong;
 import entity.LoaiPhong;
 import entity.Phong;
@@ -54,6 +55,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 	private JButton btnSuaPhong;
 	private JButton btnReset;
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
+	private PhatSinhMa phatSinhMa=new PhatSinhMa(); 
 	
 	public FormQLPhong() {
 		setBounds(0, 0, 1352, 565);
@@ -240,7 +242,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnThemPhong)) {
-			String maPhong=txtMaPhong.getText();
+			String maPhong=phatSinhMa.maPhong();
 			String tenPhong=txtTenPhong.getText();
 			Double giaPhong=Double.parseDouble(txtGiaPhong.getText());
 			String tenLoaiPhong=cbLoaiPhong.getSelectedItem().toString();
