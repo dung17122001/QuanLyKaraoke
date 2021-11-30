@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Cursor;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -127,6 +128,9 @@ public class FormTimPhong extends JPanel implements ActionListener{
 		
 		//tô màu table
 		setTableAlternateRow();
+		
+		btnReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 //		kết nối database
 		try {

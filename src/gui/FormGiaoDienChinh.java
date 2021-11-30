@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -67,6 +68,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmThongKeDoanhThu;
 	private JMenuItem mntmThongKeKH;
 	private JMenuItem mntmThongKeNV,mntmLoaiPhong;
+	private JButton btnDangXuat;
 	
 	public FormGiaoDienChinh(){
 		
@@ -269,10 +271,11 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		txtUsername.setBounds(1201, 39, 128, 31);
 		panel.add(txtUsername);
 		
-		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setIcon(new ImageIcon("img\\dangxuat.jpg"));
 		btnDangXuat.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnDangXuat.setBounds(1069, 85, 182, 40);
+		btnDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		panel.add(btnDangXuat);
 		panel.revalidate();
 		panel.repaint();

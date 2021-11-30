@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import dao.DaoLoaiPhong;
+import dao.PhatSinhMa;
 import entity.LoaiPhong;
 import entity.Phong;
 
@@ -43,6 +44,7 @@ public class FormLoaiPhong extends JPanel implements ActionListener, MouseListen
 	private JButton btnThem,btnXoa,btnSua,btnXoaTrang;
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private JTextField txtMoTa;
+	private PhatSinhMa ma=new PhatSinhMa();
 
 	public FormLoaiPhong() {
 		setBounds(0, 0, 1352, 565);
@@ -79,6 +81,7 @@ public class FormLoaiPhong extends JPanel implements ActionListener, MouseListen
 		txtMa.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtMa.setColumns(10);
 		txtMa.setBounds(305, 23, 364, 30);
+		txtMa.setEditable(false);
 		panelTT.add(txtMa);
 		
 		JLabel lblMT = new JLabel("Mô tả:");
@@ -194,7 +197,7 @@ public class FormLoaiPhong extends JPanel implements ActionListener, MouseListen
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnThem)) {
-			String maLoaiPhong=txtMa.getText();
+			String maLoaiPhong=ma.maLoaiPhong();
 			String tenLoaiPhong=txtTen.getText();
 			String mota=txtMoTa.getText();
 			LoaiPhong loaiPhong=new LoaiPhong(maLoaiPhong, tenLoaiPhong, mota);

@@ -184,6 +184,9 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnLapHoaDon.setBounds(1052, 5, 205, 40);
 		pnChucNang.add(btnLapHoaDon);
 		
+		btnLapHoaDon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnDatPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		btnTimKiem.addActionListener(this);
 		btnCapNhat.addActionListener(this);
 		btnLapHoaDon.addActionListener(this);

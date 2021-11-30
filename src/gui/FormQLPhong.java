@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.HeadlessException;
 
@@ -82,7 +83,7 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		txtMaPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtMaPhong.setBounds(130, 27, 244, 30);
 		panelThongTinPhong.add(txtMaPhong);
-		txtMaPhong.setEnabled(false);
+		txtMaPhong.setEditable(false);
 		txtMaPhong.setColumns(10);
 		
 		JLabel lbGiaPhong = new JLabel("Giá phòng: ");
@@ -176,6 +177,11 @@ public class FormQLPhong extends JPanel implements ActionListener, MouseListener
 		btnReset.setBounds(304, 113, 120, 30);
 		panel_1.add(btnReset);
 		btnReset.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
+		btnReset.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSuaPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThemPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoaPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		//tô màu table
 		setTableAlternateRow();

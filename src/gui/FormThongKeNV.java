@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
@@ -15,16 +16,28 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+
+import connect.ConnectDB;
+import dao.DaoHoaDon;
+
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 
 public class FormThongKeNV extends JPanel implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtPhong;
-	private DefaultTableModel dfNhanVien;
+	public static JTextField txtSoLuong;
+	public static DefaultTableModel dfNhanVien;
+	public static int shd=0;
 	private JTable tableNhanVien;
-	private JTextField txtTongTien;
+	public static JTextField txtTongTien;
+	private JButton btnInThongKe,btnThongKe;
+	private JComboBox<String> cbThoiGian;
+	private DaoHoaDon daoHoaDon=new DaoHoaDon();
+	public static double tongTien=0.0;
+	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 
 	public FormThongKeNV() {
 		setBounds(0, 0, 1352, 565);
@@ -46,7 +59,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		lbThoiGian.setBounds(28, 17, 198, 30);
 		panel_1.add(lbThoiGian);
 		
-		JComboBox<String> cbThoiGian = new JComboBox<String>();
+		cbThoiGian = new JComboBox<String>();
 		cbThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbThoiGian.setBounds(236, 17, 314, 30);
 		cbThoiGian.addItem("Hôm nay");
@@ -55,13 +68,13 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		cbThoiGian.addItem("Cả năm");
 		panel_1.add(cbThoiGian);
 		
-		JButton btnThongKe = new JButton("Xem thống kê");
+		btnThongKe = new JButton("Xem thống kê");
 		btnThongKe.setBackground(Color.ORANGE);
 		btnThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnThongKe.setBounds(103, 107, 164, 30);
 		panel_1.add(btnThongKe);
 		
-		JButton btnInThongKe = new JButton("In thống kê");
+		btnInThongKe = new JButton("In thống kê");
 		btnInThongKe.setBackground(Color.ORANGE);
 		btnInThongKe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnInThongKe.setBounds(338, 107, 164, 30);
@@ -78,11 +91,11 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		lbNhanVien.setBounds(42, 32, 193, 30);
 		panel_2.add(lbNhanVien);
 		
-		txtPhong = new JTextField();
-		txtPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPhong.setBounds(287, 33, 294, 30);
-		panel_2.add(txtPhong);
-		txtPhong.setColumns(10);
+		txtSoLuong = new JTextField();
+		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtSoLuong.setBounds(287, 33, 294, 30);
+		panel_2.add(txtSoLuong);
+		txtSoLuong.setColumns(10);
 		
 		JLabel lbTongTien = new JLabel("Tổng tiền bán được: ");
 		lbTongTien.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -114,16 +127,68 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 		panelThongKe.add(scrollNhanVien);
 		
 		setTableAlternateRow();
+		
+		btnInThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+//		kết nối database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		btnInThongKe.addActionListener(this);
+		btnThongKe.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Object o=e.getSource();
+		if(o.equals(btnThongKe)) {
+			if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
+				tongTien=0.0;
+				shd=0;
+				clearTable();
+				daoHoaDon.ThongKeNhanVienTheoNgay();
+				txtSoLuong.setText(""+shd);
+				txtTongTien.setText(tien.format(tongTien));
+			}
+			if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
+				tongTien=0.0;
+				shd=0;
+				clearTable();
+				daoHoaDon.ThongKeNhanVienTheoTuan();
+				txtSoLuong.setText(""+shd);
+				txtTongTien.setText(tien.format(tongTien));
+			}
+			if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
+				tongTien=0.0;
+				shd=0;
+				clearTable();
+				daoHoaDon.ThongKeNhanVienTheoThang();
+				txtSoLuong.setText(""+shd);
+				txtTongTien.setText(tien.format(tongTien));
+			}
+			if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
+				tongTien=0.0;
+				shd=0;
+				clearTable();
+				daoHoaDon.ThongKeNhanVienTheoNam();
+				txtSoLuong.setText(""+shd);
+				txtTongTien.setText(tien.format(tongTien));
+			}
+		}
 		
 	}
 	public void setTableAlternateRow() {
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		if (defaults.get("Table.alternateRowColor") == null)
 			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
+	}
+	private void clearTable() {
+		while (tableNhanVien.getRowCount() > 0) {
+			dfNhanVien.removeRow(0);
+		}
 	}
 }

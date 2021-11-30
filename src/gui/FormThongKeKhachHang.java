@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
@@ -110,6 +111,9 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		scrollKhachHang.setBounds(0, 0, 1332, 369);
 		scrollKhachHang.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollKhachHang);
+		
+		btnInThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		setTableAlternateRow();
 

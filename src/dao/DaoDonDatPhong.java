@@ -69,17 +69,42 @@ public class DaoDonDatPhong {
 		return t;
 	}
 	
-	public boolean updateTrangThaiPhong(Time time) {
+	public boolean updateTrangThaiPhong() {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
 		PreparedStatement ps = null;
 		int n = 0;
 		try {
-			String sql="update Phong set trinhTrang=N'Được đặt lúc "+time+"'"
+			String sql="update Phong set trinhTrang=CONCAT (N'Được đặt lúc ',thoiGianDat)\r\n"
 					+ "FROM     ChiTietDonDatPhong INNER JOIN\r\n"
 					+ "                  DonDatPhong ON ChiTietDonDatPhong.maDonDatPhong = DonDatPhong.maDonDatPhong INNER JOIN\r\n"
 					+ "                  Phong ON ChiTietDonDatPhong.maPhong = Phong.maPhong\r\n"
 					+ "				  where ngayDat='"+LocalDate.now()+"'";
+			ps = con.prepareStatement(sql);
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean updateTrangThaiPhongNeuKhongDat() {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			String sql="update Phong set trinhTrang=N'Trống' where maPhong in(select ChiTietDonDatPhong.maPhong\r\n"
+					+ "FROM     ChiTietDonDatPhong INNER JOIN\r\n"
+					+ "                  DonDatPhong ON ChiTietDonDatPhong.maDonDatPhong = DonDatPhong.maDonDatPhong INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietDonDatPhong.maPhong = Phong.maPhong\r\n"
+					+ "				  where ngayDat != '"+LocalDate.now()+"' and trinhTrang != N'Đang sử dụng')";
 			ps = con.prepareStatement(sql);
 			n = ps.executeUpdate();
 		} catch (SQLException e) {

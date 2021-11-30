@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -25,6 +27,8 @@ import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Cursor;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -45,6 +49,7 @@ public class FormNhanPhong extends JFrame implements ActionListener, MouseListen
 	private DaoPhong daoPhong=new DaoPhong();
 	private JButton btnNhanPhong,btnTimKiem;
 	private DaoKhachHang daoKhachHang=new DaoKhachHang();
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	/**
 	 * Launch the application.
 	 */
@@ -126,6 +131,9 @@ public class FormNhanPhong extends JFrame implements ActionListener, MouseListen
 		scroll.setBackground(new Color(248,248,248));
 		setLocationRelativeTo(null);
 		
+		btnNhanPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
 		btnNhanPhong.addActionListener(this);
 		btnTimKiem.addActionListener(this);
 		
@@ -182,6 +190,9 @@ public class FormNhanPhong extends JFrame implements ActionListener, MouseListen
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn đơn đặt phòng cần nhận phòng");
 			}
 			else {
+//				if(tableModel.getValueAt(i, 4).toString().equals(simpleDateFormat.format(LocalDate.now()))) {
+//					
+//				}
 				FormLapHD.clearTableDichVu();
 				ArrayList<Phong> ds=daoPhong.getPhongTuDonDatPhong(tableModel.getValueAt(i,2 ).toString());
 				for(Phong p:ds) {

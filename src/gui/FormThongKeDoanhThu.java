@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.SystemColor;
 
@@ -154,6 +155,9 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		scrollHangHoa.setBounds(0, 0, 1332, 369);
 		scrollHangHoa.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollHangHoa);
+		
+		btnInThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		setTableAlternateRow();
 		

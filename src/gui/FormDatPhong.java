@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JCheckBox;
 import javax.swing.border.EtchedBorder;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -220,6 +221,10 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTimKiem.setBounds(420, 37, 147, 30);
 		panel.add(btnTimKiem);
+		
+		btnDatPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		setTableAlternateRow();//tô màu  table
 

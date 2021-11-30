@@ -122,4 +122,23 @@ public class PhatSinhMa {
 		}
 		return mahd;
 	}
+	
+	public String maLoaiPhong() {
+		String maphong="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('LP', RIGHT(CONCAT('000',ISNULL(right(max(maloaiPhong),3),0) + 1),3)) from [dbo].[LoaiPhong] where maLoaiPhong like N'LP%'";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			maphong = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return maphong;
+	}
 }

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -279,6 +280,12 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		btnDatPhong.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnDatPhong.setBounds(503, 19, 126, 30);
 		panel.add(btnDatPhong);
+		
+		btnDatPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThemDV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnThemPhong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTimKiem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnTinhGio.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		//	Thêm sự kiện
 		btnThemDV.addActionListener(this);
@@ -347,13 +354,13 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			int i=tablePhong.getSelectedRow();
 			if(i==-1)
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn phòng");
-			else if(dfPhong.getValueAt(i, 4).toString().equals("Trống")) {
+			else if(!dfPhong.getValueAt(i, 4).toString().equals("Đang sử dụng")) {
 				Phong p=daoPhong.getPhongTheoMa(dfPhong.getValueAt(i, 0).toString());
 				dfDichVu.addRow(new Object[] {
 						stt++,p.getMaPhong(),p.getTenPhong(),df.format(p.getGiaPhong()),0,0
 				});
 			}
-			else 
+			else
 				JOptionPane.showMessageDialog(this, "Phòng này đang được sử dụng, vui lòng chọn phòng khác");
 
 		}
@@ -429,7 +436,8 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	}
 
 	public void LoadTatCaPhong() {
-		//daoDonDatPhong.updateTrangThaiPhong();
+		daoDonDatPhong.updateTrangThaiPhong();
+		daoDonDatPhong.updateTrangThaiPhongNeuKhongDat();
 		ArrayList<Phong> dsp=new ArrayList<Phong>();
 		dsp=daoPhong.getTatCaPhong();
 		for(Phong p:dsp) {
@@ -438,8 +446,6 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			dfPhong.addRow(new Object[] {
 					p.getMaPhong(),p.getTenPhong(),lp.getTenLoai(),df.format(p.getGiaPhong()),p.getTinhTrang()
 			});
-//			Time time=daoDonDatPhong.layGioDatPhong(p.getMaPhong());
-//			daoDonDatPhong.updateTrangThaiPhong(time);
 		}
 	}
 

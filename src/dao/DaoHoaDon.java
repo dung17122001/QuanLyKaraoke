@@ -18,6 +18,7 @@ import entity.KhachHang;
 import entity.Phong;
 import gui.FormThongKeDoanhThu;
 import gui.FormThongKeKhachHang;
+import gui.FormThongKeNV;
 import gui.FormTimHoaDon;
 import gui.FrmXuatHD;
 
@@ -59,7 +60,7 @@ public class DaoHoaDon {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
 			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
-					+ "where HoaDon.ngayLap ='"+LocalDate.now()+"' and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
+					+ "where HoaDon.ngayLap ='"+LocalDate.now()+"' and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -93,7 +94,7 @@ public class DaoHoaDon {
 			PreparedStatement stmt = null;
 			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong "
 					+ "INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon where HoaDon.ngayLap between '"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai like N'Đã thanh toán'"
-							+ "group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
+							+ "group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -118,7 +119,7 @@ public class DaoHoaDon {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
 			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
-					+ "where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
+					+ "where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -144,7 +145,7 @@ public class DaoHoaDon {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
 			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
-					+ "where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong";
+					+ "where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -174,7 +175,8 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where HoaDon.ngayLap='"+LocalDate.now()+"' and HoaDon.trangThai=N'Đã thanh toán'"
-					+ " group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
+					+ " group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -210,7 +212,8 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where HoaDon.ngayLap between'"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -245,7 +248,8 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -279,7 +283,8 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien";
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=FormThongKeDoanhThu.stt;
@@ -509,7 +514,7 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon ON KhachHang.maKhachHang = HoaDon.maKhachHang INNER JOIN\r\n"
 					+ "                  ChiTietHoaDonPhong ON HoaDon.maHoaDon = ChiTietHoaDonPhong.maHoaDon INNER JOIN\r\n"
 					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong\r\n"
-					+ "				  where HoaDon.maHoaDon=N'"+dk+"' or KhachHang.maKhachHang=N'"+dk+"' or KhachHang.soDienThoai=N'"+dk+"' or(Phong.tenPhong=N'"+dk+"' and HoaDon.trangThai=N'Chờ thanh toán')";
+					+ "				  where HoaDon.maHoaDon=N'"+dk+"' or KhachHang.maKhachHang=N'"+dk+"' or KhachHang.soDienThoai=N'"+dk+"' or(Phong.tenPhong=N'"+dk+"' and HoaDon.trangThai=N'Chờ thanh toán') and HoaDon.trangThai=N'Chờ thanh toán'";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			Object [] ds = null;
@@ -538,7 +543,7 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where HoaDon.ngayLap='"+LocalDate.now()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi";
+					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi order by SUM([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+sum([soLuong]*[giaTien]) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=1;
@@ -577,7 +582,7 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where HoaDon.ngayLap between'"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi";
+					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi order by SUM([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+sum([soLuong]*[giaTien]) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=1;
@@ -616,7 +621,7 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where MONTH(HoaDon.ngayLap)='"+LocalDate.now().getMonthValue()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi";
+					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi order by SUM([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+sum([soLuong]*[giaTien]) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=1;
@@ -655,7 +660,7 @@ public class DaoHoaDon {
 					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
 					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
 					+ "				  where YEAR(HoaDon.ngayLap)='"+LocalDate.now().getYear()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
-					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi";
+					+ "				  group by KhachHang.maKhachHang,KhachHang.tenKhachHang,KhachHang.soDienThoai,KhachHang.diaChi order by SUM([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+sum([soLuong]*[giaTien]) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
 			int i=1;
@@ -667,6 +672,154 @@ public class DaoHoaDon {
 				FormThongKeKhachHang.dfKhachHang.addRow(ds);
 			}
 			FormThongKeKhachHang.sokh=i-1;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void ThongKeNhanVienTheoNgay() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat gio=new DecimalFormat("0.0 h");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai,COUNT(NhanVien.maNhanVien) as slhd,sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))),\r\n"
+					+ "sum([soLuong]*[giaTien])\r\n"
+					+ "FROM     NhanVien INNER JOIN\r\n"
+					+ "                  HoaDon ON NhanVien.maNhanVien = HoaDon.maNhanVien INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonPhong ON HoaDon.maHoaDon = ChiTietHoaDonPhong.maHoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where HoaDon.ngayLap='"+LocalDate.now()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai\r\n"
+					+ "				  order by sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+\r\n"
+					+ "					sum([soLuong]*[giaTien]) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=1;
+			Object [] ds = null;
+			while(rs.next()) {
+				double tongTien=0.0;
+				tongTien=tongTien+rs.getDouble(6)+rs.getDouble(5);
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),tien.format(tongTien)}; 
+				FormThongKeNV.dfNhanVien.addRow(ds);
+				FormThongKeNV.shd=FormThongKeNV.shd+rs.getInt(4);
+				FormThongKeNV.tongTien=FormThongKeNV.tongTien+tongTien;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void ThongKeNhanVienTheoTuan() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat gio=new DecimalFormat("0.0 h");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai,COUNT(NhanVien.maNhanVien) as slhd,sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))),\r\n"
+					+ "sum([soLuong]*[giaTien])\r\n"
+					+ "FROM     NhanVien INNER JOIN\r\n"
+					+ "                  HoaDon ON NhanVien.maNhanVien = HoaDon.maNhanVien INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonPhong ON HoaDon.maHoaDon = ChiTietHoaDonPhong.maHoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where HoaDon.ngayLap between'"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai\r\n"
+					+ "				  order by sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+\r\n"
+					+ "					sum([soLuong]*[giaTien]) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=1;
+			Object [] ds = null;
+			while(rs.next()) {
+				double tongTien=0;
+				tongTien=rs.getDouble(6)+rs.getDouble(5);
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),tien.format(tongTien)}; 
+				FormThongKeNV.dfNhanVien.addRow(ds);
+				FormThongKeNV.shd=FormThongKeNV.shd+rs.getInt(4);
+				FormThongKeNV.tongTien=FormThongKeNV.tongTien+tongTien;
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void ThongKeNhanVienTheoThang() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat gio=new DecimalFormat("0.0 h");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai,COUNT(NhanVien.maNhanVien) as slhd,sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))),\r\n"
+					+ "sum([soLuong]*[giaTien])\r\n"
+					+ "FROM     NhanVien INNER JOIN\r\n"
+					+ "                  HoaDon ON NhanVien.maNhanVien = HoaDon.maNhanVien INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonPhong ON HoaDon.maHoaDon = ChiTietHoaDonPhong.maHoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where MONTH(HoaDon.ngayLap)='"+LocalDate.now().getMonthValue()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai\r\n"
+					+ "				  order by sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+\r\n"
+					+ "					sum([soLuong]*[giaTien]) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=1;
+			Object [] ds = null;
+			while(rs.next()) {
+				double tongTien=0;
+				tongTien=rs.getDouble(6)+rs.getDouble(5);
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),tien.format(tongTien)}; 
+				FormThongKeNV.dfNhanVien.addRow(ds);
+				FormThongKeNV.shd=FormThongKeNV.shd+rs.getInt(4);
+				FormThongKeNV.tongTien=FormThongKeNV.tongTien+tongTien;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void ThongKeNhanVienTheoNam() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat gio=new DecimalFormat("0.0 h");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai,COUNT(NhanVien.maNhanVien) as slhd,sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))),\r\n"
+					+ "sum([soLuong]*[giaTien])\r\n"
+					+ "FROM     NhanVien INNER JOIN\r\n"
+					+ "                  HoaDon ON NhanVien.maNhanVien = HoaDon.maNhanVien INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonPhong ON HoaDon.maHoaDon = ChiTietHoaDonPhong.maHoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  Phong ON ChiTietHoaDonPhong.maPhong = Phong.maPhong INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where YEAR(HoaDon.ngayLap)='"+LocalDate.now().getYear()+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by NhanVien.maNhanVien, NhanVien.tenNhanVien, NhanVien.dienThoai\r\n"
+					+ "				  order by sum([giaPhong]/60*(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)))+\r\n"
+					+ "					sum([soLuong]*[giaTien]) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=1;
+			Object [] ds = null;
+			while(rs.next()) {
+				double tongTien=0;
+				tongTien=rs.getDouble(6)+rs.getDouble(5);
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),rs.getString(3),rs.getInt(4),tien.format(tongTien)}; 
+				FormThongKeNV.dfNhanVien.addRow(ds);
+				FormThongKeNV.shd=FormThongKeNV.shd+rs.getInt(4);
+				FormThongKeNV.tongTien=FormThongKeNV.tongTien+tongTien;
+			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
