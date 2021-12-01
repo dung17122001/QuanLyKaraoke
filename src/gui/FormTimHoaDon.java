@@ -468,17 +468,22 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		}
 		if(o.equals(btnKetThuc)) {
 			int i=tableHoaDon.getSelectedRow();
-			gioRa=new Time((int)cbGioRa.getSelectedItem(), (int)cbPhutRa.getSelectedItem(), 0);
-			daoCTHoaDonPhong.capNhatGioRa(dfHoaDon.getValueAt(i, 0).toString(), gioRa);
-			gioDaHat=daoCTHoaDonPhong.soGioDaHat(dfHoaDon.getValueAt(i, 0).toString())/60;
-			clearTableChiTietHoaDon();
-			daoHoaDon.LayThongTinPhongTuHoaDonDaTraPhong(dfHoaDon.getValueAt(i, 0).toString());
-			daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-			JOptionPane.showMessageDialog(this, "Đã ngưng tính giờ phòng");
-			tienPhong=daoCTHoaDonPhong.tinhTienPhong(dfHoaDon.getValueAt(i, 0).toString());
-			tienDV=daoCTHoaDonDichVu.tinhTienDichVu(dfHoaDon.getValueAt(i, 0).toString());
-			tongTien=tienPhong+tienDV;
-			txtTongTien.setText(tien.format(tongTien));
+			if((int)cbGioRa.getSelectedItem()>(int)cbGioVao.getSelectedItem()) {
+				gioRa=new Time((int)cbGioRa.getSelectedItem(), (int)cbPhutRa.getSelectedItem(), 0);
+				daoCTHoaDonPhong.capNhatGioRa(dfHoaDon.getValueAt(i, 0).toString(), gioRa);
+				gioDaHat=daoCTHoaDonPhong.soGioDaHat(dfHoaDon.getValueAt(i, 0).toString())/60;
+				clearTableChiTietHoaDon();
+				daoHoaDon.LayThongTinPhongTuHoaDonDaTraPhong(dfHoaDon.getValueAt(i, 0).toString());
+				daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+				JOptionPane.showMessageDialog(this, "Đã ngưng tính giờ phòng");
+				tienPhong=daoCTHoaDonPhong.tinhTienPhong(dfHoaDon.getValueAt(i, 0).toString());
+				tienDV=daoCTHoaDonDichVu.tinhTienDichVu(dfHoaDon.getValueAt(i, 0).toString());
+				tongTien=tienPhong+tienDV;
+				txtTongTien.setText(tien.format(tongTien));
+			}
+			else
+				JOptionPane.showMessageDialog(this, "Giờ ra phải lớn hơn giờ vào");
+			
 		}
 		if(o.equals(btnThanhToan)) {
 			int i=tableHoaDon.getSelectedRow();
@@ -496,15 +501,15 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 					daoHoaDon.capNhatTrangThaiHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 					daoPhong.updatePhongThanhTrong(dfHoaDon.getValueAt(i, 1).toString());
 					JOptionPane.showMessageDialog(this, "Hóa đơn đã được thanh toán");
-					int tl;
-					tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn in hóa đơn này không ?", "xác nhận",
-							JOptionPane.YES_OPTION);
-					if (tl == JOptionPane.YES_OPTION) {
-						setDuLieuFrmInHd();
-						this.frmXuatHD.setVisible(true);
-						frmXuatHD.setLocationRelativeTo(null);
-						frmXuatHD.printInHoaDon();
-					}
+//					int tl;
+//					tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn in hóa đơn này không ?", "xác nhận",
+//							JOptionPane.YES_OPTION);
+//					if (tl == JOptionPane.YES_OPTION) {
+//						setDuLieuFrmInHd();
+//						this.frmXuatHD.setVisible(true);
+//						frmXuatHD.setLocationRelativeTo(null);
+//						frmXuatHD.printInHoaDon();
+//					}
 				}
 				else {
 					JOptionPane.showMessageDialog(this, "Tiền nhận phải lớn hơn tổng tiền của hóa đơn");

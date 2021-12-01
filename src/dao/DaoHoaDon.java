@@ -16,6 +16,7 @@ import connect.ConnectDB;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.Phong;
+import gui.FormInThongKeDoanhThu;
 import gui.FormThongKeDoanhThu;
 import gui.FormThongKeKhachHang;
 import gui.FormThongKeNV;
@@ -79,6 +80,32 @@ public class DaoHoaDon {
 		}
 	}
 	
+	public void InThongKeDoanhThuPhongTheoNgay() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
+					+ "where HoaDon.ngayLap ='"+LocalDate.now()+"' and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				double giaTien=0.0;
+				giaTien=rs.getDouble(3)*rs.getDouble(4)/60;
+				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				
+			}
+			FormInThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ThongKeDoanhThuPhongTheoTuan() {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		DecimalFormat sl = new DecimalFormat("### 0.0");
@@ -112,6 +139,39 @@ public class DaoHoaDon {
 		}
 	}
 	
+	public void InThongKeDoanhThuPhongTheoTuan() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong "
+					+ "INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon where HoaDon.ngayLap between '"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai like N'Đã thanh toán'"
+							+ "group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				double giaTien=0.0;
+				giaTien=rs.getDouble(3)*rs.getDouble(4)/60;
+				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+			}
+			FormInThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ThongKeDoanhThuPhongTheoThang() {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		DecimalFormat sl = new DecimalFormat("### 0.0");
@@ -138,6 +198,32 @@ public class DaoHoaDon {
 		}
 	}
 	
+	public void InThongKeDoanhThuPhongTheoThang() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
+					+ "where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				double giaTien=0.0;
+				giaTien=rs.getDouble(3)*rs.getDouble(4)/60;
+				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				
+			}
+			FormInThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ThongKeDoanhThuPhongTheoNam() {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		DecimalFormat sl = new DecimalFormat("### 0.0");
@@ -148,7 +234,7 @@ public class DaoHoaDon {
 					+ "where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
 			stmt = con.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
-			int i=FormThongKeDoanhThu.stt;
+			int i=FormInThongKeDoanhThu.stt;
 			Object [] ds = null;
 			while(rs.next()) {
 				double giaTien=0.0;
@@ -159,6 +245,32 @@ public class DaoHoaDon {
 				
 			}
 			FormThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void InThongKeDoanhThuPhongTheoNam() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT Phong.maPhong, Phong.tenPhong, Phong.giaPhong, SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa))as tgtheophut FROM Phong INNER JOIN ChiTietHoaDonPhong ON Phong.maPhong = ChiTietHoaDonPhong.maPhong INNER JOIN HoaDon ON ChiTietHoaDonPhong.maHoaDon = HoaDon.maHoaDon\r\n"
+					+ "where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai like N'Đã thanh toán' group by  Phong.maPhong, Phong.tenPhong, Phong.giaPhong order by giaPhong*SUM(DATEDIFF(N,ChiTietHoaDonPhong.gioVao,ChiTietHoaDonPhong.gioRa)) desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				double giaTien=0.0;
+				giaTien=rs.getDouble(3)*rs.getDouble(4)/60;
+				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				
+			}
+			FormInThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -187,6 +299,34 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
 			FormThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void InThongKeDoanhThuDichVuTheoNgay() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien, SUM(ChiTietHoaDonDichVu.soLuong), thanhtien=SUM(ChiTietHoaDonDichVu.soLuong)*giaTien\r\n"
+					+ "FROM     HoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where HoaDon.ngayLap='"+LocalDate.now()+"' and HoaDon.trangThai=N'Đã thanh toán'"
+					+ " group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))}; 
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				//FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
+			}
+			FormInThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -230,6 +370,39 @@ public class DaoHoaDon {
 		}
 	}
 	
+	public void InThongKeDoanhThuDichVuTheoTuan() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="\r\n"
+					+ "SELECT DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien,SUM(soLuong) as sl, thanhtien=SUM(soLuong)*giaTien\r\n"
+					+ "FROM     HoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where HoaDon.ngayLap between'"+dateFormat.format(c1.getTime())+"' and '"+dateFormat.format(c2.getTime())+"' and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ThongKeDoanhThuDichVuTheoThang() {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		DecimalFormat sl = new DecimalFormat("### 0.0");
@@ -265,6 +438,41 @@ public class DaoHoaDon {
 		}
 	}
 	
+	public void InThongKeDoanhThuDichVuTheoThang() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien,SUM(soLuong) as sl, thanhtien=SUM(soLuong)*giaTien\r\n"
+					+ "FROM     HoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where MONTH(HoaDon.ngayLap)="+LocalDate.now().getMonthValue()+" and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				//FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
+			}
+			//FormThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void ThongKeDoanhThuDichVuTheoNam() {
 		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
 		DecimalFormat sl = new DecimalFormat("### 0.0");
@@ -295,6 +503,41 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
 			}
 			FormThongKeDoanhThu.stt=i;
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void InThongKeDoanhThuDichVuTheoNam() {
+		DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+		DecimalFormat sl = new DecimalFormat("### 0.0");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+		try {
+			Connection con = ConnectDB.getCon();
+			PreparedStatement stmt = null;
+			String sql ="SELECT DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien,SUM(soLuong) as sl, thanhtien=SUM(soLuong)*giaTien\r\n"
+					+ "FROM     HoaDon INNER JOIN\r\n"
+					+ "                  ChiTietHoaDonDichVu ON HoaDon.maHoaDon = ChiTietHoaDonDichVu.maHoaDon INNER JOIN\r\n"
+					+ "                  DichVu ON ChiTietHoaDonDichVu.maDichVu = DichVu.maDichVu\r\n"
+					+ "				  where YEAR(HoaDon.ngayLap)="+LocalDate.now().getYear()+" and HoaDon.trangThai=N'Đã thanh toán'\r\n"
+					+ "				  group by DichVu.maDichVu, DichVu.tenDichVu, DichVu.giaTien"
+					+ " order by thanhtien desc";
+			stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			int i=FormInThongKeDoanhThu.stt;
+			Object [] ds = null;
+			while(rs.next()) {
+				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),rs.getInt(4),tien.format(rs.getDouble(5))};
+				FormInThongKeDoanhThu.tableModel.addRow(ds);
+				//FormThongKeDoanhThu.tongTienDV=FormThongKeDoanhThu.tongTienDV+rs.getDouble(5);
+			}
+//			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

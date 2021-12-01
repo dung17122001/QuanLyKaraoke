@@ -34,6 +34,9 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
 public class FormThongKeDoanhThu extends JPanel implements ActionListener{
@@ -49,11 +52,13 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	private DaoPhong daoPhong=new DaoPhong();
 	private DaoDichVu daoDichVu=new DaoDichVu();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
-	private JComboBox<String> cbThoiGian;
+	public static JComboBox<String> cbThoiGian;
 	public static double tongTienPhong=0.0,tongTienDV=0.0;
 	private double tongDoanhThu=0.0;
 	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	public static int stt=1;
+	private FormInThongKeDoanhThu formIn=new FormInThongKeDoanhThu();
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -247,7 +252,10 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 			}
 		}
 		if(o.equals(btnInThongKe)) {
-			
+			setDuLieuFrmInThongKe();
+			this.formIn.setVisible(true);
+			formIn.setLocationRelativeTo(null);
+			formIn.printInThongKe();
 		}
 	}
 	
@@ -260,5 +268,63 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		if (defaults.get("Table.alternateRowColor") == null)
 			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
+	}
+	public void setDuLieuFrmInThongKe() {
+		FormInThongKeDoanhThu.clearTable();
+		int i=tableHangHoa.getSelectedRow();
+//		KhachHang khachHang=daoKhachHang.getKhachHangTheoTen(dfHoaDon.getValueAt(i, 2).toString());
+//		NhanVien nv=daoNhanVien.getNVTheoHD(dfHoaDon.getValueAt(i, 0).toString());
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+        
+        if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
+			FormInThongKeDoanhThu.lblThoiGian.setText(dateFormat.format(c2.getTime()));
+			daoHoaDon.InThongKeDoanhThuPhongTheoNgay();
+			daoHoaDon.InThongKeDoanhThuDichVuTheoNgay();
+			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());
+			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
+			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
+		}
+		if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
+			FormInThongKeDoanhThu.lblThoiGian.setText(dateFormat.format(c1.getTime())+" - "+dateFormat.format(c2.getTime()));
+			daoHoaDon.InThongKeDoanhThuPhongTheoTuan();
+			daoHoaDon.InThongKeDoanhThuDichVuTheoTuan();
+			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());
+			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
+			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
+		}
+		if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
+			FormInThongKeDoanhThu.lblThoiGian.setText(c2.getTime().getMonth()+"-"+LocalDate.now().getYear());
+			daoHoaDon.InThongKeDoanhThuPhongTheoNgay();
+			daoHoaDon.InThongKeDoanhThuDichVuTheoNgay();
+			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());
+			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
+			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
+		}
+		if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
+			FormInThongKeDoanhThu.lblThoiGian.setText(""+LocalDate.now().getYear());
+			daoHoaDon.InThongKeDoanhThuPhongTheoNam();
+			daoHoaDon.InThongKeDoanhThuDichVuTheoNam();
+			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());
+			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
+			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
+		}
+
+//		FrmXuatHD.lblNgayLap1.setText(simpleDateFormat.format(c1.getTime()));
+//		FrmXuatHD.lblMaHD.setText(dfHoaDon.getValueAt(i, 0).toString());
+//		FrmXuatHD.lblTenKH1.setText(khachHang.getTenKhachHang());
+//		FrmXuatHD.lblDCKH1.setText(khachHang.getDiaChi());
+//		FrmXuatHD.lblsdtkh1.setText(khachHang.getSoDienThoai());
+//		FrmXuatHD.lblTongTien.setText(""+txtTongTien.getText());
+//		FrmXuatHD.lblTienNhan.setText(tien.format(tienNhan));
+//		FrmXuatHD.lblTienThoi.setText(txtTienThoi.getText());
+//		FrmXuatHD.lbTenNV.setText(nv.getTenNhanVien());
+//		FrmXuatHD.lbSoCMND.setText(khachHang.getSoCMND());
+//		daoHoaDon.LayThongTinPhongTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+//		daoHoaDon.LayThongTinDichVuTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 	}
 }

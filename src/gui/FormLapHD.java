@@ -384,6 +384,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			JOptionPane.showMessageDialog(this, "Đã lưu hóa đơn");
 			clearTablePhong();
 			LoadTatCaPhong();
+			stt=1;
 		}
 		if(o.equals(btnDatPhong)) {
 			new FormNhanPhong().setVisible(true);
