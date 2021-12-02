@@ -48,7 +48,7 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 
 
-public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionListener {
+public class FormInThongKeNV extends JFrame implements Printable,ActionListener {
 
 	private static JPanel contentPane;
 	public static JTable table;
@@ -73,7 +73,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormInThongKeDoanhThu frame = new FormInThongKeDoanhThu();
+					FormInThongKeNV frame = new FormInThongKeNV();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,7 +85,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 	/**
 	 * Create the frame.
 	 */
-	public FormInThongKeDoanhThu() {
+	public FormInThongKeNV() {
 		setTitle("HÓA ĐƠN KARAOKE NICE");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);

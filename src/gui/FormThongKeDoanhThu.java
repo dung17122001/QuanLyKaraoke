@@ -272,8 +272,6 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	public void setDuLieuFrmInThongKe() {
 		FormInThongKeDoanhThu.clearTable();
 		int i=tableHangHoa.getSelectedRow();
-//		KhachHang khachHang=daoKhachHang.getKhachHangTheoTen(dfHoaDon.getValueAt(i, 2).toString());
-//		NhanVien nv=daoNhanVien.getNVTheoHD(dfHoaDon.getValueAt(i, 0).toString());
 		Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
         Date date = Date.valueOf(LocalDate.now());
@@ -299,8 +297,8 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		}
 		if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
 			FormInThongKeDoanhThu.lblThoiGian.setText(c2.getTime().getMonth()+"-"+LocalDate.now().getYear());
-			daoHoaDon.InThongKeDoanhThuPhongTheoNgay();
-			daoHoaDon.InThongKeDoanhThuDichVuTheoNgay();
+			daoHoaDon.InThongKeDoanhThuPhongTheoThang();
+			daoHoaDon.InThongKeDoanhThuDichVuTheoThang();
 			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());
 			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
 			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
@@ -313,18 +311,5 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
 			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
 		}
-
-//		FrmXuatHD.lblNgayLap1.setText(simpleDateFormat.format(c1.getTime()));
-//		FrmXuatHD.lblMaHD.setText(dfHoaDon.getValueAt(i, 0).toString());
-//		FrmXuatHD.lblTenKH1.setText(khachHang.getTenKhachHang());
-//		FrmXuatHD.lblDCKH1.setText(khachHang.getDiaChi());
-//		FrmXuatHD.lblsdtkh1.setText(khachHang.getSoDienThoai());
-//		FrmXuatHD.lblTongTien.setText(""+txtTongTien.getText());
-//		FrmXuatHD.lblTienNhan.setText(tien.format(tienNhan));
-//		FrmXuatHD.lblTienThoi.setText(txtTienThoi.getText());
-//		FrmXuatHD.lbTenNV.setText(nv.getTenNhanVien());
-//		FrmXuatHD.lbSoCMND.setText(khachHang.getSoCMND());
-//		daoHoaDon.LayThongTinPhongTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-//		daoHoaDon.LayThongTinDichVuTuHoaDonChoHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 	}
 }

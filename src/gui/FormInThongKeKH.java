@@ -48,7 +48,7 @@ import javax.swing.JButton;
 import javax.swing.border.MatteBorder;
 
 
-public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionListener {
+public class FormInThongKeKH extends JFrame implements Printable,ActionListener {
 
 	private static JPanel contentPane;
 	public static JTable table;
@@ -57,12 +57,10 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 	public static JLabel lblDienThoai;
 	public static JLabel lblHD;
 	public static JLabel lblLoaiHD1;
-	public static JLabel lblTongTienPhong,lbltongTien,lblTongTienDV,lblThoiGian;
+	public static JLabel lblThoiGian;
 	private static JPanel panel;
 	public static DefaultTableModel tableModel ;
 	public static int stt=1;
-	private JLabel lbTN;
-	private JLabel lbTThoi;
 	
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	
@@ -73,7 +71,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormInThongKeDoanhThu frame = new FormInThongKeDoanhThu();
+					FormInThongKeKH frame = new FormInThongKeKH();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,7 +83,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 	/**
 	 * Create the frame.
 	 */
-	public FormInThongKeDoanhThu() {
+	public FormInThongKeKH() {
 		setTitle("HÓA ĐƠN KARAOKE NICE");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -125,8 +123,8 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		lblDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel.add(lblDienThoai);
 		
-		lblHD = new JLabel("THỐNG KÊ DOANH THU");
-		lblHD.setBounds(358, 113, 193, 35);
+		lblHD = new JLabel("THỐNG KÊ NHÂN VIÊN");
+		lblHD.setBounds(358, 113, 207, 35);
 		lblHD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHD.setForeground(Color.BLACK);
 		lblHD.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -134,11 +132,11 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setViewportBorder(new LineBorder(new Color(0, 0, 128), 1, true));
-		scrollPane_1.setBounds(10, 195, 866, 420);
+		scrollPane_1.setBounds(10, 195, 866, 500);
 		panel.add(scrollPane_1);
 		
 		
-		String[] tb = new String[] {"STT","Mã hàng hóa","Tên hàng hóa","Đơn Giá","Số Lượng","Thành Tiền"};
+		String[] tb = new String[] {"STT","Mã nhân viên","Tên nhân viên","Số điện thoại","Số hóa đơn đã lập", "Tổng tiền hóa đơn"};
 
 		tableModel = new DefaultTableModel(tb,0);
 		table = new JTable(tableModel);
@@ -147,7 +145,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		table.getColumnModel().getColumn(0).setPreferredWidth(10);
 		table.getColumnModel().getColumn(1).setPreferredWidth(50);
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
-		table.getColumnModel().getColumn(3).setPreferredWidth(63);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
 		scrollPane_1.setViewportView(table);
 		
 		JLabel lblSDT1 = new JLabel("0385142640 - 0329218740");
@@ -164,33 +162,6 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		lblLoaiHD1.setBounds(460, 52, 120, 14);
 		panel.add(lblLoaiHD1);
 		
-		JLabel lblTT = new JLabel("Tổng tiền phòng:");
-		lblTT.setBounds(10, 625, 120, 24);
-		panel.add(lblTT);
-		lblTT.setForeground(Color.BLACK);
-		lblTT.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		
-		lblTongTienPhong = new JLabel("");
-		lblTongTienPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblTongTienPhong.setBounds(162, 625, 146, 24);
-		panel.add(lblTongTienPhong);
-		
-		lbTThoi = new JLabel("Tổng doanh thu:");
-		lbTThoi.setForeground(Color.BLACK);
-		lbTThoi.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lbTThoi.setBounds(10, 693, 120, 24);
-		panel.add(lbTThoi);
-		
-		lbltongTien = new JLabel("");
-		lbltongTien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lbltongTien.setBounds(162, 693, 146, 24);
-		panel.add(lbltongTien);
-		
-		lblTongTienDV = new JLabel("");
-		lblTongTienDV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblTongTienDV.setBounds(162, 659, 131, 24);
-		panel.add(lblTongTienDV);
-		
 		JLabel lblTG = new JLabel("Thời gian thống kê:");
 		lblTG.setForeground(Color.BLACK);
 		lblTG.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -201,12 +172,6 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		lblThoiGian.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		lblThoiGian.setBounds(186, 158, 342, 27);
 		panel.add(lblThoiGian);
-		
-		lbTN = new JLabel("Tổng tiền dịch vụ: ");
-		lbTN.setBounds(10, 659, 120, 24);
-		panel.add(lbTN);
-		lbTN.setForeground(Color.BLACK);
-		lbTN.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		
 		setTableAlternateRow();
 	}

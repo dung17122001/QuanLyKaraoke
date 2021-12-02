@@ -21,8 +21,12 @@ import connect.ConnectDB;
 import dao.DaoHoaDon;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
 public class FormThongKeNV extends JPanel implements ActionListener{
@@ -38,6 +42,8 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	public static double tongTien=0.0;
 	DecimalFormat tien = new DecimalFormat("###,###,### VNĐ");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	FormInThongKeNV formNV=new FormInThongKeNV();
 
 	public FormThongKeNV() {
 		setBounds(0, 0, 1352, 565);
@@ -179,6 +185,12 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 				txtTongTien.setText(tien.format(tongTien));
 			}
 		}
+		if(o.equals(btnInThongKe)) {
+			setDuLieuFrmInThongKe();
+			this.formNV.setVisible(true);
+			formNV.setLocationRelativeTo(null);
+			formNV.printInThongKe();
+		}
 		
 	}
 	public void setTableAlternateRow() {
@@ -189,6 +201,33 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 	private void clearTable() {
 		while (tableNhanVien.getRowCount() > 0) {
 			dfNhanVien.removeRow(0);
+		}
+	}
+	public void setDuLieuFrmInThongKe() {
+		FormInThongKeNV.clearTable();
+		int i=tableNhanVien.getSelectedRow();
+		Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        Date date = Date.valueOf(LocalDate.now());
+        c1.setTime(date);
+        c2.setTime(date);
+        c1.roll(Calendar.DATE, -7);
+        
+        if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
+			FormInThongKeNV.lblThoiGian.setText(dateFormat.format(c2.getTime()));
+			daoHoaDon.InThongKeNhanVienTheoNgay();
+		}
+		if(cbThoiGian.getSelectedItem().equals("Tuần này")) {
+			FormInThongKeNV.lblThoiGian.setText(dateFormat.format(c1.getTime())+" - "+dateFormat.format(c2.getTime()));
+			daoHoaDon.InThongKeNhanVienTheoTuan();
+		}
+		if(cbThoiGian.getSelectedItem().equals("Tháng này")) {
+			FormInThongKeNV.lblThoiGian.setText(c2.getTime().getMonth()+"-"+LocalDate.now().getYear());
+			daoHoaDon.InThongKeNhanVienTheoThang();
+		}
+		if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
+			FormInThongKeNV.lblThoiGian.setText(""+LocalDate.now().getYear());
+			daoHoaDon.InThongKeNhanVienTheoNam();
 		}
 	}
 }
