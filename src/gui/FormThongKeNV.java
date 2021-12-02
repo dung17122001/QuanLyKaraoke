@@ -211,7 +211,9 @@ public class FormThongKeNV extends JPanel implements ActionListener{
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
         
         if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
 			FormInThongKeNV.lblThoiGian.setText(dateFormat.format(c2.getTime()));
@@ -226,7 +228,7 @@ public class FormThongKeNV extends JPanel implements ActionListener{
 			daoHoaDon.InThongKeNhanVienTheoThang();
 		}
 		if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
-			FormInThongKeNV.lblThoiGian.setText(""+LocalDate.now().getYear());
+			FormInThongKeNV.lblThoiGian.setText("Cả năm "+LocalDate.now().getYear());
 			daoHoaDon.InThongKeNhanVienTheoNam();
 		}
 	}

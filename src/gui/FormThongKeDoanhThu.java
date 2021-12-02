@@ -271,13 +271,15 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	}
 	public void setDuLieuFrmInThongKe() {
 		FormInThongKeDoanhThu.clearTable();
-		int i=tableHangHoa.getSelectedRow();
+		//int i=tableHangHoa.getSelectedRow();
 		Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
         
         if(cbThoiGian.getSelectedItem().equals("Hôm nay")) {
 			FormInThongKeDoanhThu.lblThoiGian.setText(dateFormat.format(c2.getTime()));
@@ -304,7 +306,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
 		}
 		if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
-			FormInThongKeDoanhThu.lblThoiGian.setText(""+LocalDate.now().getYear());
+			FormInThongKeDoanhThu.lblThoiGian.setText("Cả năm "+LocalDate.now().getYear());
 			daoHoaDon.InThongKeDoanhThuPhongTheoNam();
 			daoHoaDon.InThongKeDoanhThuDichVuTheoNam();
 			FormInThongKeDoanhThu.lblTongTienPhong.setText(txtPhong.getText());

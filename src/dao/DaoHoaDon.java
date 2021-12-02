@@ -117,7 +117,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -134,6 +136,7 @@ public class DaoHoaDon {
 				FormThongKeDoanhThu.tongTienPhong=FormThongKeDoanhThu.tongTienPhong+giaTien;
 				ds = new Object [] { i++ ,rs.getString(1),rs.getString(2),tien.format(rs.getDouble(3)),sl.format(rs.getDouble(4)/60)+" h",tien.format(giaTien)}; 
 				FormThongKeDoanhThu.dfHangHoa.addRow(ds);
+				
 			}
 			FormThongKeDoanhThu.stt=i;
 		}catch (SQLException e) {
@@ -150,7 +153,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -344,7 +349,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -380,7 +387,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -845,7 +854,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -885,7 +896,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -1151,7 +1164,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
@@ -1194,7 +1209,9 @@ public class DaoHoaDon {
         Date date = Date.valueOf(LocalDate.now());
         c1.setTime(date);
         c2.setTime(date);
-        c1.roll(Calendar.DATE, -7);
+        c1.add(Calendar.DATE, -7);
+        if(c1.getTime().getDate()<8)
+            c1.roll(Calendar.MONTH, -1);
 		try {
 			Connection con = ConnectDB.getCon();
 			PreparedStatement stmt = null;
