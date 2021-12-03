@@ -33,9 +33,11 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import chucnang.Regex;
 import connect.ConnectDB;
 import entity.KhachHang;
 import dao.DaoKhachHang;
+import dao.PhatSinhMa;
 
 public class FormQLKhachHang extends JPanel implements ActionListener, MouseListener {
 
@@ -50,8 +52,12 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	private JTextField txtCmnd;
 	private JTextField txtDiachi;
 	private JTextField txtSdt;
+	private JLabel errorTen;
+	private JLabel errorSDT;
+	private JLabel errorCMND;
 	private DefaultTableModel tableModel;
 	private DaoKhachHang dao = new DaoKhachHang();
+	private PhatSinhMa phatSinhMa=new PhatSinhMa();
 	
 	public FormQLKhachHang() {
 		setBounds(0, 0, 1366,620);
@@ -126,6 +132,26 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		txtDiachi.setBounds(416, 135, 576, 30);
 		pnTTNV.add(txtDiachi);
 		txtDiachi.setColumns(10);
+		
+		/*
+		errorTen = new JLabel("(*)");
+		errorTen.setForeground(Color.RED);
+		errorTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorTen.setBounds(416, 113, 190, 30);
+		pnTTNV.add(errorTen);
+		
+		errorSDT = new JLabel("(*)");
+		errorSDT.setForeground(Color.RED);
+		errorSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorSDT.setBounds(801, 55, 190, 30);
+		pnTTNV.add(errorSDT);
+		
+		errorCMND = new JLabel("(*)");
+		errorCMND.setForeground(Color.RED);
+		errorCMND.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorCMND.setBounds(801, 113, 190, 30);
+		pnTTNV.add(errorCMND);
+		*/
 		
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
@@ -334,7 +360,8 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnThem)) {
-			String ma = txtID.getText();
+			if(KiemTraDuLieu()) {
+			String ma = phatSinhMa.maKhachHang();
 			String ten = txtTenKh.getText();
 			String diachi = txtDiachi.getText();
 			String sdt = txtSdt.getText();
@@ -356,8 +383,10 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			}
 		}
 		if(o.equals(btnSua)) {
+			if(KiemTraDuLieu()) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
 				String ma = txtID.getText();
@@ -383,6 +412,7 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 			else {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần cập nhật thông tin");
 			}
+		}
 		}
 		if(o.equals(btnXoa)) {
 			int row = table.getSelectedRow();
@@ -425,4 +455,53 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		txtCmnd.setText("");
 		
 	}
+	/*
+	public boolean validData() {
+		String ten = txtTenKh.getText().trim();
+		String sdt = txtSdt.getText().trim();
+		String cmnd = txtCmnd.getText().trim();
+		
+		if (!(ten.length() > 0 && ten.matches("[\\p{L}\\s]+"))) {
+			errorTen.setText("Sai cú pháp \n Tên phải bắt đầu bằng chữ cái hoa");
+			txtTenKh.requestFocus();
+			return false;
+		} else {
+			errorTen.setText("");
+		}
+		
+		
+		if (!((sdt.length() > 0) && sdt.matches("[0-9]{10}"))) {
+			errorSDT.setText("SDT phải là 10 số");
+			txtSdt.requestFocus();
+			return false;
+		} else {
+			errorSDT.setText("");
+		}
+		
+		if (!((cmnd.length() > 0) && cmnd.matches("[0-9]{9,12}"))) {
+			errorCMND.setText("CMND phải từ 9-12 số");
+			txtCmnd.requestFocus();
+			return false;
+		} else {
+			errorCMND.setText("");
+		}
+		return true;
+	}
+	*/
+	
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRongTen(txtTenKh))
+			return false;
+		if(regex.RegexTen(txtTenKh))
+			return false;
+		if(regex.RegexDiaChi(txtDiachi))
+			return false;
+		if(regex.RegexSDT(txtSdt))
+			return false;
+		if(regex.RegexSDT(txtCmnd))
+			return false;
+		return true;
+	}
+
 }

@@ -48,11 +48,14 @@ import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
 import dao.DaoDichVu;
+import dao.DaoDonVi;
 import dao.DaoLoaiDV;
+import entity.DonVi;
 import entity.LoaiDichVu;
 
 
-public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListener{
+
+public class FormDonVi extends JPanel implements ActionListener, MouseListener{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtId;
@@ -62,10 +65,10 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private DaoDichVu dao = new DaoDichVu();
-	private DaoLoaiDV daoDV = new DaoLoaiDV();
+	private DaoDonVi daoDV = new DaoDonVi();
 	private JComboBox<String> cbChucVu;
 	
-	public FormThemLoaiDV() {
+	public FormDonVi() {
 		
 		setBounds(0, 0, 1366, 766);
 		setLayout(null);
@@ -79,12 +82,12 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 				
 		JPanel pnTimKiem = new JPanel();
 		pnTimKiem.setBackground(Color.WHITE);
-		pnTimKiem.setBorder(new TitledBorder(null, "THÔNG TIN LOẠI DỊCH VỤ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnTimKiem.setBorder(new TitledBorder(null, "THÔNG TIN ĐƠN VỊ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnTimKiem.setBounds(0,0, 1366,210);
 		pnTimKiem.setLayout(null);
 		add(pnTimKiem);
 		
-		JLabel lblMaNV = new JLabel("Mã loại DV:");
+		JLabel lblMaNV = new JLabel("Mã đơn vị:");
 		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblMaNV.setBounds(420, 40, 200, 30);
 		pnTimKiem.add(lblMaNV);
@@ -96,7 +99,7 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 		txtId.setColumns(10);
 		
 	    
-        JLabel lblTenNV = new JLabel("Tên loại DV:");
+        JLabel lblTenNV = new JLabel("Tên đơn vị:");
         lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 26));
         lblTenNV.setBounds(420, 100, 300, 30);
         pnTimKiem.add(lblTenNV);
@@ -141,7 +144,7 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblDSNV = new JLabel("DANH SÁCH LOẠI DỊCH VỤ:");
+		JLabel lblDSNV = new JLabel("DANH SÁCH ĐƠN VỊ:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		lblDSNV.setBounds(500,0, 500, 40);
@@ -241,7 +244,7 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 		
 		//Add thông tin vào bảng
 		try {
-			daoDV.loadData("select * from LoaiDichVu ", tableModel); 
+			daoDV.loadData("select * from DonVi ", tableModel); 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -254,9 +257,9 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 			String ma=txtId.getText(); 
 			String ten=txtTen.getText();
 			
-			LoaiDichVu ldv =new LoaiDichVu(ma,ten);
+			DonVi dv =new DonVi(ma,ten);
 			try {
-				if (daoDV.themLoaiDichVu(ldv)) {
+				if (daoDV.themDonVi(dv)) {
 					clearTable();
 					reloadData();
 					JOptionPane.showMessageDialog(this, "Thêm thành công");
@@ -274,7 +277,7 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa loại dịch vụ này", "Chú ý",
 								JOptionPane.YES_NO_OPTION);
 						if (xacnhan == JOptionPane.YES_OPTION) {
-							if (daoDV.delLoaiDichVu(txtId.getText())) {
+							if (daoDV.delDonVi(txtId.getText())) {
 								tableModel.removeRow(row);
 								JOptionPane.showMessageDialog(this, "Xóa thành công!");
 								reloadData();
@@ -327,7 +330,7 @@ public class FormThemLoaiDV extends JPanel implements ActionListener, MouseListe
 	public void reloadData() {
 		try {
 			tableModel.setRowCount(0);
-			daoDV.loadData("select * from LoaiDichVu ", tableModel);
+			daoDV.loadData("select * from DonVi ", tableModel);
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}

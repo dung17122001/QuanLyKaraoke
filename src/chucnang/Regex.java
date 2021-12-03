@@ -90,7 +90,22 @@ public class Regex implements Serializable {
 		}
 		return false;
 	}
-
+	public boolean kiemTraRongTen(JTextField txt) {
+		if (txt.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Tên không được để trống");
+			txt.requestFocus();
+			return true;
+		}
+		return false;
+	}
+	public boolean kiemTraNS(JDateChooser ngaysinh) {
+		if (ngaysinh.getDate() == null) {
+			JOptionPane.showMessageDialog(null, "Ngày sinh không được để trống");
+			ngaysinh.requestFocus();
+			return true;
+		}
+		return false;
+	}
 	public boolean kiemTraGiaPhong(JTextField txtTuoi2) {
 		try {
 			int x = Integer.parseInt(txtTuoi2.getText());
@@ -118,6 +133,7 @@ public class Regex implements Serializable {
 		} else
 			return false;
 	}
+	
 //	SỐ LƯỢNG
 	public boolean regexSoLuong(JTextField txtSoluong) {
 		String input = txtSoluong.getText();

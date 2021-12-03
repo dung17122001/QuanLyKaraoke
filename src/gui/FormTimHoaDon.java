@@ -20,12 +20,14 @@ import dao.DaoPhong;
 import dao.DaoCTHoaDonDichVu;
 import dao.DaoCTHoaDonPhong;
 import dao.DaoDichVu;
+import dao.DaoDonVi;
 import dao.DaoHoaDon;
 import dao.DaoLoaiDV;
 import dao.DaoLoaiPhong;
 import dao.DaoNhanVien;
 import entity.ChiTietHoaDonDichVu;
 import entity.DichVu;
+import entity.DonVi;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.LoaiDichVu;
@@ -65,6 +67,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
 	private DaoDichVu daoDichVu=new DaoDichVu();
+	private DaoDonVi daoDonVi = new DaoDonVi();
 	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
@@ -73,6 +76,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 	public static int stt=1;
 	private JComboBox<String> cbLoaiDV;
 	private JComboBox<String> cbTenDV;
+	private JComboBox<String> cbDonVi;
 	private JComboBox<Integer> cbPhutVao;
 	private JComboBox<Integer> cbGioVao;
 	private JComboBox<Integer> cbGioRa;
@@ -127,6 +131,15 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		cbTenDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		cbTenDV.setBounds(457, 22, 190, 30);
 		panelDV.add(cbTenDV);
+		
+		JLabel lbdonVi = new JLabel("Đơn vị:");
+		lbdonVi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbdonVi.setBounds(200, 76, 95, 30);
+		panelDV.add(lbdonVi);
+
+		cbDonVi = new JComboBox<String>();
+		cbDonVi.setBounds(300, 76, 95, 30);
+		panelDV.add(cbDonVi);
 
 		btnThemDV = new JButton("Thêm dịch vụ vào hóa đơn");
 		btnThemDV.setBackground(Color.ORANGE);
@@ -136,7 +149,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 
 		txtSL = new JSpinner();
 		txtSL.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtSL.setBounds(155, 77, 56, 30);
+		txtSL.setBounds(135, 77, 56, 30);
 		txtSL.setValue(1);
 		panelDV.add(txtSL);
 
@@ -356,6 +369,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 
 		//Thêm sự kiện
 		cbLoaiDV.addActionListener(this);
+		cbDonVi.addActionListener(this);
 		btnInHoaDon.addActionListener(this);
 		btnThanhToan.addActionListener(this);
 		btnThemDV.addActionListener(this);
@@ -366,6 +380,7 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 
 		//		Thêm dữ liệu vào combobox
 		ThemDuLieuVaoCBLoaiDichVu();
+		ThemDuLieuVaoCbDonVi();
 		//Lấy danh sách các hóa đơn chờ thanh toán
 		daoHoaDon.LayHoaDonChoThanhToan();
 
@@ -434,6 +449,13 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 				cbTenDV.addItem(dv.getTenDichVu());
 			}
 		}
+		if(o.equals(cbDonVi)) {
+			cbTenDV.removeAllItems();
+			ArrayList<DichVu> dsDV=daoDichVu.getDichVuTheoDonVi(cbDonVi.getSelectedItem().toString());
+			for(DichVu dv:dsDV) {
+				cbTenDV.addItem(dv.getTenDichVu());
+			}
+		}
 		if(o.equals(btnThemDV)) {
 			int i=tableHoaDon.getSelectedRow();
 			int count=0;
@@ -468,22 +490,17 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		}
 		if(o.equals(btnKetThuc)) {
 			int i=tableHoaDon.getSelectedRow();
-			if((int)cbGioRa.getSelectedItem()>(int)cbGioVao.getSelectedItem()) {
-				gioRa=new Time((int)cbGioRa.getSelectedItem(), (int)cbPhutRa.getSelectedItem(), 0);
-				daoCTHoaDonPhong.capNhatGioRa(dfHoaDon.getValueAt(i, 0).toString(), gioRa);
-				gioDaHat=daoCTHoaDonPhong.soGioDaHat(dfHoaDon.getValueAt(i, 0).toString())/60;
-				clearTableChiTietHoaDon();
-				daoHoaDon.LayThongTinPhongTuHoaDonDaTraPhong(dfHoaDon.getValueAt(i, 0).toString());
-				daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
-				JOptionPane.showMessageDialog(this, "Đã ngưng tính giờ phòng");
-				tienPhong=daoCTHoaDonPhong.tinhTienPhong(dfHoaDon.getValueAt(i, 0).toString());
-				tienDV=daoCTHoaDonDichVu.tinhTienDichVu(dfHoaDon.getValueAt(i, 0).toString());
-				tongTien=tienPhong+tienDV;
-				txtTongTien.setText(tien.format(tongTien));
-			}
-			else
-				JOptionPane.showMessageDialog(this, "Giờ ra phải lớn hơn giờ vào");
-			
+			gioRa=new Time((int)cbGioRa.getSelectedItem(), (int)cbPhutRa.getSelectedItem(), 0);
+			daoCTHoaDonPhong.capNhatGioRa(dfHoaDon.getValueAt(i, 0).toString(), gioRa);
+			gioDaHat=daoCTHoaDonPhong.soGioDaHat(dfHoaDon.getValueAt(i, 0).toString())/60;
+			clearTableChiTietHoaDon();
+			daoHoaDon.LayThongTinPhongTuHoaDonDaTraPhong(dfHoaDon.getValueAt(i, 0).toString());
+			daoHoaDon.LayThongTinDichVuTuHoaDon(dfHoaDon.getValueAt(i, 0).toString());
+			JOptionPane.showMessageDialog(this, "Đã ngưng tính giờ phòng");
+			tienPhong=daoCTHoaDonPhong.tinhTienPhong(dfHoaDon.getValueAt(i, 0).toString());
+			tienDV=daoCTHoaDonDichVu.tinhTienDichVu(dfHoaDon.getValueAt(i, 0).toString());
+			tongTien=tienPhong+tienDV;
+			txtTongTien.setText(tien.format(tongTien));
 		}
 		if(o.equals(btnThanhToan)) {
 			int i=tableHoaDon.getSelectedRow();
@@ -501,15 +518,15 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 					daoHoaDon.capNhatTrangThaiHoaDon(dfHoaDon.getValueAt(i, 0).toString());
 					daoPhong.updatePhongThanhTrong(dfHoaDon.getValueAt(i, 1).toString());
 					JOptionPane.showMessageDialog(this, "Hóa đơn đã được thanh toán");
-//					int tl;
-//					tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn in hóa đơn này không ?", "xác nhận",
-//							JOptionPane.YES_OPTION);
-//					if (tl == JOptionPane.YES_OPTION) {
-//						setDuLieuFrmInHd();
-//						this.frmXuatHD.setVisible(true);
-//						frmXuatHD.setLocationRelativeTo(null);
-//						frmXuatHD.printInHoaDon();
-//					}
+					int tl;
+					tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn in hóa đơn này không ?", "xác nhận",
+							JOptionPane.YES_OPTION);
+					if (tl == JOptionPane.YES_OPTION) {
+						setDuLieuFrmInHd();
+						this.frmXuatHD.setVisible(true);
+						frmXuatHD.setLocationRelativeTo(null);
+						frmXuatHD.printInHoaDon();
+					}
 				}
 				else {
 					JOptionPane.showMessageDialog(this, "Tiền nhận phải lớn hơn tổng tiền của hóa đơn");
@@ -542,6 +559,13 @@ public class FormTimHoaDon extends JPanel implements ActionListener,MouseListene
 		}
 	}
 
+	public void ThemDuLieuVaoCbDonVi() {
+		ArrayList<DonVi> dsdvi=new ArrayList<DonVi>();
+		dsdvi=daoDonVi.getTatCaDonVi();
+		for(DonVi dvi: dsdvi) {
+			cbDonVi.addItem(dvi.getTenDonVi());
+		}
+	}
 	private void clearTableChiTietHoaDon() {
 		while (tableHangHoa.getRowCount() > 0) {
 			dfHangHoa.removeRow(0);

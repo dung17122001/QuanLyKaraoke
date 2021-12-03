@@ -41,11 +41,13 @@ import javax.swing.table.TableColumnModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import chucnang.Regex;
 import connect.ConnectDB;
 import entity.ChucVu;
 import entity.NhanVien;
 import dao.DaoChucVu;
 import dao.DaoNhanVien;
+import dao.PhatSinhMa;
 
 public class FormQLNhanVien extends JPanel implements ActionListener, MouseListener {
 
@@ -62,9 +64,14 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	private JTextField txtCmnd;
 	private JComboBox<String> cbChucVu;
 	private JTextField txtSdt;
+	private JLabel errorTen;
+	private JLabel errorSDT;
+	private JLabel errorCMND;
+	private JLabel errorNS;
 	private DefaultTableModel tableModel;
 	private DaoNhanVien dao = new DaoNhanVien();
 	private DaoChucVu daoCV= new DaoChucVu();
+	private PhatSinhMa phatSinhMa=new PhatSinhMa(); 
 	
 	public FormQLNhanVien() {
 		setBounds(0, 0, 1366, 620);
@@ -91,7 +98,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(216, 31, 190, 30);
+		txtID.setBounds(215, 30, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
 		
@@ -151,13 +158,13 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		
 		txtCmnd = new JTextField();
 		txtCmnd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtCmnd.setBounds(601, 83, 190, 30);
+		txtCmnd.setBounds(600, 85, 190, 30);
 		pnTTNV.add(txtCmnd);
 		txtCmnd.setColumns(10);
 		
 		JLabel lbSdt = new JLabel("Số điện thoại:");
 		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSdt.setBounds(955, 83, 190, 30);
+		lbSdt.setBounds(955, 85, 190, 30);
 		pnTTNV.add(lbSdt);
 		
 		txtSdt = new JTextField();
@@ -176,6 +183,33 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		cbChucVu.setBounds(216, 140, 190, 30);
 		pnTTNV.add(cbChucVu);
 		
+		/*
+		errorTen = new JLabel("(*)");
+		errorTen.setForeground(Color.RED);
+		errorTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorTen.setBounds(600, 55, 400, 30);
+		pnTTNV.add(errorTen);
+		
+		errorNS = new JLabel("(*)");
+		errorNS.setForeground(Color.RED);
+		errorNS.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorNS.setBounds(216, 113, 190, 30);
+		pnTTNV.add(errorNS);
+		
+		errorSDT = new JLabel("(*)");
+		errorSDT.setForeground(Color.RED);
+		errorSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorSDT.setBounds(1055, 113, 400, 30);
+		pnTTNV.add(errorSDT);
+		
+		errorCMND = new JLabel("(*)");
+		errorCMND.setForeground(Color.RED);
+		errorCMND.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorCMND.setBounds(601, 118, 400, 30);
+		pnTTNV.add(errorCMND);
+		/*
+		 * 
+		 */
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
 		pnChucNang.setBounds(0,190, 1366,40);
@@ -383,7 +417,8 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnThem)) {
-			String ma=txtID.getText(); 
+			if(KiemTraDuLieu()) {
+			String ma=phatSinhMa.maNhanVien();
 			String ten=txtTenNv.getText(); 
 			String gt = (String) cbGioitinh.getSelectedItem();
 			Date ns = new Date(ngaysinh.getDate().getTime());
@@ -405,8 +440,10 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			}
 		}
 		if(o.equals(btnSua)) {
+			if(KiemTraDuLieu()) {
 			int i = table.getSelectedRow();
 			if (i != -1) {
 				String ma=txtID.getText(); 
@@ -427,6 +464,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 				XoaTrang();
 			} else {
 				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần cập nhật thông tin");
+			}
 			}
 		
 		}
@@ -456,6 +494,7 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		if(o.equals(btnCapNhat)) {
 			XoaTrang();
 		}
+		
 	}
 
 	public void LoadTatCaNhanVien() {
@@ -500,4 +539,64 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		txtCmnd.setText("");
 		cbChucVu.setToolTipText("");
 	}
+	/**
+	 * Kiểm tra dữ liệu đầu vào Rỗng return false
+	 * 
+	 * @return true
+	 */
+	/*
+	public boolean validData() {
+		String ten = txtTenNv.getText().trim();
+		String sdt = txtSdt.getText().trim();
+		String cmnd = txtCmnd.getText().trim();
+		
+		if (!(ten.length() > 0 && ten.matches("[\\p{L}\\s]+"))) {
+			errorTen.setText("Sai cú pháp \n Tên phải bắt đầu bằng chữ cái hoa");
+			txtTenNv.requestFocus();
+			return false;
+		} else {
+			errorTen.setText("");
+		}
+		
+		if (ngaysinh.getDate() == null) {
+			errorNS.setText("Ngày sinh rỗng");
+			ngaysinh.requestFocus();
+			return false;
+		} else {
+			errorNS.setText("");
+		}
+		
+		if (!((sdt.length() > 0) && sdt.matches("[0-9]{10}"))) {
+			errorSDT.setText("SDT phải là 10 số");
+			txtSdt.requestFocus();
+			return false;
+		} else {
+			errorSDT.setText("");
+		}
+		
+		if (!((cmnd.length() > 0) && cmnd.matches("[0-9]{9,12}"))) {
+			errorCMND.setText("CMND phải từ 9-12 số");
+			txtCmnd.requestFocus();
+			return false;
+		} else {
+			errorCMND.setText("");
+		}
+		return true;
+	}
+	*/
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRongTen(txtTenNv))
+			return false;
+		if(regex.RegexTen(txtTenNv))
+			return false;
+		if(regex.kiemTraNS(ngaysinh))
+			return false;
+		if(regex.RegexSDT(txtSdt))
+			return false;
+		if(regex.RegexSDT(txtCmnd))
+			return false;
+		return true;
+	}
+
 }

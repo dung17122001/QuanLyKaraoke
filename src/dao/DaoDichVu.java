@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import entity.DichVu;
+import entity.DonVi;
 import entity.LoaiDichVu;
 import entity.Phong;
 
@@ -28,7 +29,7 @@ public class DaoDichVu {
 			Vector<Object> vector = new Vector<Object>();
 			vector.add(rs.getString("maDichVu")); 
 			vector.add(rs.getString("tenDichVu")); 
-			vector.add(rs.getString("donVi")); 
+			vector.add(rs.getString("tenDonVi")); 
 			vector.add(rs.getString("giaTien")); 
 			vector.add(rs.getString("tenLoaiDV"));
 			tableModel.addRow(vector);
@@ -43,13 +44,15 @@ public class DaoDichVu {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				String maDV=rs.getString(1);
-				String tenDV=rs.getString(2);
-				String donVi=rs.getString(3);
-				float giaDV=rs.getFloat(4);
+				String maDichVu=rs.getString(1);
+				String tenDichVu=rs.getString(2);
+				String maDonVi=rs.getString(3);
+				double giaTien=rs.getDouble(4);
 				String maLoaiDV=rs.getString(5);
 				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
-				DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV,ldv);
+				DonVi dvi=new DonVi(maDonVi);
+				
+				DichVu dv=new DichVu(maDichVu, tenDichVu,dvi, giaTien, ldv);
 				dsDV.add(dv);
 			}
 		}
@@ -70,11 +73,40 @@ public class DaoDichVu {
 			while(rs.next()) {
 				String maDichVu=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				String donVi=rs.getString(3);
+				String maDonVi=rs.getString(3);
 				double giaTien=rs.getDouble(4);
 				String maLoaiDV=rs.getString(5);
 				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
-				DichVu dv=new DichVu(maDichVu, tenDichVu,donVi, giaTien, ldv);
+				DonVi dvi=new DonVi(maDonVi);
+				
+				DichVu dv=new DichVu(maDichVu, tenDichVu,dvi, giaTien, ldv);
+				dsDV.add(dv);
+			}
+		}
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return dsDV;	
+	}
+	public ArrayList<DichVu> getDichVuTheoDonVi(String tenDvi){
+		ArrayList<DichVu> dsDV= new ArrayList<DichVu>();
+		try {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			String sql="SELECT * FROM DichVu INNER JOIN DonVi ON DichVu.maDonVi = DonVi.maDonVi where DonVi.tenDonVi like N'"+ tenDvi +"'";
+			PreparedStatement ps = con.prepareStatement(sql);	
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String maDichVu=rs.getString(1);
+				String tenDichVu=rs.getString(2);
+				String maDonVi=rs.getString(3);
+				double giaTien=rs.getDouble(4);
+				String maLoaiDV=rs.getString(5);
+				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
+				DonVi dvi=new DonVi(maDonVi);
+				
+				DichVu dv=new DichVu(maDichVu, tenDichVu,dvi, giaTien, ldv);
 				dsDV.add(dv);
 			}
 		}
@@ -94,15 +126,18 @@ public class DaoDichVu {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				String maDV=rs.getString(1);
+				String maDichVu=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				String donVi=rs.getString(3);
+				String maDonVi=rs.getString(3);
 				double giaTien=rs.getDouble(4);
 				String maLoaiDV=rs.getString(5);
+				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
+				DonVi dvi=new DonVi(maDonVi);
 				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
-				dv.setMaDichVu(maDV);
+				
+				dv.setMaDichVu(maDichVu);
 				dv.setTenDichVu(tenDichVu);
-				dv.setDonVi(donVi);
+				dv.setDonVi(dvi);
 				dv.setGiaTien(giaTien);
 				dv.setLoaiDichVu(loaiDichVu);
 			}
@@ -123,15 +158,18 @@ public class DaoDichVu {
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-				String madv=rs.getString(1);
+				String maDichVu=rs.getString(1);
 				String tenDichVu=rs.getString(2);
-				String donVi=rs.getString(3);
+				String maDonVi=rs.getString(3);
 				double giaTien=rs.getDouble(4);
 				String maLoaiDV=rs.getString(5);
+				LoaiDichVu ldv=new LoaiDichVu(maLoaiDV);
+				DonVi dvi=new DonVi(maDonVi);
 				LoaiDichVu loaiDichVu=new LoaiDichVu(maLoaiDV);
-				dv.setMaDichVu(madv);
+				
+				dv.setMaDichVu(maDichVu);
 				dv.setTenDichVu(tenDichVu);
-				dv.setDonVi(donVi);
+				dv.setDonVi(dvi);
 				dv.setGiaTien(giaTien);
 				dv.setLoaiDichVu(loaiDichVu);
 			}
@@ -151,7 +189,7 @@ public class DaoDichVu {
 			ps = con.prepareStatement("insert into DichVu VALUES(?,?,?,?,?) ");
 			ps.setString(1, dv.getMaDichVu());
 			ps.setString(2, dv.getTenDichVu());
-			ps.setString(3, dv.getTenDichVu());
+			ps.setString(3, dv.getDonVi().getMaDonVi());
 			ps.setDouble(4, dv.getGiaTien());
 			ps.setString(5, dv.getLoaiDichVu().getMaLoai());
 			n = ps.executeUpdate();
@@ -173,9 +211,9 @@ public class DaoDichVu {
 		int n = 0;
 		try {
 			ps = con.prepareStatement(
-					"update DichVu set tenDichVu=?, donVi=? ,giaTien=?, maLoaiDV=? where maDichVu=?");
+					"update DichVu set tenDichVu=?, maDonVi=? ,giaTien=?, maLoaiDV=? where maDichVu=?");
 			ps.setString(1, dv.getTenDichVu());
-			ps.setString(2, dv.getDonVi());
+			ps.setString(2, dv.getDonVi().getMaDonVi());
 			ps.setDouble(3, dv.getGiaTien());
 			ps.setString(4, dv.getLoaiDichVu().getMaLoai());
 			ps.setString(5, dv.getMaDichVu());

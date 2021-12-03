@@ -141,4 +141,23 @@ public class PhatSinhMa {
 		}
 		return maphong;
 	}
+	public String maNhanVien() {
+		String manv="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('NV', RIGHT(CONCAT('000',ISNULL(right(max(maNhanVien),3),0) + 1),3)) from [dbo].[NhanVien] where maNhanVien like N'NV%'";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			manv = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return manv;
+	}
+	
 }

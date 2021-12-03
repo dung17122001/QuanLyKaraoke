@@ -34,6 +34,7 @@ import dao.DaoCTHoaDonDichVu;
 import dao.DaoCTHoaDonPhong;
 import dao.DaoDichVu;
 import dao.DaoDonDatPhong;
+import dao.DaoDonVi;
 import dao.DaoHoaDon;
 import dao.DaoLoaiDV;
 import dao.DaoLoaiPhong;
@@ -41,6 +42,7 @@ import dao.PhatSinhMa;
 import entity.ChiTietHoaDonDichVu;
 import entity.ChiTietHoaDonPhong;
 import entity.DichVu;
+import entity.DonVi;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.LoaiDichVu;
@@ -69,10 +71,12 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 	private JButton btnTinhGio,btnTimKiem,btnDatPhong;
 	private JComboBox<String> cbLoaiDV;
 	private JComboBox<String> cbTenDV;
+	private JComboBox<String> cbDonVi;
 	private DaoPhong daoPhong=new DaoPhong();
 	private DaoLoaiPhong daoLoaiPhong=new DaoLoaiPhong();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
 	private DaoDichVu daoDichVu=new DaoDichVu();
+	private DaoDonVi daoDonVi = new DaoDonVi();
 	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
 	private DaoCTHoaDonPhong daoCTHoaDonPhong=new DaoCTHoaDonPhong();
@@ -193,6 +197,15 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		cbTenDV = new JComboBox<String>();
 		cbTenDV.setBounds(130, 96, 205, 30);
 		panelDichVu.add(cbTenDV);
+		
+		JLabel lbdonVi = new JLabel("Đơn vị:");
+		lbdonVi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbdonVi.setBounds(375, 33, 87, 30);
+		panelDichVu.add(lbdonVi);
+
+		cbDonVi = new JComboBox<String>();
+		cbDonVi.setBounds(430, 33, 60, 30);
+		panelDichVu.add(cbDonVi);
 
 		btnThemDV = new JButton("Thêm vào hóa đơn");
 		btnThemDV.setBackground(Color.ORANGE);
@@ -202,7 +215,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 
 		JLabel lbSoLuongDV = new JLabel("Số lượng:");
 		lbSoLuongDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSoLuongDV.setBounds(375, 33, 87, 30);
+		lbSoLuongDV.setBounds(500, 33, 87, 30);
 		panelDichVu.add(lbSoLuongDV);
 
 		//SpinnerModel spinnerModel = new SpinnerNumberModel(1, 1, 100, 1);
@@ -210,7 +223,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		spinner = new JSpinner();
 		spinner.setValue(1);
 		spinner.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		spinner.setBounds(448, 34, 50, 30);
+		spinner.setBounds(565, 34, 50, 30);
 		panelDichVu.add(spinner);
 
 		JLabel lbThongTinHD = new JLabel("Thông tin hóa đơn");
@@ -292,6 +305,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		btnThemPhong.addActionListener(this);
 		btnTinhGio.addActionListener(this);
 		cbLoaiDV.addActionListener(this);
+		cbDonVi.addActionListener(this);
 		tablePhong.addMouseListener(this);
 		tableDichVu.addMouseListener(this);
 		txtTimKH.addMouseListener(this);
@@ -313,6 +327,7 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 
 		//		Thêm dữ liệu vào combobox
 		ThemDuLieuVaoCBLoaiDichVu();
+		ThemDuLieuVaoCbDonVi();
 
 		//lấy giờ hiện tại cho cbbox giờ và phút
 		cbGio.setSelectedItem(Calendar.getInstance().getTime().getHours());
@@ -346,6 +361,13 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		if(o.equals(cbLoaiDV)) {
 			cbTenDV.removeAllItems();
 			ArrayList<DichVu> dsDV=daoDichVu.getDichVuTheoLoai(cbLoaiDV.getSelectedItem().toString());
+			for(DichVu dv:dsDV) {
+				cbTenDV.addItem(dv.getTenDichVu());
+			}
+		}
+		if(o.equals(cbDonVi)) {
+			cbTenDV.removeAllItems();
+			ArrayList<DichVu> dsDV=daoDichVu.getDichVuTheoDonVi(cbDonVi.getSelectedItem().toString());
 			for(DichVu dv:dsDV) {
 				cbTenDV.addItem(dv.getTenDichVu());
 			}
@@ -384,7 +406,6 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 			JOptionPane.showMessageDialog(this, "Đã lưu hóa đơn");
 			clearTablePhong();
 			LoadTatCaPhong();
-			stt=1;
 		}
 		if(o.equals(btnDatPhong)) {
 			new FormNhanPhong().setVisible(true);
@@ -455,6 +476,14 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		dsDV=daoLoaiDV.getTatCaLoaiDV();
 		for(LoaiDichVu l: dsDV) {
 			cbLoaiDV.addItem(l.getTenLoaiDV());
+		}
+	}
+	
+	public void ThemDuLieuVaoCbDonVi() {
+		ArrayList<DonVi> dsdvi=new ArrayList<DonVi>();
+		dsdvi=daoDonVi.getTatCaDonVi();
+		for(DonVi dvi: dsdvi) {
+			cbDonVi.addItem(dvi.getTenDonVi());
 		}
 	}
 	private void ThemVaoCTHDP(int vt) {

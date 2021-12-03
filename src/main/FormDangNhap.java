@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import gui.FormGiaoDienChinh;
 import main.FormDangNhap;
 
 
@@ -146,6 +147,10 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	txtUserName.addActionListener(this);
 	}
 	
+	public static void main(String[] args) throws SQLException {	
+		FormDangNhap frm = new FormDangNhap();
+		frm.setVisible(true);
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
