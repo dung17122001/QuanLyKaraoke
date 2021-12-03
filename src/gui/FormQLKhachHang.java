@@ -497,9 +497,9 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 			return false;
 		if(regex.RegexDiaChi(txtDiachi))
 			return false;
-		if(regex.RegexSDT(txtSdt))
+		if(regex.kiemTraSDT(txtSdt))
 			return false;
-		if(regex.RegexSDT(txtCmnd))
+		if(regex.kiemTraSCM(txtCmnd))
 			return false;
 		return true;
 	}

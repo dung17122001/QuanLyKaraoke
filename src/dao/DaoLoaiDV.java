@@ -118,6 +118,28 @@ public class DaoLoaiDV {
 		}
 		return n > 0;
 	}
+	//Sua
+		public boolean suaLoaiDichVu(LoaiDichVu ldv) {
+			ConnectDB.getInstance();
+			Connection con = ConnectDB.getCon();
+			PreparedStatement ps = null;
+			int n = 0;
+			try {
+				ps = con.prepareStatement("update LoaiDichVu set tenLoaiDV=? where maLoaiDV=?");
+				ps.setString(1,ldv.getTenLoaiDV());
+				ps.setString(2,ldv.getMaLoai());
+				n = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					ps.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return n > 0;
+		}
 	//xoa
 			public boolean delLoaiDichVu(String maLoaiDV) throws SQLException {
 				ConnectDB.getInstance();

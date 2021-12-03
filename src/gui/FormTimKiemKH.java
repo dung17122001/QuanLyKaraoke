@@ -86,59 +86,59 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		
 		JLabel lblMaKH = new JLabel("Mã khách hàng:");
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblMaKH.setBounds(50, 20, 300, 30);
+		lblMaKH.setBounds(50, 50, 300, 30);
 		pnTimKiem.add(lblMaKH);
 
 		txtTimMaKH = new JTextField();
 		txtTimMaKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimMaKH.setBounds(300, 20, 300, 30);
+		txtTimMaKH.setBounds(300, 50, 300, 30);
 		pnTimKiem.add(txtTimMaKH);
 		txtTimMaKH.setColumns(10);
 		
 	    
         JLabel lblTenKH = new JLabel("Tên khách hàng:");
         lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblTenKH.setBounds(50, 70, 300, 30);
+        lblTenKH.setBounds(50, 100, 300, 30);
         pnTimKiem.add(lblTenKH);
 
 		txtTimTenKH = new JTextField();
 		txtTimTenKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimTenKH.setBounds(300, 70, 300, 30);
+		txtTimTenKH.setBounds(300, 100, 300, 30);
 		pnTimKiem.add(txtTimTenKH);
 		txtTimTenKH.setColumns(10);
 	
         JLabel lblDiaChi = new JLabel("Địa chỉ:");
         lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblDiaChi.setBounds(50, 120, 300, 30);
+        lblDiaChi.setBounds(50, 150, 300, 30);
         pnTimKiem.add(lblDiaChi);
 
         txtTimDiaChi = new JTextField();
         txtTimDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 24));
-        txtTimDiaChi.setBounds(300, 120, 300, 30);
+        txtTimDiaChi.setBounds(300, 150, 900, 30);
 		pnTimKiem.add(txtTimDiaChi);
 		txtTimDiaChi.setColumns(10);
 	    
 		
         JLabel lblSdt = new JLabel("Số điện thoại:");
         lblSdt.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblSdt.setBounds(700, 20, 300, 30);
+        lblSdt.setBounds(700, 50, 300, 30);
         pnTimKiem.add(lblSdt);
 
 		txtTimSdtKH = new JTextField();
 		txtTimSdtKH.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimSdtKH.setBounds(950, 20, 300, 30);
+		txtTimSdtKH.setBounds(900, 50, 300, 30);
 		pnTimKiem.add(txtTimSdtKH);
 		txtTimSdtKH.setColumns(10);
         
 		
         JLabel lblCmnd = new JLabel("CMND:");
         lblCmnd.setFont(new Font("Tahoma", Font.PLAIN, 26));
-        lblCmnd.setBounds(700, 70, 300, 30);
+        lblCmnd.setBounds(700, 100, 300, 30);
         pnTimKiem.add(lblCmnd);
 
 		txtTimSocmKH = new JTextField();
 		txtTimSocmKH .setFont(new Font("Tahoma", Font.PLAIN, 24));
-		txtTimSocmKH .setBounds(950, 70, 300, 30);
+		txtTimSocmKH .setBounds(900, 100, 300, 30);
 		pnTimKiem.add(txtTimSocmKH );
 		txtTimSocmKH .setColumns(10);
 		
@@ -151,7 +151,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		
 		btnTimKiem = new JButton("Tìm kiếm");
 		btnTimKiem.setForeground(SystemColor.controlText);
-		btnTimKiem.setBackground(new Color(255, 204, 102));
+		btnTimKiem.setBackground(new Color(255, 255, 153));
 		btnTimKiem.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnTimKiem.setBounds(143, 5, 180, 40);
 		btnTimKiem.setFocusable(false);
@@ -159,7 +159,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		
 		btnCapNhat= new JButton("Tải lại");
 		btnCapNhat.setForeground(SystemColor.controlText);
-		btnCapNhat.setBackground(new Color(255, 204, 102));
+		btnCapNhat.setBackground(new Color(255, 255, 153));
 		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnCapNhat.setBounds(450, 5, 180, 40);
 		btnCapNhat.setFocusable(false);
@@ -172,7 +172,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnDatPhong.setForeground(Color.BLACK);
 		btnDatPhong.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnDatPhong.setFocusable(false);
-		btnDatPhong.setBackground(new Color(255, 204, 102));
+		btnDatPhong.setBackground(new Color(255, 255, 153));
 		btnDatPhong.setBounds(750, 5, 180, 40);
 		pnChucNang.add(btnDatPhong);
 		
@@ -180,7 +180,7 @@ public class FormTimKiemKH extends JPanel implements ActionListener, MouseListen
 		btnLapHoaDon.setForeground(Color.BLACK);
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 26));
 		btnLapHoaDon.setFocusable(false);
-		btnLapHoaDon.setBackground(new Color(255, 204, 102));
+		btnLapHoaDon.setBackground(new Color(255, 255, 153));
 		btnLapHoaDon.setBounds(1052, 5, 205, 40);
 		pnChucNang.add(btnLapHoaDon);
 		

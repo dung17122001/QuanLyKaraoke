@@ -119,7 +119,19 @@ public class Regex implements Serializable {
 			return true;
 		}
 	}
-
+	public boolean kiemTraGiaDV(JTextField txtTuoi2) {
+		try {
+			int x = Integer.parseInt(txtTuoi2.getText());
+			if (x < 0) {
+				JOptionPane.showMessageDialog(null, "Nhập sai dữ liệu (Phải lớn hơn 0)");
+				return true;
+			}
+			return false;
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Nhập sai kiểu dữ liệu giá dịch vụ (phải nhập số)");
+			return true;
+		}
+	}
 	public boolean RegexSDT(JTextField txtSDT) {
 		String input = txtSDT.getText();
 		String regex = "^[0-9]{9,12}$";
@@ -127,6 +139,32 @@ public class Regex implements Serializable {
 		Matcher matcher = pattern.matcher(input);
 		if (!matcher.find()) {
 			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số điện thoại hoặc CMND (Ví dụ nhập:0987654321/312477543");
+			txtSDT.requestFocus();
+			txtSDT.selectAll();
+			return true;
+		} else
+			return false;
+	}
+	public boolean kiemTraSDT(JTextField txtSDT) {
+		String input = txtSDT.getText();
+		String regex = "^[0-9]{10}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		if (!matcher.find()) {
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số điện thoại (Ví dụ nhập:0987654321)");
+			txtSDT.requestFocus();
+			txtSDT.selectAll();
+			return true;
+		} else
+			return false;
+	}
+	public boolean kiemTraSCM(JTextField txtSDT) {
+		String input = txtSDT.getText();
+		String regex = "^[0-9]{9,12}$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(input);
+		if (!matcher.find()) {
+			JOptionPane.showMessageDialog(null, "Nhập sai định dạng số CMND (Ví dụ nhập:312477543");
 			txtSDT.requestFocus();
 			txtSDT.selectAll();
 			return true;

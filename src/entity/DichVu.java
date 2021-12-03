@@ -6,15 +6,15 @@ public class DichVu {
 	
 	private String maDichVu;
 	private String tenDichVu;
-	private DonVi DonVi;
+	private String donVi;
 	private double giaTien;
 	private LoaiDichVu LoaiDichVu;
-
-	public DichVu(String maDichVu, String tenDichVu, entity.DonVi donVi, double giaTien, entity.LoaiDichVu loaiDichVu) {
+	
+	public DichVu(String maDichVu, String tenDichVu, String donVi, double giaTien, entity.LoaiDichVu loaiDichVu) {
 		super();
 		this.maDichVu = maDichVu;
 		this.tenDichVu = tenDichVu;
-		DonVi = donVi;
+		this.donVi = donVi;
 		this.giaTien = giaTien;
 		LoaiDichVu = loaiDichVu;
 	}
@@ -24,10 +24,9 @@ public class DichVu {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	@Override
 	public String toString() {
-		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", DonVi=" + DonVi + ", giaTien=" + giaTien
+		return "DichVu [maDichVu=" + maDichVu + ", tenDichVu=" + tenDichVu + ", donVi=" + donVi + ", giaTien=" + giaTien
 				+ ", LoaiDichVu=" + LoaiDichVu + "]";
 	}
 
@@ -47,14 +46,12 @@ public class DichVu {
 		this.tenDichVu = tenDichVu;
 	}
 
-	
-
-	public DonVi getDonVi() {
-		return DonVi;
+	public String getDonVi() {
+		return donVi;
 	}
 
-	public void setDonVi(DonVi donVi) {
-		DonVi = donVi;
+	public void setDonVi(String donVi) {
+		this.donVi = donVi;
 	}
 
 	public double getGiaTien() {
@@ -77,8 +74,8 @@ public class DichVu {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((DonVi == null) ? 0 : DonVi.hashCode());
 		result = prime * result + ((LoaiDichVu == null) ? 0 : LoaiDichVu.hashCode());
+		result = prime * result + ((donVi == null) ? 0 : donVi.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(giaTien);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -96,15 +93,15 @@ public class DichVu {
 		if (getClass() != obj.getClass())
 			return false;
 		DichVu other = (DichVu) obj;
-		if (DonVi == null) {
-			if (other.DonVi != null)
-				return false;
-		} else if (!DonVi.equals(other.DonVi))
-			return false;
 		if (LoaiDichVu == null) {
 			if (other.LoaiDichVu != null)
 				return false;
 		} else if (!LoaiDichVu.equals(other.LoaiDichVu))
+			return false;
+		if (donVi == null) {
+			if (other.donVi != null)
+				return false;
+		} else if (!donVi.equals(other.donVi))
 			return false;
 		if (Double.doubleToLongBits(giaTien) != Double.doubleToLongBits(other.giaTien))
 			return false;
@@ -120,7 +117,7 @@ public class DichVu {
 			return false;
 		return true;
 	}
-
+	
 	
 	
 	

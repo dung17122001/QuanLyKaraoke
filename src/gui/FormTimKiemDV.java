@@ -37,10 +37,8 @@ import javax.swing.table.TableColumnModel;
 
 import connect.ConnectDB;
 import entity.DichVu;
-import entity.DonVi;
 import entity.LoaiDichVu;
 import dao.DaoDichVu;
-import dao.DaoDonVi;
 import dao.DaoKhachHang;
 import dao.DaoLoaiDV;
 
@@ -58,8 +56,6 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 	private DaoDichVu daoDichVu = new DaoDichVu();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
-	private DaoDonVi daoDonVi=new DaoDonVi();
-	
 	public FormTimKiemDV() {
 		setBounds(0, 0, 1366,768);
 		setLayout(null);
@@ -309,7 +305,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 			if (!timkiemma.equals("")) {
 				tableModel.setRowCount(0);
 				try {
-					daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DonVi.tenDonVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV From ((DichVu  INNER JOIN DonVi ON DichVu.maDonVi = DonVi.maDonVi) INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV) where maDichVu like N'%" + timkiemma + "%'", tableModel);
+					daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where maDichVu like N'%" + timkiemma + "%'", tableModel);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -320,7 +316,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 				if (!timkiemten.equals("")) {
 					tableModel.setRowCount(0);
 					try {
-						daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DonVi.tenDonVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV From ((DichVu  INNER JOIN DonVi ON DichVu.maDonVi = DonVi.maDonVi) INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV) where tenDichVu like N'%" + timkiemten + "%'", tableModel);
+						daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where tenDichVu like N'%" + timkiemten + "%'", tableModel);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -331,7 +327,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 					if (!timkiemten.equals("")) {
 						tableModel.setRowCount(0);
 						try {
-							daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DonVi.tenDonVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV From ((DichVu  INNER JOIN DonVi ON DichVu.maDonVi = DonVi.maDonVi) INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV) where giaTien like N'%" + timkiemgia + "%'", tableModel);
+							daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where giaTien like N'%" + timkiemgia + "%'", tableModel);
 						} catch (SQLException e1) {
 							e1.printStackTrace();
 						}
@@ -342,7 +338,7 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 						if (!timtenloaidv.equals("")) {
 							tableModel.setRowCount(0);
 							try {
-								daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DonVi.tenDonVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV From ((DichVu  INNER JOIN DonVi ON DichVu.maDonVi = DonVi.maDonVi) INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV)  where tenLoaiDV like N'%" + timtenloaidv + "%'", tableModel);
+								daoDichVu.loadData("select DichVu.maDichVu,DichVu.tenDichVu,DichVu.donVi,DichVu.giaTien,LoaiDichVu.tenLoaiDV from DichVu INNER JOIN LoaiDichVu ON DichVu.maLoaiDV = LoaiDichVu.maLoaiDV where tenLoaiDV like N'%" + timtenloaidv + "%'", tableModel);
 							} catch (SQLException e1) {
 								e1.printStackTrace();
 							}
@@ -356,7 +352,6 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 			}
 		}
 		}
-		
 		if(o.equals(btnCapNhat)) {
 			clearTable();
 			LoadTatCaDichVu();
@@ -368,11 +363,9 @@ public class FormTimKiemDV extends JPanel implements ActionListener, MouseListen
 		dsdv=daoDichVu.getTatCaDichVu();
 		for(DichVu dv:dsdv) {
 			LoaiDichVu ldv=new LoaiDichVu();
-			DonVi dvi= new DonVi();
 			ldv=daoLoaiDV.getDichVuTheoMa(dv.getLoaiDichVu().getMaLoai());
-			dvi=daoDonVi.getDonViTheoMa(dv.getDonVi().getMaDonVi());
 			tableModel.addRow(new Object[] {
-					dv.getMaDichVu(),dv.getTenDichVu(),dvi.getTenDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
+					dv.getMaDichVu(),dv.getTenDichVu(),dv.getDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
 			});
 		}
 		

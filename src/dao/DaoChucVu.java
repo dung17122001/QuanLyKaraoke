@@ -116,6 +116,28 @@ public class DaoChucVu {
 		}
 		return n > 0;
 	}
+	//Sua
+	public boolean suaChucVu(ChucVu cv) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		int n = 0;
+		try {
+			ps = con.prepareStatement("update ChucVu set tenChucVu=? where maChucVu=?");
+			ps.setString(1, cv.getTenChucVu());
+			ps.setString(2,cv.getMaChucVu());
+			n = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	//xoa
 		public boolean delChucVu(String maChucVu) throws SQLException {
 			ConnectDB.getInstance();

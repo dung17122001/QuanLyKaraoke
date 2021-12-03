@@ -592,9 +592,9 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 			return false;
 		if(regex.kiemTraNS(ngaysinh))
 			return false;
-		if(regex.RegexSDT(txtSdt))
+		if(regex.kiemTraSDT(txtSdt))
 			return false;
-		if(regex.RegexSDT(txtCmnd))
+		if(regex.kiemTraSCM(txtCmnd))
 			return false;
 		return true;
 	}

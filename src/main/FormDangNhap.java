@@ -3,7 +3,9 @@ package main;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Panel;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,17 +22,22 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import connect.ConnectDB;
+import dao.DaoTaiKhoan;
+import entity.TaiKhoan;
 import gui.FormGiaoDienChinh;
-import main.FormDangNhap;
+
 
 
 public class FormDangNhap extends JFrame implements ActionListener, MouseListener {
@@ -42,7 +49,18 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	private JTextField txtUserName;
 	private JButton btnLogin;
 
+	private DaoTaiKhoan daoTK = new DaoTaiKhoan();
+	private TaiKhoan tk;
+	private Panel pnLogin;
+	
 	public FormDangNhap() {
+
+		//connect database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	setTitle("KARAOKE NICE");
 	setBackground(Color.WHITE);
@@ -112,13 +130,13 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	txtUserName.setBounds(55, 171, 412, 60);
 	pnLogin.add(txtUserName);
 	txtUserName.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-	txtUserName.setText("admin");
+	txtUserName.setText("ad001");
 	txtUserName.setColumns(10);
 
 	txtPassword = new JPasswordField(10);
 	txtPassword.setBounds(55, 236, 412, 60);
 	pnLogin.add(txtPassword);
-	txtPassword.setText("admin");
+	txtPassword.setText("123");
 	txtPassword.setFont(new Font("Times New Roman", Font.PLAIN, 28));
 
 	btnLogin = new JButton("Đăng nhập");
@@ -151,7 +169,21 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 		FormDangNhap frm = new FormDangNhap();
 		frm.setVisible(true);
 	}
-	
+	private boolean validInput() {
+		if (txtUserName.getText().equals("")) {
+			JOptionPane.showMessageDialog(getContentPane(), "Vui lòng nhập tên tài khoản!", "Lỗi",
+					JOptionPane.WARNING_MESSAGE);
+			txtUserName.requestFocus();
+			return false;
+		}
+		if (new String(txtPassword.getPassword()).equals("")) {
+			JOptionPane.showMessageDialog(getContentPane(), "Vui lòng nhập mật khẩu", "Lỗi",
+					JOptionPane.WARNING_MESSAGE);
+			txtPassword.requestFocus();
+			return false;
+		}
+		return true;
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -161,7 +193,6 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -184,11 +215,50 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		Object o = e.getSource();
+		if (o.equals(btnLogin)) {
+			if (validInput()) {
+				String user = txtUserName.getText().trim().toLowerCase();
+				String pass = new String(txtPassword.getPassword());
+				if (daoTK.checkAccount(user, pass)) {
+					tk = daoTK.getTaikhoanByName(user);
+					new TaskFormDanhNhap(tk, this).execute();
+				} else {
+					JOptionPane.showMessageDialog(this,
+							"Đăng nhập không thành công! \n Mật Khẩu hoặc tên người dùng không chính xác", "Lỗi",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else if (o.equals(txtUserName)) {
+			txtPassword.requestFocus();
+		} else if (o.equals(txtPassword)) {
+			btnLogin.doClick();
+		}
+	}
+	
+}
+class TaskFormDanhNhap extends SwingWorker<Void, Void> {
+
+	private TaiKhoan tk;
+	private JFrame jframe;
+
+	public TaskFormDanhNhap(TaiKhoan tk, JFrame jframe) {
+		this.tk = tk;
+		this.jframe = jframe;
 	}
 
-
+	@Override
+	protected Void doInBackground() throws Exception {
+		FormGiaoDienChinh frame = new FormGiaoDienChinh ();
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Rectangle r = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		frame.setSize(r.width, r.height);
+		frame.setVisible(true);
+		return null;
+	}
+	@Override
+	protected void done() {
+		this.jframe.dispose();
+	}
 
 }
-

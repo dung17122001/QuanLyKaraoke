@@ -57,7 +57,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmSuaDV;
 	private JMenuItem mntmTimKiemDV;
 	private JMenuItem mntmThemLDV;
-	private JMenuItem mntmThemDonVi;
 	private JMenu mnQLPhong;
 	private JMenuItem mntmCapNhatPhong;
 	private JMenuItem mntmTimPhong;
@@ -130,12 +129,6 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmThemLDV.setIcon(new ImageIcon("img\\sua.png"));
 		mntmThemLDV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQlDichVu.add(mntmThemLDV);
-		
-		mntmThemDonVi = new JMenuItem("Đơn vị");
-		mntmThemDonVi.setIcon(new ImageIcon("img\\sua.png"));
-		mntmThemDonVi.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		mnQlDichVu.add(mntmThemDonVi);
-		
 		
 		mnQLPhong = new JMenu("Phòng");
 		mnQLPhong.setIcon(new ImageIcon("img\\icon3.png"));
@@ -214,8 +207,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmTimPhong.addActionListener(this);
 		mntmChucVu.addActionListener(this);
 		mntmLoaiPhong.addActionListener(this);
-		mntmThemDonVi.addActionListener(this);
 		mntmThemLDV.addActionListener(this);
+		
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 0));
@@ -286,6 +279,9 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		panel.add(btnDangXuat);
 		panel.revalidate();
 		panel.repaint();
+		
+		btnDangXuat.addActionListener(this);
+		btnDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		panel_Manage = new JPanel();
 		panel_Manage.setBounds(0, 129, 1352, 565);
@@ -367,10 +363,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		}
 		
 		if(o.equals(mntmThemLDV)) {
-			changeScreen(new FormLoaiDV());
-		}
-		if(o.equals(mntmThemDonVi)) {
-			changeScreen(new FormDonVi());
+			changeScreen(new FormThemLoaiDV());
 		}
 		if(o.equals(mntmCapNhatPhong)) {
 			changeScreen(new FormQLPhong());
@@ -398,6 +391,9 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		}
 		if(o.equals(mntmLoaiPhong)) {
 			changeScreen(new FormLoaiPhong());
+		}
+		if (o.equals(btnDangXuat)) {
+			this.dispose();
 		}
 		
 	}

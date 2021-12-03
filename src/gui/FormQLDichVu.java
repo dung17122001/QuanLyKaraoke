@@ -35,15 +35,15 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import chucnang.Regex;
 import connect.ConnectDB;
 import entity.DichVu;
-import entity.DonVi;
 import entity.LoaiDichVu;
 import entity.LoaiPhong;
 import entity.Phong;
 import dao.DaoDichVu;
-import dao.DaoDonVi;
 import dao.DaoLoaiDV;
+import dao.PhatSinhMa;
 
 public class FormQLDichVu extends JPanel implements ActionListener, MouseListener {
 
@@ -56,14 +56,13 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 	private JTextField txtGiaDV;
 	private JTextField txtID;
 	private JTextField txtTenDV;
-	private JComboBox<String> cbDonVi;
+	private JTextField txtDonViTinh;
 	private JComboBox<String> cbLoaiDV;
 	private DefaultTableModel tableModel;
 	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
 	private DaoDichVu daoDichVu = new DaoDichVu();
 	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
-	private DaoDonVi daoDonVi = new DaoDonVi();
-	
+	private PhatSinhMa phatSinhMa=new PhatSinhMa(); 
 	public FormQLDichVu() {
 		setBounds(0, 0, 1366,768);
 		setLayout(null);
@@ -109,10 +108,11 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		lbDonViTinh.setBounds(310, 80, 96, 38);
 		pnTTNV.add(lbDonViTinh);
 		
-		cbDonVi = new JComboBox<String>();
-		cbDonVi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		cbDonVi.setBounds(415, 80, 190, 30);
-		pnTTNV.add(cbDonVi);
+		txtDonViTinh = new JTextField();
+		txtDonViTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDonViTinh.setBounds(415, 80, 190, 30);
+		pnTTNV.add(txtDonViTinh);
+		txtDonViTinh.setColumns(10);
 		
 		JLabel lbGiadv = new JLabel("Giá dịch vụ:");
 		lbGiadv .setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -288,7 +288,6 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		//Add thông tin vào bảng
 		LoadTatCaDichVu();
 		ThemDuLieuVaoCbLoaiDV();
-		ThemDuLieuVaoCbDonVi();
 		
 		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -306,7 +305,7 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		int i = table.getSelectedRow();
 		txtID.setText(tableModel.getValueAt(i, 0).toString());
 		txtTenDV.setText(tableModel.getValueAt(i, 1).toString());
-		cbDonVi.setSelectedItem(tableModel.getValueAt(i,2).toString());
+		txtDonViTinh.setText(tableModel.getValueAt(i,2).toString());
 		txtGiaDV.setText(tableModel.getValueAt(i, 3).toString());
 		cbLoaiDV.setSelectedItem(tableModel.getValueAt(i, 4).toString());
 	}
@@ -339,17 +338,16 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnThem)) {
-			String maDV=txtID.getText();
+			if(KiemTraDuLieu()) {
+			String maDV=phatSinhMa.maDichVu();
 			String tenDV=txtTenDV.getText();
-			String tenDonVi=cbDonVi.getSelectedItem().toString();
+			String donVi=txtDonViTinh.getText();
 			Double giaDV=Double.parseDouble(txtGiaDV.getText());
 			String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
 			
 			
 			LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
-			DonVi dvi =daoDonVi.getDonViTheoTen(tenDonVi);
-			
-			DichVu dv=new DichVu(maDV, tenDV,dvi, giaDV, ldv);
+			DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
 			
 				if (daoDichVu.themDichVu(dv)) {
 					clearTable();
@@ -358,23 +356,20 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 				} else
 					JOptionPane.showMessageDialog(this, "Lỗi");
 		}
+		}
 		if(o.equals(btnSua)) {
-			
+			if(KiemTraDuLieu()) {
 			if (table.getSelectedRow() == -1) {
 				JOptionPane.showMessageDialog(this, "Hãy chọn dịch vụ cần sửa");
 			} else {
 				String maDV=txtID.getText();
 				String tenDV=txtTenDV.getText();
-				String tenDonVi=cbDonVi.getSelectedItem().toString();
+				String donVi=txtDonViTinh.getText();
 				Double giaDV=Double.parseDouble(txtGiaDV.getText());
 				String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
-				
-				
+			
 				LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
-				DonVi dvi =daoDonVi.getDonViTheoTen(tenDonVi);
-				
-				DichVu dv=new DichVu(maDV, tenDV,dvi, giaDV, ldv);
-				
+				DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
 				
 				int tl;
 				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa dịch vụ này không ?", "Cảnh báo",
@@ -390,7 +385,7 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 					JOptionPane.showMessageDialog(this, "Đã hủy");
 				}
 			}
-			
+			}
 		}
 		if(o.equals(btnXoa)) {
 			String maDV=txtID.getText();
@@ -421,11 +416,9 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		dsdv=daoDichVu.getTatCaDichVu();
 		for(DichVu dv:dsdv) {
 			LoaiDichVu ldv=new LoaiDichVu();
-			DonVi dvi= new DonVi();
 			ldv=daoLoaiDV.getDichVuTheoMa(dv.getLoaiDichVu().getMaLoai());
-			dvi=daoDonVi.getDonViTheoMa(dv.getDonVi().getMaDonVi());
 			tableModel.addRow(new Object[] {
-					dv.getMaDichVu(),dv.getTenDichVu(),dvi.getTenDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
+					dv.getMaDichVu(),dv.getTenDichVu(),dv.getDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
 			});
 		}
 		
@@ -438,14 +431,6 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 			cbLoaiDV.addItem(ldv.getTenLoaiDV());
 		}
 	}
-	
-	public void ThemDuLieuVaoCbDonVi() {
-		ArrayList<DonVi> dsdvi=new ArrayList<DonVi>();
-		dsdvi=daoDonVi.getTatCaDonVi();
-		for(DonVi dvi: dsdvi) {
-			cbDonVi.addItem(dvi.getTenDonVi());
-		}
-	}
 
 	private void clearTable() {
 		while (table.getRowCount() > 0) {
@@ -456,5 +441,15 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		txtID.setText("");
 		txtGiaDV.setText("");
 		txtTenDV.setText("");
+	}
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRong(txtTenDV))
+			return false;
+		if(regex.kiemTraRong(txtDonViTinh))
+			return false;
+		if(regex.kiemTraGiaDV(txtGiaDV))
+			return false;
+		return true;
 	}
 }

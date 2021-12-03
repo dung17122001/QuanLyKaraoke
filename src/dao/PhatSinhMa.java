@@ -159,5 +159,40 @@ public class PhatSinhMa {
 		}
 		return manv;
 	}
-	
+	public String maChucVu() {
+		String macv="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('CV', RIGHT(CONCAT('000',ISNULL(right(max(maChucVu),3),0) + 1),3)) from [dbo].[ChucVu] where maChucVu like N'CV%'";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			macv = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return macv;
+	}
+	public String maLoaiDV() {
+		String malcv="";
+		try {
+			ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		String sql = "select CONCAT('LDV', RIGHT(CONCAT('000',ISNULL(right(max(maLoaiDV),3),0) + 1),3)) from [dbo].[LoaiDichVu] where maLoaiDV like N'LDV%'";
+		Statement stm = con.createStatement();
+		ResultSet rs = stm.executeQuery(sql);
+		while(rs.next())
+		{
+			malcv = rs.getString(1);
+		}
+		} catch (SQLException e) {
+			// TODO: handle 
+			e.printStackTrace();
+		}
+		return malcv;
+	}
 }
