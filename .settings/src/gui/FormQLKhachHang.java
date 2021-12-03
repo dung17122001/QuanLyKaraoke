@@ -33,22 +33,43 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import chucnang.Regex;
+import connect.ConnectDB;
+import entity.KhachHang;
+import dao.DaoKhachHang;
+import dao.PhatSinhMa;
+
 public class FormQLKhachHang extends JPanel implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JButton btnThem;
 	private JButton btnSua;
-	private JButton btnLuu;
-	private JButton btnXoarong;
+	private JButton btnCapNhat;
+	private JButton btnXoa;
 	private JTextField txtTenKh;
 	private JTextField txtID;
 	private JTextField txtCmnd;
 	private JTextField txtDiachi;
 	private JTextField txtSdt;
+	private JLabel errorTen;
+	private JLabel errorSDT;
+	private JLabel errorCMND;
 	private DefaultTableModel tableModel;
+	private DaoKhachHang dao = new DaoKhachHang();
+	private PhatSinhMa phatSinhMa=new PhatSinhMa();
+	
 	public FormQLKhachHang() {
-		setBounds(0, 0, 1366,768);
+		setBounds(0, 0, 1366,620);
 		setLayout(null);
+		//connect database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		DaoKhachHang dao_khachhang = new DaoKhachHang(); 
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -59,58 +80,78 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		
 		JLabel lbManv = new JLabel("Mã KH: ");
 		lbManv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbManv.setBounds(10, 27, 96, 38);
+		lbManv.setBounds(310, 27, 96, 38);
 		pnTTNV.add(lbManv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(116, 31, 190, 30);
+		txtID.setBounds(416, 31, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
 		
 		JLabel lbTennv = new JLabel("Tên KH: ");
 		lbTennv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTennv.setBounds(10, 80, 96, 38);
+		lbTennv.setBounds(310, 80, 96, 38);
 		pnTTNV.add(lbTennv);
 		
 		txtTenKh = new JTextField();
 		txtTenKh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenKh.setBounds(501, 30, 190, 30);
+		txtTenKh.setBounds(416, 83, 190, 30);
 		pnTTNV.add(txtTenKh);
 		txtTenKh.setColumns(10);
 		
 		JLabel lbScm = new JLabel("Số CMND");
 		lbScm.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbScm.setBounds(405, 80, 96, 30);
+		lbScm.setBounds(705, 80, 96, 30);
 		pnTTNV.add(lbScm);
 		
 		txtCmnd = new JTextField();
 		txtCmnd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtCmnd.setBounds(501, 83, 190, 30);
+		txtCmnd.setBounds(801, 83, 190, 30);
 		pnTTNV.add(txtCmnd);
 		txtCmnd.setColumns(10);
 		
 		JLabel lbSdt = new JLabel("Số điện thoại:");
 		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSdt.setBounds(405, 24, 96, 38);
+		lbSdt.setBounds(705, 24, 96, 38);
 		pnTTNV.add(lbSdt);
-		
-		txtDiachi = new JTextField();
-		txtDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtDiachi.setBounds(116, 83, 190, 30);
-		pnTTNV.add(txtDiachi);
-		txtDiachi.setColumns(10);
-		
-		JLabel lbDiachi = new JLabel("Địa chỉ:");
-		lbDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbDiachi.setBounds(855, 83, 190, 30);
-		pnTTNV.add(lbDiachi);
 		
 		txtSdt = new JTextField();
 		txtSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtSdt.setBounds(955, 88, 190, 30);
+		txtSdt.setBounds(801, 30, 190, 30);
 		pnTTNV.add(txtSdt);
 		txtSdt.setColumns(10);
+		
+		JLabel lbDiachi = new JLabel("Địa chỉ:");
+		lbDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbDiachi.setBounds(310, 135, 190, 30);
+		pnTTNV.add(lbDiachi);
+		
+		txtDiachi = new JTextField();
+		txtDiachi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDiachi.setBounds(416, 135, 576, 30);
+		pnTTNV.add(txtDiachi);
+		txtDiachi.setColumns(10);
+		
+		/*
+		errorTen = new JLabel("(*)");
+		errorTen.setForeground(Color.RED);
+		errorTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorTen.setBounds(416, 113, 190, 30);
+		pnTTNV.add(errorTen);
+		
+		errorSDT = new JLabel("(*)");
+		errorSDT.setForeground(Color.RED);
+		errorSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorSDT.setBounds(801, 55, 190, 30);
+		pnTTNV.add(errorSDT);
+		
+		errorCMND = new JLabel("(*)");
+		errorCMND.setForeground(Color.RED);
+		errorCMND.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorCMND.setBounds(801, 113, 190, 30);
+		pnTTNV.add(errorCMND);
+		*/
 		
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
@@ -118,29 +159,37 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
+		btnThem = new JButton("Thêm");
+		btnThem.setForeground(SystemColor.controlText);
+		btnThem.setBackground(new Color(255, 255, 153));
+		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnThem.setBounds(200, 10, 150, 30);
+		btnThem.setFocusable(false);
+		pnChucNang.add(btnThem);
+		
 		btnSua = new JButton("Sửa");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(10, 10, 100, 30);
+		btnSua.setBounds(450, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
-		btnXoarong = new JButton("Xóa rỗng");
-		btnXoarong.setForeground(SystemColor.controlText);
-		btnXoarong.setBackground(new Color(255, 255, 153));
-		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(150, 10, 150, 30);
-		btnXoarong.setFocusable(false);
-		pnChucNang.add(btnXoarong);
+		btnXoa = new JButton("Xóa");
+		btnXoa.setForeground(SystemColor.controlText);
+		btnXoa.setBackground(new Color(255, 255, 153));
+		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnXoa.setBounds(700, 10, 150, 30);
+		btnXoa.setFocusable(false);
+		pnChucNang.add(btnXoa);
 		
-		btnLuu= new JButton("Lưu");
-		btnLuu.setForeground(SystemColor.controlText);
-		btnLuu.setBackground(new Color(255, 255, 153));
-		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(340, 10, 130, 30);
-		btnLuu.setFocusable(false);
-		pnChucNang.add(btnLuu);
+		btnCapNhat= new JButton("Xóa trắng");
+		btnCapNhat.setForeground(SystemColor.controlText);
+		btnCapNhat.setBackground(new Color(255, 255, 153));
+		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnCapNhat.setBounds(950, 10, 150, 30);
+		btnCapNhat.setFocusable(false);
+		pnChucNang.add(btnCapNhat);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -151,11 +200,11 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		JLabel lblDSNV = new JLabel("DANH SÁCH KHÁCH HÀNG:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,0, 380, 40);
+		lblDSNV.setBounds(500,0, 500, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1366, 820);
+		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
 		String[] header = {"Mã KH", "Tên KH","Địa chỉ", "Điện thoại", "CMND"};
@@ -172,66 +221,66 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 				}
 			};
 		
-		table = new JTable()
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			/**
-			 * tô màu từng dòng
-			 */
-			@Override
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : new Color(218, 223, 225));
-				return c;
-			}
-			
-            public boolean getScrollableTracksViewportWidth()
-            {
-                return getPreferredSize().width < getParent().getWidth();
-            }
-            @Override
-            public void doLayout()
-            {
-                TableColumn resizingColumn = null;
+			table = new JTable() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-                if (tableHeader != null)
-                    resizingColumn = tableHeader.getResizingColumn();
+				/**
+				 * tô màu từng dòng
+				 */
+				@Override
+				public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+					Component c = super.prepareRenderer(renderer, row, column);
+					if (!isRowSelected(row))
+						c.setBackground(row % 2 == 0 ? getBackground() :  new Color(218, 223, 225));
+					return c;
+				}
 
-                //  Viewport size changed. May need to increase columns widths
+				public boolean getScrollableTracksViewportWidth() {
+					return getPreferredSize().width < getParent().getWidth();
+				}
 
-                if (resizingColumn == null)
-                {
-                    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                    super.doLayout();
-                }
+				@Override
+				public void doLayout() {
+					TableColumn resizingColumn = null;
+					TableColumnModel tcm = getColumnModel();
 
-                //  Specific column resized. Reset preferred widths
+					if (tableHeader != null)
+						resizingColumn = tableHeader.getResizingColumn();
 
-                else
-                {
-                    TableColumnModel tcm = getColumnModel();
+					// Viewport size changed. May need to increase columns widths
 
-                    for (int i = 0; i < tcm.getColumnCount(); i++)
-                    {
-                        TableColumn tc = tcm.getColumn(i);
-                        tc.setPreferredWidth( tc.getWidth() );
-                    }
+					if (resizingColumn == null) {
+						setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
 
-                    // Columns don't fill the viewport, invoke default layout
+					// Specific column resized. Reset preferred widths
 
-                    if (tcm.getTotalColumnWidth() < getParent().getWidth())
-                        setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                        super.doLayout();
-                }
+					else {
 
-                setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            }
+						for (int i = 0; i < tcm.getColumnCount(); i++) {
+							resizingColumn = table.getColumnModel().getColumn(i);
+							if (i == 1) {
+								resizingColumn.setPreferredWidth(700); // second column is bigger
+							} else {
+								resizingColumn.setPreferredWidth(resizingColumn.getWidth());
+							}
+						}
 
-        };
+						// Columns don't fill the viewport, invoke default layout
+
+						if (tcm.getTotalColumnWidth() < getParent().getWidth())
+							setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
+
+					setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				}
+
+			};
         
         table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -246,19 +295,32 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		//Add thông tin vào bảng
+		try {
+			dao_khachhang.loadData("select * from KhachHang ", tableModel); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		btnThem.addActionListener(this);
+		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
-		btnXoarong.addActionListener(this);
-		btnLuu.addActionListener(this);
+		btnCapNhat.addActionListener(this);
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		int i = table.getSelectedRow();
+		txtID.setText(tableModel.getValueAt(i, 0).toString());
+		txtTenKh.setText(tableModel.getValueAt(i, 1).toString());
+		txtDiachi.setText(tableModel.getValueAt(i, 2).toString());
+		txtSdt.setText(tableModel.getValueAt(i, 3).toString());
+		txtCmnd.setText(tableModel.getValueAt(i, 4).toString());
 	}
 
 	@Override
@@ -285,10 +347,161 @@ public class FormQLKhachHang extends JPanel implements ActionListener, MouseList
 		
 	}
 
+	public void reloadData() {
+		DaoKhachHang dao_khachhang = new DaoKhachHang();
+		try {
+			tableModel.setRowCount(0);
+			dao_khachhang.loadData("select * from KhachHang ", tableModel);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			if(KiemTraDuLieu()) {
+			String ma = phatSinhMa.maKhachHang();
+			String ten = txtTenKh.getText();
+			String diachi = txtDiachi.getText();
+			String sdt = txtSdt.getText();
+			String cmnd = txtCmnd.getText();
+			KhachHang kh =new KhachHang(ma,ten,diachi,sdt,cmnd);
+			try {
+				if (dao.themKhachHang(kh)) {
+					clearTable();
+					reloadData();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+					int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có muốn lập hóa đơn cho khách hàng này", "Chú ý",
+							JOptionPane.YES_NO_OPTION);
+					if (xacnhan == JOptionPane.YES_OPTION) {
+						FormGiaoDienChinh.changeScreen(new FormLapHD());
+					}
+				}else {
+					JOptionPane.showMessageDialog(this, "Có lỗi xảy ra! Vui lòng thử lại\nThêm không thành công");
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			}
+		}
+		if(o.equals(btnSua)) {
+			if(KiemTraDuLieu()) {
+			int i = table.getSelectedRow();
+			if (i != -1) {
+				String ma = txtID.getText();
+				String ten = txtTenKh.getText();
+				String diachi = txtDiachi.getText();
+				String sdt = txtSdt.getText();
+				String cmnd = txtCmnd.getText();
+				KhachHang kh =new KhachHang(ma,ten,diachi,sdt,cmnd);
+				try {
+					if (dao.suaThongtinKhachHang(kh)) {
+						clearTable();
+						reloadData();
+						JOptionPane.showMessageDialog(this, "Sửa thành công");
+					} else {
+						JOptionPane.showMessageDialog(this, "Lỗi");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+			
+		}
+			else {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng cần cập nhật thông tin");
+			}
+		}
+		}
+		if(o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
+			if (row != -1) {
+				try {
+						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa khách hàng này", "Chú ý",
+								JOptionPane.YES_NO_OPTION);
+						if (xacnhan == JOptionPane.YES_OPTION) {
+							if (dao.delKhachHang(txtID.getText())) {
+								tableModel.removeRow(row);
+								JOptionPane.showMessageDialog(this, "Xóa thành công!");
+								reloadData();
+							} 
+							else {
+								JOptionPane.showMessageDialog(this, "Xóa khách hàng " + txtID.getText() + " thành công!");
+							}
+						}
+					}
+				 catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn khách hàng để xóa");
+		}
+		if(o.equals(btnCapNhat)) {
+			XoaTrang();
+		}
+	}
+
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtID.setText("");
+		txtTenKh.setText("");
+		txtDiachi.setText("");
+		txtSdt.setText("");
+		txtCmnd.setText("");
 		
+	}
+	/*
+	public boolean validData() {
+		String ten = txtTenKh.getText().trim();
+		String sdt = txtSdt.getText().trim();
+		String cmnd = txtCmnd.getText().trim();
+		
+		if (!(ten.length() > 0 && ten.matches("[\\p{L}\\s]+"))) {
+			errorTen.setText("Sai cú pháp \n Tên phải bắt đầu bằng chữ cái hoa");
+			txtTenKh.requestFocus();
+			return false;
+		} else {
+			errorTen.setText("");
+		}
+		
+		
+		if (!((sdt.length() > 0) && sdt.matches("[0-9]{10}"))) {
+			errorSDT.setText("SDT phải là 10 số");
+			txtSdt.requestFocus();
+			return false;
+		} else {
+			errorSDT.setText("");
+		}
+		
+		if (!((cmnd.length() > 0) && cmnd.matches("[0-9]{9,12}"))) {
+			errorCMND.setText("CMND phải từ 9-12 số");
+			txtCmnd.requestFocus();
+			return false;
+		} else {
+			errorCMND.setText("");
+		}
+		return true;
+	}
+	*/
+	
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRongTen(txtTenKh))
+			return false;
+		if(regex.RegexTen(txtTenKh))
+			return false;
+		if(regex.RegexDiaChi(txtDiachi))
+			return false;
+		if(regex.kiemTraSDT(txtSdt))
+			return false;
+		if(regex.kiemTraSCM(txtCmnd))
+			return false;
+		return true;
 	}
 
 }

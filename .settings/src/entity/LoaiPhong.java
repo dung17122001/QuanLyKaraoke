@@ -13,6 +13,21 @@ public class LoaiPhong {
 		this.moTa = moTa;
 	}
 
+
+	public LoaiPhong() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+	public LoaiPhong(String maLoaiPhong) {
+		super();
+		this.maLoaiPhong = maLoaiPhong;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "LoaiPhong [maLoaiPhong=" + maLoaiPhong + ", tenLoai=" + tenLoai + ", moTa=" + moTa + "]";

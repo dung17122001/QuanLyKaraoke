@@ -3,7 +3,9 @@ package gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -13,7 +15,10 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,30 +32,57 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import com.toedter.calendar.JDateChooser;
+
+import chucnang.Regex;
+import connect.ConnectDB;
+import entity.ChucVu;
+import entity.NhanVien;
+import dao.DaoChucVu;
+import dao.DaoNhanVien;
+import dao.PhatSinhMa;
+
 public class FormQLNhanVien extends JPanel implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
 	private JButton btnSua;
-	private JButton btnXoarong;
-	private JButton btnLuu;
+	private JButton btnCapNhat;
+	private JButton btnThem;
+	private JButton btnXoa;
 	private JTextField txtTenNv;
 	private JTextField txtID;
-	private JTextField txtNgaySinh;
-	private JTextField txtGioitinh;
+	private JDateChooser ngaysinh;
+	private JComboBox<String> cbGioitinh;;
 	private JTextField txtCmnd;
-	private JTextField txtChucVu;
+	private JComboBox<String> cbChucVu;
 	private JTextField txtSdt;
+	private JLabel errorTen;
+	private JLabel errorSDT;
+	private JLabel errorCMND;
+	private JLabel errorNS;
 	private DefaultTableModel tableModel;
+	private DaoNhanVien dao = new DaoNhanVien();
+	private DaoChucVu daoCV= new DaoChucVu();
+	private PhatSinhMa phatSinhMa=new PhatSinhMa(); 
+	
 	public FormQLNhanVien() {
-		setBounds(0, 0, 1352, 539);
+		setBounds(0, 0, 1366, 620);
 		setLayout(null);
+		
+		//connect database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -61,125 +93,175 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		
 		JLabel lbManv = new JLabel("Mã NV: ");
 		lbManv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbManv.setBounds(10, 27, 96, 38);
+		lbManv.setBounds(110, 27, 96, 38);
 		pnTTNV.add(lbManv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(116, 31, 190, 30);
+		txtID.setBounds(215, 30, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
 		
 		JLabel lbTennv = new JLabel("Tên NV: ");
 		lbTennv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTennv.setBounds(405, 24, 96, 38);
+		lbTennv.setBounds(505, 24, 96, 38);
 		pnTTNV.add(lbTennv);
 		
 		txtTenNv = new JTextField();
 		txtTenNv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenNv.setBounds(501, 30, 190, 30);
+		txtTenNv.setBounds(601, 30, 190, 30);
 		pnTTNV.add(txtTenNv);
 		txtTenNv.setColumns(10);
 		
 		JLabel lbGt = new JLabel("Giới tính:");
 		lbGt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbGt.setBounds(855, 24, 96, 38);
+		lbGt.setBounds(955, 24, 96, 38);
 		pnTTNV.add(lbGt);
 		
-		txtGioitinh = new JTextField();
-		txtGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGioitinh.setBounds(955, 30, 190, 30);
-		pnTTNV.add(txtGioitinh);
-		txtGioitinh.setColumns(10);
+		cbGioitinh = new JComboBox<String>();
+		cbGioitinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbGioitinh.addItem("Nam");
+		cbGioitinh.addItem("Nữ");
+		cbGioitinh.setBounds(1055, 30, 190, 30);
+		pnTTNV.add(cbGioitinh);
 		
+		JLabel lblNgaysinh = new JLabel("Ngày sinh:");
+		lblNgaysinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNgaysinh.setBounds(110, 80, 96, 38);
+		pnTTNV.add(lblNgaysinh);
+
+		ngaysinh = new JDateChooser();
+		ngaysinh.setDateFormatString("dd/MM/yyyy");
+		ngaysinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		ngaysinh.setPreferredSize(new Dimension(400, 400));
+		ngaysinh.getJCalendar().getMonthChooser().setPreferredSize(new Dimension(150, 30));
+		ngaysinh.setBounds(216, 83, 190, 30);
+		pnTTNV.add(ngaysinh);
+		
+		/*
 		JLabel lbNs = new JLabel("Ngày sinh:");
 		lbNs.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbNs.setBounds(10, 80, 96, 38);
+		lbNs.setBounds(110, 80, 96, 38);
 		pnTTNV.add(lbNs);
 		
 		txtNgaySinh = new JTextField();
 		txtNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtNgaySinh.setBounds(116, 83, 190, 30);
+		txtNgaySinh.setBounds(216, 83, 190, 30);
 		pnTTNV.add(txtNgaySinh);
 		txtNgaySinh.setColumns(10);
+		*/
 		
 		JLabel lbScm = new JLabel("Số CMND:");
 		lbScm.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbScm.setBounds(405, 80, 96, 30);
+		lbScm.setBounds(505, 80, 96, 30);
 		pnTTNV.add(lbScm);
 		
 		txtCmnd = new JTextField();
 		txtCmnd.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtCmnd.setBounds(501, 83, 190, 30);
+		txtCmnd.setBounds(600, 85, 190, 30);
 		pnTTNV.add(txtCmnd);
 		txtCmnd.setColumns(10);
 		
 		JLabel lbSdt = new JLabel("Số điện thoại:");
 		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSdt.setBounds(855, 83, 190, 30);
+		lbSdt.setBounds(955, 85, 190, 30);
 		pnTTNV.add(lbSdt);
 		
 		txtSdt = new JTextField();
 		txtSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtSdt.setBounds(955, 88, 190, 30);
+		txtSdt.setBounds(1055, 88, 190, 30);
 		pnTTNV.add(txtSdt);
 		txtSdt.setColumns(10);
 		
-		JLabel lbCv = new JLabel("Chức vụ: ");
-		lbCv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbCv.setBounds(10, 137, 96, 38);
-		pnTTNV.add(lbCv);
+		JLabel lbChucVu = new JLabel("Chức vụ: ");
+		lbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbChucVu.setBounds(110, 137, 96, 38);
+		pnTTNV.add(lbChucVu);
 		
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtChucVu.setBounds(116, 140, 190, 30);
-		pnTTNV.add(txtChucVu);
-		txtChucVu.setColumns(10);
+		cbChucVu = new JComboBox<String>();
+		cbChucVu.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbChucVu.setBounds(216, 140, 190, 30);
+		pnTTNV.add(cbChucVu);
 		
+		/*
+		errorTen = new JLabel("(*)");
+		errorTen.setForeground(Color.RED);
+		errorTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorTen.setBounds(600, 55, 400, 30);
+		pnTTNV.add(errorTen);
+		
+		errorNS = new JLabel("(*)");
+		errorNS.setForeground(Color.RED);
+		errorNS.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorNS.setBounds(216, 113, 190, 30);
+		pnTTNV.add(errorNS);
+		
+		errorSDT = new JLabel("(*)");
+		errorSDT.setForeground(Color.RED);
+		errorSDT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorSDT.setBounds(1055, 113, 400, 30);
+		pnTTNV.add(errorSDT);
+		
+		errorCMND = new JLabel("(*)");
+		errorCMND.setForeground(Color.RED);
+		errorCMND.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		errorCMND.setBounds(601, 118, 400, 30);
+		pnTTNV.add(errorCMND);
+		/*
+		 * 
+		 */
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
 		pnChucNang.setBounds(0,190, 1366,40);
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
-		btnSua = new JButton("Cập nhật");
+		btnThem = new JButton("Thêm");
+		btnThem.setForeground(SystemColor.controlText);
+		btnThem.setBackground(new Color(255, 255, 153));
+		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnThem.setBounds(200, 10, 150, 30);
+		btnThem.setFocusable(false);
+		pnChucNang.add(btnThem);
+		
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(10, 10, 150, 30);
+		btnSua.setBounds(450, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
-		btnXoarong= new JButton("Xóa rỗng");
-		btnXoarong.setForeground(SystemColor.controlText);
-		btnXoarong.setBackground(new Color(255, 255, 153));
-		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(170, 10, 150, 30);
-		btnXoarong.setFocusable(false);
-		pnChucNang.add(btnXoarong);
+		btnXoa = new JButton("Xóa");
+		btnXoa.setForeground(SystemColor.controlText);
+		btnXoa.setBackground(new Color(255, 255, 153));
+		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnXoa.setBounds(700, 10, 150, 30);
+		btnXoa.setFocusable(false);
+		pnChucNang.add(btnXoa);
 		
-		btnLuu= new JButton("Lưu");
-		btnLuu.setForeground(SystemColor.controlText);
-		btnLuu.setBackground(new Color(255, 255, 153));
-		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(330, 10, 150, 30);
-		btnLuu.setFocusable(false);
-		pnChucNang.add(btnLuu);
+		btnCapNhat= new JButton("Xóa trắng");
+		btnCapNhat.setForeground(SystemColor.controlText);
+		btnCapNhat.setBackground(new Color(255, 255, 153));
+		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnCapNhat.setBounds(950, 10, 150, 30);
+		btnCapNhat.setFocusable(false);
+		pnChucNang.add(btnCapNhat);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
-		panel.setBounds(0, 230, 1368, 768);
+		panel.setBounds(0, 230, 1366, 820);
 		add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblDSNV = new JLabel("DANH SÁCH NHÂN VIÊN:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,0, 380, 40);
+		lblDSNV.setBounds(500,0, 500, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1366, 820);
+		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
 		String[] header = {"Mã NV", "Tên NV","Giới tính","Ngày sinh", "Điện thoại", "CMND", "Chức vụ"};
@@ -196,66 +278,66 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 				}
 			};
 		
-		table = new JTable()
-		{
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			/**
-			 * tô màu từng dòng
-			 */
-			@Override
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : new Color(218, 223, 225));
-				return c;
-			}
-			
-            public boolean getScrollableTracksViewportWidth()
-            {
-                return getPreferredSize().width < getParent().getWidth();
-            }
-            @Override
-            public void doLayout()
-            {
-                TableColumn resizingColumn = null;
+			table = new JTable() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 
-                if (tableHeader != null)
-                    resizingColumn = tableHeader.getResizingColumn();
+				/**
+				 * tô màu từng dòng
+				 */
+				@Override
+				public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+					Component c = super.prepareRenderer(renderer, row, column);
+					if (!isRowSelected(row))
+						c.setBackground(row % 2 == 0 ? getBackground() :  new Color(218, 223, 225));
+					return c;
+				}
 
-                //  Viewport size changed. May need to increase columns widths
+				public boolean getScrollableTracksViewportWidth() {
+					return getPreferredSize().width < getParent().getWidth();
+				}
 
-                if (resizingColumn == null)
-                {
-                    setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                    super.doLayout();
-                }
+				@Override
+				public void doLayout() {
+					TableColumn resizingColumn = null;
+					TableColumnModel tcm = getColumnModel();
 
-                //  Specific column resized. Reset preferred widths
+					if (tableHeader != null)
+						resizingColumn = tableHeader.getResizingColumn();
 
-                else
-                {
-                    TableColumnModel tcm = getColumnModel();
+					// Viewport size changed. May need to increase columns widths
 
-                    for (int i = 0; i < tcm.getColumnCount(); i++)
-                    {
-                        TableColumn tc = tcm.getColumn(i);
-                        tc.setPreferredWidth( tc.getWidth() );
-                    }
+					if (resizingColumn == null) {
+						setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
 
-                    // Columns don't fill the viewport, invoke default layout
+					// Specific column resized. Reset preferred widths
 
-                    if (tcm.getTotalColumnWidth() < getParent().getWidth())
-                        setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-                        super.doLayout();
-                }
+					else {
 
-                setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            }
+						for (int i = 0; i < tcm.getColumnCount(); i++) {
+							resizingColumn = table.getColumnModel().getColumn(i);
+							if (i == 1) {
+								resizingColumn.setPreferredWidth(700); // second column is bigger
+							} else {
+								resizingColumn.setPreferredWidth(resizingColumn.getWidth());
+							}
+						}
 
-        };
+						// Columns don't fill the viewport, invoke default layout
+
+						if (tcm.getTotalColumnWidth() < getParent().getWidth())
+							setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+						super.doLayout();
+					}
+
+					setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				}
+
+			};
         
         table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
 		table.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -270,20 +352,42 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
-		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		/*//Add thông tin vào bảng
+		try {
+			dao_nhanvien.loadData("select * from NhanVien ", tableModel); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
 		
+		//Add thông tin vào bảng
+		LoadTatCaNhanVien();
+		ThemDuLieuVaoCbLoaiCV();
+		
+		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
-		btnXoarong.addActionListener(this);
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-	}
+		btnXoa.addActionListener(this);
+		btnCapNhat.addActionListener(this);
+		
+		}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		int i = table.getSelectedRow();
+		txtID.setText(tableModel.getValueAt(i, 0).toString());
+		txtTenNv.setText(tableModel.getValueAt(i, 1).toString());
+		cbGioitinh.setSelectedItem(tableModel.getValueAt(i, 2).toString());
+		ngaysinh.setToolTipText(tableModel.getValueAt(i, 3).toString());
+		txtSdt.setText(tableModel.getValueAt(i, 4).toString());
+		txtCmnd.setText(tableModel.getValueAt(i, 5).toString());
+		cbChucVu.setSelectedItem(tableModel.getValueAt(i, 6).toString());
 	}
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -311,8 +415,188 @@ public class FormQLNhanVien extends JPanel implements ActionListener, MouseListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			if(KiemTraDuLieu()) {
+			String ma=phatSinhMa.maNhanVien();
+			String ten=txtTenNv.getText(); 
+			String gt = (String) cbGioitinh.getSelectedItem();
+			Date ns = new Date(ngaysinh.getDate().getTime());
+			String sdt = txtSdt.getText();
+			String cmnd = txtCmnd.getText();
+			String tenChucVu=cbChucVu.getSelectedItem().toString();
+			
+			ChucVu lcv=daoCV.getChucVuTheoTen(tenChucVu);
+			NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,lcv);
+			
+			try {
+				if (dao.themNhanVien(nv)) {
+					clearTable();
+					LoadTatCaNhanVien();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				} else
+					JOptionPane.showMessageDialog(this, "Lỗi");
+			} catch (HeadlessException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			}
+		}
+		if(o.equals(btnSua)) {
+			if(KiemTraDuLieu()) {
+			int i = table.getSelectedRow();
+			if (i != -1) {
+				String ma=txtID.getText(); 
+				String ten=txtTenNv.getText(); 
+				String gt = (String) cbGioitinh.getSelectedItem();
+				Date ns = new Date(ngaysinh.getDate().getTime());
+				String sdt = txtSdt.getText();
+				String cmnd = txtCmnd.getText();
+				String tenChucVu=cbChucVu.getSelectedItem().toString();
+				
+				ChucVu lcv=daoCV.getChucVuTheoTen(tenChucVu);
+				NhanVien nv =new NhanVien(ma,ten,gt, ns,sdt,cmnd,lcv);
+				
+				dao.suaThongtinNhanvien(nv);
+				clearTable();
+				LoadTatCaNhanVien();
+				JOptionPane.showMessageDialog(this, "Đã sửa");
+				XoaTrang();
+			} else {
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần cập nhật thông tin");
+			}
+			}
 		
+		}
+		if(o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
+			if (row != -1) {
+				try {
+						int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa nhân viên này", "Chú ý",
+								JOptionPane.YES_NO_OPTION);
+						if (xacnhan == JOptionPane.YES_OPTION) {
+							if (dao.delNhanVien(txtID.getText())) {
+								tableModel.removeRow(row);
+								JOptionPane.showMessageDialog(this, "Xóa thành công!");
+								LoadTatCaNhanVien();
+							} 
+							else {
+								JOptionPane.showMessageDialog(this, "Xóa nhân viên " + txtID.getText() + " thành công!");
+							}
+						}
+					}
+				 catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			} else
+				JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xóa");
+		}
+		if(o.equals(btnCapNhat)) {
+			XoaTrang();
+		}
+		
+	}
+
+	public void LoadTatCaNhanVien() {
+		ArrayList<NhanVien> dsnv=new ArrayList<NhanVien>();
+		dsnv=dao.getalltbNhanVien();
+		for(NhanVien nv:dsnv) {
+			ChucVu lcv=new ChucVu();
+			lcv=daoCV.getChucVuTheoMa(nv.getChucVu().getMaChucVu());
+			tableModel.addRow(new Object[] {
+					nv.getMaNhanVien(),nv.getTenNhanVien(),nv.getGioiTinh(),nv.getNgaySinh(),nv.getDienThoai(),nv.getSoCMND(),lcv.getTenChucVu()
+			});
+		}
+		
+	}
+	public void ThemDuLieuVaoCbLoaiCV() {
+		ArrayList<ChucVu> dsCV=new ArrayList<ChucVu>();
+		dsCV=daoCV.getTatCaLoaiCV();
+		for(ChucVu lcv: dsCV) {
+			cbChucVu.addItem(lcv.getTenChucVu());
+		}
+	}
+	public void reloadData() {
+		DaoNhanVien dao_nhanvien = new DaoNhanVien();
+		try {
+			tableModel.setRowCount(0);
+			dao_nhanvien.loadData("select * from NhanVien ", tableModel);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtID.setText("");
+		txtTenNv.setText("");
+		cbGioitinh.setToolTipText("");
+		ngaysinh.setToolTipText("");
+		txtSdt.setText("");
+		txtCmnd.setText("");
+		cbChucVu.setToolTipText("");
+	}
+	/**
+	 * Kiểm tra dữ liệu đầu vào Rỗng return false
+	 * 
+	 * @return true
+	 */
+	/*
+	public boolean validData() {
+		String ten = txtTenNv.getText().trim();
+		String sdt = txtSdt.getText().trim();
+		String cmnd = txtCmnd.getText().trim();
+		
+		if (!(ten.length() > 0 && ten.matches("[\\p{L}\\s]+"))) {
+			errorTen.setText("Sai cú pháp \n Tên phải bắt đầu bằng chữ cái hoa");
+			txtTenNv.requestFocus();
+			return false;
+		} else {
+			errorTen.setText("");
+		}
+		
+		if (ngaysinh.getDate() == null) {
+			errorNS.setText("Ngày sinh rỗng");
+			ngaysinh.requestFocus();
+			return false;
+		} else {
+			errorNS.setText("");
+		}
+		
+		if (!((sdt.length() > 0) && sdt.matches("[0-9]{10}"))) {
+			errorSDT.setText("SDT phải là 10 số");
+			txtSdt.requestFocus();
+			return false;
+		} else {
+			errorSDT.setText("");
+		}
+		
+		if (!((cmnd.length() > 0) && cmnd.matches("[0-9]{9,12}"))) {
+			errorCMND.setText("CMND phải từ 9-12 số");
+			txtCmnd.requestFocus();
+			return false;
+		} else {
+			errorCMND.setText("");
+		}
+		return true;
+	}
+	*/
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRongTen(txtTenNv))
+			return false;
+		if(regex.RegexTen(txtTenNv))
+			return false;
+		if(regex.kiemTraNS(ngaysinh))
+			return false;
+		if(regex.kiemTraSDT(txtSdt))
+			return false;
+		if(regex.kiemTraSCM(txtCmnd))
+			return false;
+		return true;
 	}
 
 }

@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -33,20 +35,44 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import chucnang.Regex;
+import connect.ConnectDB;
+import entity.DichVu;
+import entity.LoaiDichVu;
+import entity.LoaiPhong;
+import entity.Phong;
+import dao.DaoDichVu;
+import dao.DaoLoaiDV;
+import dao.PhatSinhMa;
+
 public class FormQLDichVu extends JPanel implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private JButton btnThem;
+	private JButton btnXoa;
 	private JButton btnSua;
-	private JButton btnXoarong;
-	private JButton btnLuu;
+	private JButton btnCapNhat;
 	private JTextField txtGiaDV;
 	private JTextField txtID;
 	private JTextField txtTenDV;
+	private JTextField txtDonViTinh;
+	private JComboBox<String> cbLoaiDV;
 	private DefaultTableModel tableModel;
+	private DecimalFormat df = new DecimalFormat("#,### VNĐ");
+	private DaoDichVu daoDichVu = new DaoDichVu();
+	private DaoLoaiDV daoLoaiDV=new DaoLoaiDV();
+	private PhatSinhMa phatSinhMa=new PhatSinhMa(); 
 	public FormQLDichVu() {
 		setBounds(0, 0, 1366,768);
 		setLayout(null);
+		
+		//connect database
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		JPanel pnTTNV = new JPanel();
 		pnTTNV.setBackground(Color.WHITE);
@@ -55,40 +81,59 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		pnTTNV.setLayout(null);
 		add(pnTTNV);
 		
-		JLabel lbManv = new JLabel("Mã DV: ");
-		lbManv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbManv.setBounds(10, 27, 96, 38);
-		pnTTNV.add(lbManv);
+		JLabel lbMadv = new JLabel("Mã DV: ");
+		lbMadv.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbMadv.setBounds(310, 30, 96, 38);
+		pnTTNV.add(lbMadv);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtID.setBounds(116, 31, 190, 30);
+		txtID.setBounds(415, 30, 190, 30);
 		pnTTNV.add(txtID);
 		txtID.setColumns(10);
-		
-		JLabel lbTennv = new JLabel("Giá dịch vụ:");
-		lbTennv.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbTennv.setBounds(10, 80, 96, 38);
-		pnTTNV.add(lbTennv);
-		
-		txtGiaDV = new JTextField();
-		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtGiaDV.setBounds(501, 30, 190, 30);
-		pnTTNV.add(txtGiaDV);
-		txtGiaDV.setColumns(10);
-		
-		
-		
-		JLabel lbSdt = new JLabel("Tên DV:");
-		lbSdt.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lbSdt.setBounds(405, 24, 96, 38);
-		pnTTNV.add(lbSdt);
+	
+		JLabel lbTendv = new JLabel("Tên DV:");
+		lbTendv.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbTendv.setBounds(705, 30, 96, 38);
+		pnTTNV.add(lbTendv);
 		
 		txtTenDV = new JTextField();
 		txtTenDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtTenDV.setBounds(116, 83, 190, 30);
+		txtTenDV.setBounds(815, 30, 190, 30);
 		pnTTNV.add(txtTenDV);
 		txtTenDV.setColumns(10);
+		
+		JLabel lbDonViTinh = new JLabel("Đơn vị tính:");
+		lbDonViTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbDonViTinh.setBounds(310, 80, 96, 38);
+		pnTTNV.add(lbDonViTinh);
+		
+		txtDonViTinh = new JTextField();
+		txtDonViTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDonViTinh.setBounds(415, 80, 190, 30);
+		pnTTNV.add(txtDonViTinh);
+		txtDonViTinh.setColumns(10);
+		
+		JLabel lbGiadv = new JLabel("Giá dịch vụ:");
+		lbGiadv .setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbGiadv .setBounds(705, 80, 96, 38);
+		pnTTNV.add(lbGiadv );
+		
+		txtGiaDV = new JTextField();
+		txtGiaDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtGiaDV.setBounds(815, 80, 190, 30);
+		pnTTNV.add(txtGiaDV);
+		txtGiaDV.setColumns(10);
+		
+		JLabel lbLoaidv = new JLabel("Loại DV:");
+		lbLoaidv.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lbLoaidv.setBounds(310, 130, 96, 38);
+		pnTTNV.add(lbLoaidv);
+		
+		cbLoaiDV = new JComboBox<String>();
+		cbLoaiDV.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		cbLoaiDV.setBounds(415, 130, 190, 30);
+		pnTTNV.add(cbLoaiDV);
 		
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
@@ -96,29 +141,37 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		pnChucNang.setLayout(null);
 		add(pnChucNang);
 		
+		btnThem = new JButton("Thêm");
+		btnThem.setForeground(SystemColor.controlText);
+		btnThem.setBackground(new Color(255, 255, 153));
+		btnThem.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnThem.setBounds(200, 10, 150, 30);
+		btnThem.setFocusable(false);
+		pnChucNang.add(btnThem);
+		
 		btnSua = new JButton("Sửa");
 		btnSua.setForeground(SystemColor.controlText);
 		btnSua.setBackground(new Color(255, 255, 153));
 		btnSua.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnSua.setBounds(10, 10, 100, 30);
+		btnSua.setBounds(450, 10, 150, 30);
 		btnSua.setFocusable(false);
 		pnChucNang.add(btnSua);
 		
-		btnXoarong = new JButton("Xóa rỗng");
-		btnXoarong.setForeground(SystemColor.controlText);
-		btnXoarong.setBackground(new Color(255, 255, 153));
-		btnXoarong.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnXoarong.setBounds(150, 10, 150, 30);
-		btnXoarong.setFocusable(false);
-		pnChucNang.add(btnXoarong);
+		btnXoa = new JButton("Xóa");
+		btnXoa.setForeground(SystemColor.controlText);
+		btnXoa.setBackground(new Color(255, 255, 153));
+		btnXoa.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnXoa.setBounds(700, 10, 150, 30);
+		btnXoa.setFocusable(false);
+		pnChucNang.add(btnXoa);
 		
-		btnLuu= new JButton("Lưu");
-		btnLuu.setForeground(SystemColor.controlText);
-		btnLuu.setBackground(new Color(255, 255, 153));
-		btnLuu.setFont(new Font("Times New Roman", Font.PLAIN, 28));
-		btnLuu.setBounds(340, 10, 130, 30);
-		btnLuu.setFocusable(false);
-		pnChucNang.add(btnLuu);
+		btnCapNhat= new JButton("Xóa trắng");
+		btnCapNhat.setForeground(SystemColor.controlText);
+		btnCapNhat.setBackground(new Color(255, 255, 153));
+		btnCapNhat.setFont(new Font("Times New Roman", Font.PLAIN, 28));
+		btnCapNhat.setBounds(950, 10, 150, 30);
+		btnCapNhat.setFocusable(false);
+		pnChucNang.add(btnCapNhat);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 238, 204));
@@ -129,21 +182,21 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		JLabel lblDSNV = new JLabel("DANH SÁCH DỊCH VỤ:");
 		lblDSNV.setHorizontalAlignment(SwingConstants.LEFT);
 		lblDSNV.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblDSNV.setBounds(20,0, 380, 40);
+		lblDSNV.setBounds(500,0, 500, 40);
 		panel.add(lblDSNV);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(0, 30, 1366, 820);
+		scrollPane.setBounds(0, 30, 1350, 300);
 		panel.add(scrollPane);
 		
-		String[] header = {"Mã DV", "Tên DV","Giá dịch vụ"};
+		String[] header = {"Mã DV", "Tên DV","Đơn vị tính","Giá dịch vụ","Loại dịch vụ"};
 		tableModel = new DefaultTableModel(header, 0){
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-					false, false, false
+					false, false, false,false,false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -224,21 +277,39 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(table);
 		
+		/* //Add thông tin vào bảng
+		try {
+			dao_dichvu.loadData("select * from DichVu ", tableModel); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+		
+		//Add thông tin vào bảng
+		LoadTatCaDichVu();
+		ThemDuLieuVaoCbLoaiDV();
+		
+		btnThem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnXoa.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnSua.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnLuu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnXoarong.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCapNhat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	
+		btnThem.addActionListener(this);
+		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
-		btnXoarong.addActionListener(this);
-		btnLuu.addActionListener(this);
+		btnCapNhat.addActionListener(this);
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		int i = table.getSelectedRow();
+		txtID.setText(tableModel.getValueAt(i, 0).toString());
+		txtTenDV.setText(tableModel.getValueAt(i, 1).toString());
+		txtDonViTinh.setText(tableModel.getValueAt(i,2).toString());
+		txtGiaDV.setText(tableModel.getValueAt(i, 3).toString());
+		cbLoaiDV.setSelectedItem(tableModel.getValueAt(i, 4).toString());
 	}
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -265,8 +336,120 @@ public class FormQLDichVu extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			if(KiemTraDuLieu()) {
+			String maDV=phatSinhMa.maDichVu();
+			String tenDV=txtTenDV.getText();
+			String donVi=txtDonViTinh.getText();
+			Double giaDV=Double.parseDouble(txtGiaDV.getText());
+			String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
+			
+			
+			LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
+			DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
+			
+				if (daoDichVu.themDichVu(dv)) {
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				} else
+					JOptionPane.showMessageDialog(this, "Lỗi");
+		}
+		}
+		if(o.equals(btnSua)) {
+			if(KiemTraDuLieu()) {
+			if (table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn dịch vụ cần sửa");
+			} else {
+				String maDV=txtID.getText();
+				String tenDV=txtTenDV.getText();
+				String donVi=txtDonViTinh.getText();
+				Double giaDV=Double.parseDouble(txtGiaDV.getText());
+				String tenLoaiDV=cbLoaiDV.getSelectedItem().toString();
+			
+				LoaiDichVu ldv=daoLoaiDV.getLoaiDichVuTheoTen(tenLoaiDV);
+				DichVu dv=new DichVu(maDV, tenDV,donVi, giaDV, ldv);
+				
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa dịch vụ này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoDichVu.suaDichVu(dv);
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Đã sửa");
+					XoaTrang();
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
+			}
+			}
+		}
+		if(o.equals(btnXoa)) {
+			String maDV=txtID.getText();
+			if (table.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(this, "Hãy chọn dịch vụ cần xóa");
+			} else {
+				int tl;
+				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa dịch vụ này không ?", "Cảnh báo",
+						JOptionPane.YES_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					daoDichVu.xoaDichVu(maDV);
+					clearTable();
+					LoadTatCaDichVu();
+					JOptionPane.showMessageDialog(this, "Đã xóa");
+				}
+				if(tl==JOptionPane.NO_OPTION) {
+					JOptionPane.showMessageDialog(this, "Đã hủy");
+				}
+			}
+		}
+		if(o.equals(btnCapNhat)) {
+			XoaTrang();
+		}
+	}
+	
+	public void LoadTatCaDichVu() {
+		ArrayList<DichVu> dsdv=new ArrayList<DichVu>();
+		dsdv=daoDichVu.getTatCaDichVu();
+		for(DichVu dv:dsdv) {
+			LoaiDichVu ldv=new LoaiDichVu();
+			ldv=daoLoaiDV.getDichVuTheoMa(dv.getLoaiDichVu().getMaLoai());
+			tableModel.addRow(new Object[] {
+					dv.getMaDichVu(),dv.getTenDichVu(),dv.getDonVi(),df.format(dv.getGiaTien()),ldv.getTenLoaiDV()
+			});
+		}
 		
 	}
+	
+	public void ThemDuLieuVaoCbLoaiDV() {
+		ArrayList<LoaiDichVu> dsldv=new ArrayList<LoaiDichVu>();
+		dsldv=daoLoaiDV.getTatCaLoaiDV();
+		for(LoaiDichVu ldv: dsldv) {
+			cbLoaiDV.addItem(ldv.getTenLoaiDV());
+		}
+	}
 
+	private void clearTable() {
+		while (table.getRowCount() > 0) {
+			tableModel.removeRow(0);
+		}
+	}
+	private void XoaTrang() {
+		txtID.setText("");
+		txtGiaDV.setText("");
+		txtTenDV.setText("");
+	}
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRong(txtTenDV))
+			return false;
+		if(regex.kiemTraRong(txtDonViTinh))
+			return false;
+		if(regex.kiemTraGiaDV(txtGiaDV))
+			return false;
+		return true;
+	}
 }

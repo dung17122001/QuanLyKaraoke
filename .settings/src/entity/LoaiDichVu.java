@@ -11,6 +11,18 @@ public class LoaiDichVu {
 		this.tenLoaiDV = tenLoaiDV;
 	}
 
+	
+	public LoaiDichVu(String maLoai) {
+		super();
+		this.maLoai = maLoai;
+	}
+
+
+	public LoaiDichVu() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public String toString() {
 		return "LoaiDichVu [maLoai=" + maLoai + ", tenLoaiDV=" + tenLoaiDV + "]";

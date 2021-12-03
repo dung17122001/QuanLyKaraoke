@@ -2,56 +2,46 @@ package entity;
 
 public class TaiKhoan {
 	
-	private String maNhanVien;
-	private String tenTaiKhoan;
+	private String maTaikhoan;
+	private String tenTaikhoan;
 	private String matKhau;
-	
-	public TaiKhoan(String maNhanVien, String tenTaiKhoan, String matKhau) {
+	public TaiKhoan(String maTaikhoan, String tenTaikhoan, String matKhau) {
 		super();
-		this.maNhanVien = maNhanVien;
-		this.tenTaiKhoan = tenTaiKhoan;
+		this.maTaikhoan = maTaikhoan;
+		this.tenTaikhoan = tenTaikhoan;
 		this.matKhau = matKhau;
 	}
-
-	@Override
-	public String toString() {
-		return "TaiKhoan [maNhanVien=" + maNhanVien + ", tenTaiKhoan=" + tenTaiKhoan + ", matKhau=" + matKhau + "]";
+	public String getMaTaikhoan() {
+		return maTaikhoan;
 	}
-
-	public String getMaNhanVien() {
-		return maNhanVien;
+	public void setMaTaikhoan(String maTaikhoan) {
+		this.maTaikhoan = maTaikhoan;
 	}
-
-	public void setMaNhanVien(String maNhanVien) {
-		this.maNhanVien = maNhanVien;
+	public String getTenTaikhoan() {
+		return tenTaikhoan;
 	}
-
-	public String getTenTaiKhoan() {
-		return tenTaiKhoan;
+	public void setTenTaikhoan(String tenTaikhoan) {
+		this.tenTaikhoan = tenTaikhoan;
 	}
-
-	public void setTenTaiKhoan(String tenTaiKhoan) {
-		this.tenTaiKhoan = tenTaiKhoan;
-	}
-
 	public String getMatKhau() {
 		return matKhau;
 	}
-
 	public void setMatKhau(String matKhau) {
 		this.matKhau = matKhau;
 	}
-
+	@Override
+	public String toString() {
+		return "TaiKhoan [maTaikhoan=" + maTaikhoan + ", tenTaikhoan=" + tenTaikhoan + ", matKhau=" + matKhau + "]";
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((maNhanVien == null) ? 0 : maNhanVien.hashCode());
+		result = prime * result + ((maTaikhoan == null) ? 0 : maTaikhoan.hashCode());
 		result = prime * result + ((matKhau == null) ? 0 : matKhau.hashCode());
-		result = prime * result + ((tenTaiKhoan == null) ? 0 : tenTaiKhoan.hashCode());
+		result = prime * result + ((tenTaikhoan == null) ? 0 : tenTaikhoan.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,20 +51,20 @@ public class TaiKhoan {
 		if (getClass() != obj.getClass())
 			return false;
 		TaiKhoan other = (TaiKhoan) obj;
-		if (maNhanVien == null) {
-			if (other.maNhanVien != null)
+		if (maTaikhoan == null) {
+			if (other.maTaikhoan != null)
 				return false;
-		} else if (!maNhanVien.equals(other.maNhanVien))
+		} else if (!maTaikhoan.equals(other.maTaikhoan))
 			return false;
 		if (matKhau == null) {
 			if (other.matKhau != null)
 				return false;
 		} else if (!matKhau.equals(other.matKhau))
 			return false;
-		if (tenTaiKhoan == null) {
-			if (other.tenTaiKhoan != null)
+		if (tenTaikhoan == null) {
+			if (other.tenTaikhoan != null)
 				return false;
-		} else if (!tenTaiKhoan.equals(other.tenTaiKhoan))
+		} else if (!tenTaikhoan.equals(other.tenTaikhoan))
 			return false;
 		return true;
 	}
