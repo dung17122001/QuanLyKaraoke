@@ -41,6 +41,7 @@ import javax.swing.table.TableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import chucnang.Regex;
 import connect.ConnectDB;
 import dao.DaoKhachHang;
 import dao.DaoPhong;
@@ -257,17 +258,19 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnTimKiem)) {
-			//clearTableDichVu();
-			khachHang=daoKhachHang.getKhachHangBangSDTHoacCMND(txtTimKH.getText());
-			if(khachHang==null) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng này");
-				khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
-				lbTenKhachHang.setText(khachHang.getTenKhachHang());
-				lbSDT.setText(khachHang.getSoDienThoai());
+			if(KiemTraDuLieu()) {
+				//clearTableDichVu();
+				khachHang=daoKhachHang.getKhachHangBangSDTHoacCMND(txtTimKH.getText());
+				if(khachHang==null) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy thông tin khách hàng này");
+					khachHang=daoKhachHang.getKhachHangTheoMa(ma.maKhachHangVuaThem());
+					lbTenKhachHang.setText(khachHang.getTenKhachHang());
+					lbSDT.setText(khachHang.getSoDienThoai());
+				}
+				else
+					lbTenKhachHang.setText(khachHang.getTenKhachHang());
+					lbSDT.setText(khachHang.getSoDienThoai());
 			}
-			else
-				lbTenKhachHang.setText(khachHang.getTenKhachHang());
-				lbSDT.setText(khachHang.getSoDienThoai());
 		}
 		if(o.equals(btnDatPhong)) {
 			int i = tablePhong.getSelectedRow();
@@ -303,7 +306,6 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 
 //		makh=ma.maKhachHangVuaThem();
 //		KhachHang kh=daoKhachHang.getKhachHangTheoMa(makh);
-
 		String manv="NV001";//sau nay lay tu form dang nhap
 		NhanVien nv=new NhanVien(manv);
 
@@ -386,5 +388,13 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		if (defaults.get("Table.alternateRowColor") == null)
 			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
+	}
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRong(txtTimKH))
+			return false;
+		if(regex.RegexSDT(txtTimKH))
+			return false;
+		return true;
 	}
 }

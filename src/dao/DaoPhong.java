@@ -91,7 +91,7 @@ public class DaoPhong {
 		try {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getCon();
-			String sql="SELECT * FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where (Phong.trinhTrang like N'"+cbtrinhtrang+"' and LoaiPhong.tenLoai like N'" + cbtenloai + "') and (Phong.maPhong=N'"+ textbox +"' or Phong.tenPhong=N'"+ textbox +"')";
+			String sql="SELECT * FROM Phong INNER JOIN LoaiPhong ON Phong.maLoaiPhong = LoaiPhong.maLoaiPhong where (Phong.trinhTrang like N'"+cbtrinhtrang+"' and LoaiPhong.tenLoai like N'" + cbtenloai + "') and (Phong.maPhong=N'"+ textbox +"' or Phong.tenPhong like '%"+ textbox +"%')";
 			PreparedStatement ps = con.prepareStatement(sql);	
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {

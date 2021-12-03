@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import chucnang.Regex;
 import connect.ConnectDB;
 import dao.DaoLoaiPhong;
 import dao.PhatSinhMa;
@@ -197,41 +198,45 @@ public class FormLoaiPhong extends JPanel implements ActionListener, MouseListen
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
 		if(o.equals(btnThem)) {
-			String maLoaiPhong=ma.maLoaiPhong();
-			String tenLoaiPhong=txtTen.getText();
-			String mota=txtMoTa.getText();
-			LoaiPhong loaiPhong=new LoaiPhong(maLoaiPhong, tenLoaiPhong, mota);
-			
-				if (daoLoaiPhong.themLoaiPhong(loaiPhong)) {
-					clearTable();
-					LoadTatCaloaiPhong();
-					JOptionPane.showMessageDialog(this, "Thêm thành công");
-				} else
-					JOptionPane.showMessageDialog(this, "Lỗi");
-		}
-		
-		if(o.equals(btnSua)) {
-			
-			if (tablePhong.getSelectedRow() == -1) {
-				JOptionPane.showMessageDialog(this, "Hãy chọn loại phòng cần sửa");
-			} else {
-				String maLoaiPhong=txtMa.getText();
+			if(KiemTraDuLieu()) {
+				String maLoaiPhong=ma.maLoaiPhong();
 				String tenLoaiPhong=txtTen.getText();
 				String mota=txtMoTa.getText();
 				LoaiPhong loaiPhong=new LoaiPhong(maLoaiPhong, tenLoaiPhong, mota);
 				
-				int tl;
-				tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa loại phòng này không ?", "Cảnh báo",
-						JOptionPane.YES_OPTION);
-				if (tl == JOptionPane.YES_OPTION) {
-					daoLoaiPhong.SuaPhong(loaiPhong);
-					clearTable();
-					LoadTatCaloaiPhong();
-					JOptionPane.showMessageDialog(this, "Đã sửa");
-					XoaTrang();
-				}
-				if(tl==JOptionPane.NO_OPTION) {
-					JOptionPane.showMessageDialog(this, "Đã hủy");
+					if (daoLoaiPhong.themLoaiPhong(loaiPhong)) {
+						clearTable();
+						LoadTatCaloaiPhong();
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+					} else
+						JOptionPane.showMessageDialog(this, "Lỗi");
+			}
+		}
+		
+		if(o.equals(btnSua)) {
+			
+			if(KiemTraDuLieu()) {
+				if (tablePhong.getSelectedRow() == -1) {
+					JOptionPane.showMessageDialog(this, "Hãy chọn loại phòng cần sửa");
+				} else {
+					String maLoaiPhong=txtMa.getText();
+					String tenLoaiPhong=txtTen.getText();
+					String mota=txtMoTa.getText();
+					LoaiPhong loaiPhong=new LoaiPhong(maLoaiPhong, tenLoaiPhong, mota);
+					
+					int tl;
+					tl = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa loại phòng này không ?", "Cảnh báo",
+							JOptionPane.YES_OPTION);
+					if (tl == JOptionPane.YES_OPTION) {
+						daoLoaiPhong.SuaPhong(loaiPhong);
+						clearTable();
+						LoadTatCaloaiPhong();
+						JOptionPane.showMessageDialog(this, "Đã sửa");
+						XoaTrang();
+					}
+					if(tl==JOptionPane.NO_OPTION) {
+						JOptionPane.showMessageDialog(this, "Đã hủy");
+					}
 				}
 			}
 			
@@ -284,5 +289,13 @@ public class FormLoaiPhong extends JPanel implements ActionListener, MouseListen
 		UIDefaults defaults = UIManager.getLookAndFeelDefaults();
 		if (defaults.get("Table.alternateRowColor") == null)
 			defaults.put("Table.alternateRowColor", new Color(218, 223, 225));
+	}
+	public boolean KiemTraDuLieu() {
+		Regex regex=new Regex();
+		if(regex.kiemTraRong(txtTen))
+			return false;
+		if(regex.kiemTraRong(txtMoTa))
+			return false;
+		return true;
 	}
 }
