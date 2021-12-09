@@ -28,7 +28,9 @@ import javax.swing.table.TableColumnModel;
 import connect.ConnectDB;
 import dao.DaoDichVu;
 import dao.DaoHoaDon;
+import dao.DaoNhanVien;
 import dao.DaoPhong;
+import entity.NhanVien;
 
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -59,6 +61,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	public static int stt=1;
 	private FormInThongKeDoanhThu formIn=new FormInThongKeDoanhThu();
+	private DaoNhanVien daoNhanVien=new DaoNhanVien();
 
 	public FormThongKeDoanhThu() {
 		setBounds(0, 0, 1352, 565);
@@ -71,7 +74,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Chọn thời gian cần thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 10, 663, 166);
+		panel_1.setBounds(10, 45, 663, 166);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -103,7 +106,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(679, 10, 663, 166);
+		panel_2.setBounds(683, 45, 663, 166);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -141,7 +144,7 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		txtDoanhThu.setColumns(10);
 		
 		JPanel panelThongKe = new JPanel();
-		panelThongKe.setBounds(10, 176, 1332, 379);
+		panelThongKe.setBounds(10, 211, 1332, 344);
 		panel.add(panelThongKe);
 		
 		
@@ -157,12 +160,18 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 		panelThongKe.setLayout(null);
 		scrollHangHoa=new JScrollPane(tableHangHoa,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollHangHoa.setBorder(BorderFactory.createTitledBorder("Thông tin các hành hóa đã bán"));
-		scrollHangHoa.setBounds(0, 0, 1332, 369);
+		scrollHangHoa.setBounds(0, 10, 1332, 324);
 		scrollHangHoa.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollHangHoa);
 		
 		btnInThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		JLabel lblTitle = new JLabel("THỐNG KÊ DOANH THU");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTitle.setBounds(562, 10, 248, 30);
+		panel.add(lblTitle);
 		
 		setTableAlternateRow();
 		
@@ -313,5 +322,13 @@ public class FormThongKeDoanhThu extends JPanel implements ActionListener{
 			FormInThongKeDoanhThu.lblTongTienDV.setText(txtDichVu.getText());
 			FormInThongKeDoanhThu.lbltongTien.setText(txtDoanhThu.getText());
 		}
+		try {
+			NhanVien nv=daoNhanVien.getNhanvienByMaNhanVien("NV001");//lấy tạm
+			FormInThongKeDoanhThu.lblTenNhanVien.setText(""+nv.getTenNhanVien());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }

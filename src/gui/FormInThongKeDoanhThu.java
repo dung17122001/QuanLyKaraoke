@@ -57,7 +57,7 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 	public static JLabel lblDienThoai;
 	public static JLabel lblHD;
 	public static JLabel lblLoaiHD1;
-	public static JLabel lblTongTienPhong,lbltongTien,lblTongTienDV,lblThoiGian;
+	public static JLabel lblTongTienPhong,lbltongTien,lblTongTienDV,lblThoiGian,lblTenNhanVien;
 	private static JPanel panel;
 	public static DefaultTableModel tableModel ;
 	public static int stt=1;
@@ -207,6 +207,23 @@ public class FormInThongKeDoanhThu extends JFrame implements Printable,ActionLis
 		panel.add(lbTN);
 		lbTN.setForeground(Color.BLACK);
 		lbTN.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new MatteBorder(0, 1, 0, 0, (Color) new Color(0, 0, 0)));
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(460, 625, 267, 92);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblTenNV = new JLabel("Người lập thống kê");
+		lblTenNV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblTenNV.setBounds(71, 10, 134, 24);
+		panel_1.add(lblTenNV);
+		
+		lblTenNhanVien = new JLabel("");
+		lblTenNhanVien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblTenNhanVien.setBounds(71, 44, 134, 24);
+		panel_1.add(lblTenNhanVien);
 		
 		setTableAlternateRow();
 	}

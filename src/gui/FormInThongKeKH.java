@@ -57,12 +57,14 @@ public class FormInThongKeKH extends JFrame implements Printable,ActionListener 
 	public static JLabel lblDienThoai;
 	public static JLabel lblHD;
 	public static JLabel lblLoaiHD1;
-	public static JLabel lblThoiGian;
+	public static JLabel lblThoiGian,lblTenNV;
 	private static JPanel panel;
 	public static DefaultTableModel tableModel ;
 	public static int stt=1;
 	
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
+	private JPanel panel_1;
+	private JLabel lblNV;
 	
 	/**
 	 * Launch the application.
@@ -132,7 +134,7 @@ public class FormInThongKeKH extends JFrame implements Printable,ActionListener 
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setViewportBorder(new LineBorder(new Color(0, 0, 128), 1, true));
-		scrollPane_1.setBounds(10, 195, 866, 500);
+		scrollPane_1.setBounds(10, 195, 866, 471);
 		panel.add(scrollPane_1);
 		
 		
@@ -172,6 +174,22 @@ public class FormInThongKeKH extends JFrame implements Printable,ActionListener 
 		lblThoiGian.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		lblThoiGian.setBounds(186, 158, 342, 27);
 		panel.add(lblThoiGian);
+		
+		panel_1 = new JPanel();
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setLayout(null);
+		panel_1.setBounds(10, 676, 396, 38);
+		panel.add(panel_1);
+		
+		lblNV = new JLabel("Nhân viên lập báo cáo: ");
+		lblNV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNV.setBounds(10, 10, 136, 17);
+		panel_1.add(lblNV);
+		
+		lblTenNV = new JLabel("");
+		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTenNV.setBounds(179, 10, 168, 17);
+		panel_1.add(lblTenNV);
 		
 		setTableAlternateRow();
 	}

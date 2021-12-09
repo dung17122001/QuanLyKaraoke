@@ -57,14 +57,14 @@ public class FormInThongKeNV extends JFrame implements Printable,ActionListener 
 	public static JLabel lblDienThoai;
 	public static JLabel lblHD;
 	public static JLabel lblLoaiHD1;
-	public static JLabel lblTongTienPhong,lbltongTien,lblTongTienDV,lblThoiGian;
+	public static JLabel lbltongTien,lblThoiGian,lblTenNV;
 	private static JPanel panel;
 	public static DefaultTableModel tableModel ;
 	public static int stt=1;
-	private JLabel lbTN;
-	private JLabel lbTThoi;
 	
 	private DaoHoaDon daoHoaDon=new DaoHoaDon();
+	private JPanel panel_1;
+	private JLabel lblNV;
 	
 	/**
 	 * Launch the application.
@@ -125,7 +125,7 @@ public class FormInThongKeNV extends JFrame implements Printable,ActionListener 
 		lblDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		panel.add(lblDienThoai);
 		
-		lblHD = new JLabel("THỐNG KÊ DOANH THU");
+		lblHD = new JLabel("THỐNG KÊ NHÂN VIÊN");
 		lblHD.setBounds(358, 113, 193, 35);
 		lblHD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHD.setForeground(Color.BLACK);
@@ -134,11 +134,11 @@ public class FormInThongKeNV extends JFrame implements Printable,ActionListener 
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setViewportBorder(new LineBorder(new Color(0, 0, 128), 1, true));
-		scrollPane_1.setBounds(10, 195, 866, 420);
+		scrollPane_1.setBounds(10, 195, 866, 471);
 		panel.add(scrollPane_1);
 		
 		
-		String[] tb = new String[] {"STT","Mã hàng hóa","Tên hàng hóa","Đơn Giá","Số Lượng","Thành Tiền"};
+		String[] tb = new String[] {"STT","Mã nhân viên","Tên nhân viên","Số điện thoại","Số hóa đơn đã lập","Tổng tiền"};
 
 		tableModel = new DefaultTableModel(tb,0);
 		table = new JTable(tableModel);
@@ -164,32 +164,10 @@ public class FormInThongKeNV extends JFrame implements Printable,ActionListener 
 		lblLoaiHD1.setBounds(460, 52, 120, 14);
 		panel.add(lblLoaiHD1);
 		
-		JLabel lblTT = new JLabel("Tổng tiền phòng:");
-		lblTT.setBounds(10, 625, 120, 24);
-		panel.add(lblTT);
-		lblTT.setForeground(Color.BLACK);
-		lblTT.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		
-		lblTongTienPhong = new JLabel("");
-		lblTongTienPhong.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblTongTienPhong.setBounds(162, 625, 146, 24);
-		panel.add(lblTongTienPhong);
-		
-		lbTThoi = new JLabel("Tổng doanh thu:");
-		lbTThoi.setForeground(Color.BLACK);
-		lbTThoi.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lbTThoi.setBounds(10, 693, 120, 24);
-		panel.add(lbTThoi);
-		
 		lbltongTien = new JLabel("");
 		lbltongTien.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 		lbltongTien.setBounds(162, 693, 146, 24);
 		panel.add(lbltongTien);
-		
-		lblTongTienDV = new JLabel("");
-		lblTongTienDV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-		lblTongTienDV.setBounds(162, 659, 131, 24);
-		panel.add(lblTongTienDV);
 		
 		JLabel lblTG = new JLabel("Thời gian thống kê:");
 		lblTG.setForeground(Color.BLACK);
@@ -202,11 +180,21 @@ public class FormInThongKeNV extends JFrame implements Printable,ActionListener 
 		lblThoiGian.setBounds(186, 158, 342, 27);
 		panel.add(lblThoiGian);
 		
-		lbTN = new JLabel("Tổng tiền dịch vụ: ");
-		lbTN.setBounds(10, 659, 120, 24);
-		panel.add(lbTN);
-		lbTN.setForeground(Color.BLACK);
-		lbTN.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		panel_1 = new JPanel();
+		panel_1.setLayout(null);
+		panel_1.setBackground(Color.WHITE);
+		panel_1.setBounds(10, 676, 396, 38);
+		panel.add(panel_1);
+		
+		lblNV = new JLabel("Nhân viên lập báo cáo: ");
+		lblNV.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		lblNV.setBounds(10, 10, 136, 17);
+		panel_1.add(lblNV);
+		
+		lblTenNV = new JLabel("");
+		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTenNV.setBounds(179, 10, 168, 17);
+		panel_1.add(lblTenNV);
 		
 		setTableAlternateRow();
 	}

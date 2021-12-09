@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import dao.DaoHoaDon;
+import dao.DaoNhanVien;
+import entity.NhanVien;
 
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -27,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
+import javax.swing.border.MatteBorder;
 
 public class FormThongKeKhachHang extends JPanel implements ActionListener{
 
@@ -40,6 +43,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 	public static int sokh;
 	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 	FormInThongKeKH formKH=new FormInThongKeKH();
+	private DaoNhanVien daoNhanVien=new DaoNhanVien();
 
 	public FormThongKeKhachHang() {
 		setBounds(0, 0, 1352, 565);
@@ -52,7 +56,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Chọn thời gian cần thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 10, 663, 166);
+		panel_1.setBounds(10, 44, 663, 166);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -84,7 +88,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Thông tin thống kê", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(679, 10, 663, 166);
+		panel_2.setBounds(679, 44, 663, 166);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -100,7 +104,7 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		txtKhachHang.setColumns(10);
 
 		JPanel panelThongKe = new JPanel();
-		panelThongKe.setBounds(10, 176, 1332, 379);
+		panelThongKe.setBounds(10, 220, 1332, 335);
 		panel.add(panelThongKe);
 
 		String []header= {"STT","Mã khách hàng","Tên khách hàng","Số điện thoại","Địa chỉ","Số giờ đến quán","Tổng tiền hóa đơn"};
@@ -114,12 +118,18 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		panelThongKe.setLayout(null);
 		scrollKhachHang=new JScrollPane(tableKhachHang,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollKhachHang.setBorder(BorderFactory.createTitledBorder("Thông tin khách hàng"));
-		scrollKhachHang.setBounds(0, 0, 1332, 369);
+		scrollKhachHang.setBounds(0, 10, 1332, 315);
 		scrollKhachHang.setBackground(new Color(248,248,248));
 		panelThongKe.add(scrollKhachHang);
 		
 		btnInThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnThongKe.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		JLabel lblTitle = new JLabel("THỐNG KÊ KHÁCH HÀNG");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTitle.setBounds(561, 10, 251, 30);
+		panel.add(lblTitle);
 		
 		setTableAlternateRow();
 
@@ -205,6 +215,13 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 		if(cbThoiGian.getSelectedItem().equals("Cả năm")) {
 			FormInThongKeKH.lblThoiGian.setText("Cả năm "+LocalDate.now().getYear());
 			daoHoaDon.InThongKeKhachHangTheoNam();
+		}
+		try {
+			NhanVien nv=daoNhanVien.getNhanvienByMaNhanVien("NV001");
+			FormInThongKeKH.lblTenNV.setText(""+nv.getTenNhanVien());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
