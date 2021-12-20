@@ -69,6 +69,8 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private JMenuItem mntmThongKeKH;
 	private JMenuItem mntmThongKeNV,mntmLoaiPhong;
 	private JButton btnDangXuat;
+	private JMenu mnTroGiup;
+	private JMenuItem mntmTroGiup;
 	
 	public FormGiaoDienChinh(){
 		
@@ -190,6 +192,15 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmThongKeNV.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLThongKe.add(mntmThongKeNV);
 		
+		mnTroGiup = new JMenu("Trợ giúp");
+		mnTroGiup.setIcon(new ImageIcon("img\\help.jpg"));
+		mnTroGiup.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+		menuBar.add(mnTroGiup);
+		
+		mntmTroGiup = new JMenuItem("Hướng dẫn sử dụng");
+		mntmTroGiup.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnTroGiup.add(mntmTroGiup);
+		
 		//Thêm sự kiện
 		mntmSuaDV.addActionListener(this);
 		mntmSuaKH.addActionListener(this);
@@ -208,6 +219,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmChucVu.addActionListener(this);
 		mntmLoaiPhong.addActionListener(this);
 		mntmThemLDV.addActionListener(this);
+		mntmTroGiup.addActionListener(this);
 		
 		
 		contentPane = new JPanel();
@@ -395,6 +407,13 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		if (o.equals(btnDangXuat)) {
 			this.dispose();
 		}
-		
+		if(o.equals(mntmTroGiup)) {
+			String[] commands= {"cmd","/c","data\\HDSDKaraokeNice.chm"};
+			try {
+				Runtime.getRuntime().exec(commands);
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 }

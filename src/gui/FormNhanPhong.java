@@ -50,25 +50,7 @@ public class FormNhanPhong extends JFrame implements ActionListener, MouseListen
 	private JButton btnNhanPhong,btnTimKiem;
 	private DaoKhachHang daoKhachHang=new DaoKhachHang();
 	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					FormNhanPhong frame = new FormNhanPhong();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public FormNhanPhong() {
 		setTitle("Đơn đặt phòng");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -203,6 +185,7 @@ public class FormNhanPhong extends JFrame implements ActionListener, MouseListen
 				FormLapHD.khachHang=daoKhachHang.getKhachHangBangSDTHoacCMND(tableModel.getValueAt(i, 2).toString());
 				FormLapHD.loadThongTinKH();
 				JOptionPane.showMessageDialog(this, "Đã nhận phòng");
+				this.dispose();
 			}
 		}
 		
