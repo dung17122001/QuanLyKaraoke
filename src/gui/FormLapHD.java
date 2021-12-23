@@ -374,7 +374,8 @@ public class FormLapHD extends JPanel implements ActionListener,MouseListener{
 		if(o.equals(btnTinhGio)) {
 			maHoaDon=ma.maHoaDon();
 			Date date=new Date(System.currentTimeMillis());
-			NhanVien nhanVien=new NhanVien("NV001");//lấy tạm, sau này lấy từ form đăng nhập
+			String manv=FormGiaoDienChinh.txtUsername.getText();
+			NhanVien nhanVien=new NhanVien(manv);
 			hoaDon=new HoaDon(maHoaDon, date, "Chờ thanh toán", khachHang, nhanVien);
 			daoHoaDon.themHoaDon(hoaDon);
 			for(int i=0;i<tableDichVu.getRowCount();i++) {

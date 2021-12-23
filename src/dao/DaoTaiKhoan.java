@@ -157,6 +157,47 @@ public class DaoTaiKhoan {
 		}
 		return n>0 ? true : false;
 	}
-
+	
+	public String getChucVu(String user) {
+		String chucvu="";
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT ChucVu.tenChucVu\r\n"
+					+ "FROM     TaiKhoan INNER JOIN\r\n"
+					+ "                  NhanVien ON TaiKhoan.maNhanVien = NhanVien.maNhanVien INNER JOIN\r\n"
+					+ "                  ChucVu ON NhanVien.maChucVu = ChucVu.maChucVu where tenTaiKhoan like N'"+user+"'";
+			ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				chucvu=rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return chucvu;
+	}
+	
+	public String getMaNV(String user) {
+		String manv="";
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = null;
+		try {
+			String sql = "SELECT NhanVien.maNhanVien\r\n"
+					+ "FROM     TaiKhoan INNER JOIN\r\n"
+					+ "                  NhanVien ON TaiKhoan.maNhanVien = NhanVien.maNhanVien\r\n"
+					+ "				  where tenTaiKhoan like N'"+user+"'";
+			ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				manv=rs.getString(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return manv;
+	}
     
 }

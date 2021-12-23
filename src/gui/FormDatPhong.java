@@ -306,7 +306,7 @@ public class FormDatPhong extends JPanel implements ActionListener, MouseListene
 
 //		makh=ma.maKhachHangVuaThem();
 //		KhachHang kh=daoKhachHang.getKhachHangTheoMa(makh);
-		String manv="NV001";//sau nay lay tu form dang nhap
+		String manv=FormGiaoDienChinh.txtUsername.getText();
 		NhanVien nv=new NhanVien(manv);
 
 		maDon=ma.maDonDatPhong();

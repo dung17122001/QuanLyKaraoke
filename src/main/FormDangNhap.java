@@ -14,6 +14,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.sql.SQLException;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
@@ -46,7 +47,7 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 	private JPanel pnMain;
 	private JPasswordField txtPassword;
 	int xx, xy;
-	private JTextField txtUserName;
+	public static JTextField txtUserName;
 	private JButton btnLogin;
 
 	private DaoTaiKhoan daoTK = new DaoTaiKhoan();
@@ -236,6 +237,8 @@ public class FormDangNhap extends JFrame implements ActionListener, MouseListene
 		}
 	}
 	
+	
+	
 }
 class TaskFormDanhNhap extends SwingWorker<Void, Void> {
 
@@ -249,10 +252,13 @@ class TaskFormDanhNhap extends SwingWorker<Void, Void> {
 
 	@Override
 	protected Void doInBackground() throws Exception {
+		DaoTaiKhoan daoTK=new DaoTaiKhoan();
 		FormGiaoDienChinh frame = new FormGiaoDienChinh ();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Rectangle r = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		frame.setSize(r.width, r.height);
+		KiemTraQuanLy();
+		FormGiaoDienChinh.txtUsername.setText(daoTK.getMaNV(FormDangNhap.txtUserName.getText()));
 		frame.setVisible(true);
 		return null;
 	}
@@ -260,5 +266,12 @@ class TaskFormDanhNhap extends SwingWorker<Void, Void> {
 	protected void done() {
 		this.jframe.dispose();
 	}
-
+	public void KiemTraQuanLy() {
+		DaoTaiKhoan daoTK=new DaoTaiKhoan();
+		if(!daoTK.getChucVu(FormDangNhap.txtUserName.getText()).equals("Quản lý")) {
+			FormGiaoDienChinh.mnQLNhanVien.setEnabled(false);
+		}
+		else
+			FormGiaoDienChinh.mnQLNhanVien.setEnabled(true);
+	}
 }

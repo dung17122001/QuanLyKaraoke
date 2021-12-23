@@ -217,7 +217,8 @@ public class FormThongKeKhachHang extends JPanel implements ActionListener{
 			daoHoaDon.InThongKeKhachHangTheoNam();
 		}
 		try {
-			NhanVien nv=daoNhanVien.getNhanvienByMaNhanVien("NV001");
+			String manv=FormGiaoDienChinh.txtUsername.getText();
+			NhanVien nv=daoNhanVien.getNhanvienByMaNhanVien(manv);
 			FormInThongKeKH.lblTenNV.setText(""+nv.getTenNhanVien());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

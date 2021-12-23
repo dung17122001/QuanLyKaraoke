@@ -43,10 +43,10 @@ import javax.swing.JMenuItem;
 public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseListener {
 	private static final long serialVersionUID = -1554680235689968471L;
 	private JPanel contentPane;
-	private JLabel txtUsername;
+	public static JLabel txtUsername;
 	private static JPanel panel_Manage;
 	private JMenuBar menuBar;
-	private JMenu mnQLNhanVien;
+	public static JMenu mnQLNhanVien;
 	private JMenu mnQLKhachHang;
 	private JMenuItem mntmSuaNV;
 	private JMenuItem mntmTimKiemNV;
