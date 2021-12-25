@@ -47,10 +47,11 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 	private static JPanel panel_Manage;
 	private JMenuBar menuBar;
 	public static JMenu mnQLNhanVien;
-	private JMenu mnQLKhachHang;
 	private JMenuItem mntmSuaNV;
 	private JMenuItem mntmTimKiemNV;
 	private JMenuItem mntmChucVu;
+	private JMenuItem mntmTaiKhoan;
+	private JMenu mnQLKhachHang;
 	private JMenuItem mntmSuaKH;
 	private JMenuItem mntmTimKiemKH;
 	private JMenu mnQlDichVu;
@@ -96,6 +97,11 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmChucVu.setIcon(new ImageIcon("img\\sua.png"));
 		mntmChucVu.setFont(new Font("Times New Roman", Font.PLAIN, 20));
 		mnQLNhanVien.add(mntmChucVu);
+		
+		mntmTaiKhoan = new JMenuItem("Tài khoản");
+		mntmTaiKhoan.setIcon(new ImageIcon("img\\sua.png"));
+		mntmTaiKhoan.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		mnQLNhanVien.add(mntmTaiKhoan);
 		
 		mnQLKhachHang = new JMenu("Khách Hàng");
 		mnQLKhachHang.setIcon(new ImageIcon("img\\img\\icon1.png"));
@@ -220,6 +226,7 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		mntmLoaiPhong.addActionListener(this);
 		mntmThemLDV.addActionListener(this);
 		mntmTroGiup.addActionListener(this);
+		mntmTaiKhoan.addActionListener(this);
 		
 		
 		contentPane = new JPanel();
@@ -352,14 +359,19 @@ public class FormGiaoDienChinh extends JFrame  implements ActionListener, MouseL
 		if(o.equals(mntmSuaNV)) {
 			changeScreen(new FormQLNhanVien());
 		}
+		
 		if(o.equals(mntmTimKiemNV)) {
 			changeScreen(new FormTimKiemNV());
-			
 		}
+		
 		if(o.equals(mntmChucVu)) {
-			changeScreen(new FormThemCV());
-			
+			changeScreen(new FormThemCV());	
 		}
+		
+		if(o.equals(mntmTaiKhoan)) {
+			changeScreen(new FormTaiKhoan());	
+		}
+		
 		if(o.equals(mntmSuaKH)) {
 			changeScreen(new FormQLKhachHang());
 		}

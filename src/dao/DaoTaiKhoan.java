@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
 
 import connect.ConnectDB;
 import entity.TaiKhoan;
@@ -14,6 +17,20 @@ import entity.TaiKhoan;
 
 public class DaoTaiKhoan {
 
+	public void loadData(String sql, DefaultTableModel tableModel) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Vector<Object> vector = new Vector<Object>();
+			vector.add(rs.getString("maNhanVien")); 
+			vector.add(rs.getString("tenTaiKhoan"));  
+			vector.add(rs.getString("matKhau"));  
+			tableModel.addRow(vector);
+		}
+	}
+	
 	public ArrayList<TaiKhoan> getDsTaikhoan() throws SQLException {
 		ArrayList<TaiKhoan> dstk = new ArrayList<TaiKhoan>();
 		ConnectDB.getInstance();
@@ -57,12 +74,8 @@ public class DaoTaiKhoan {
 		}
 		return tk;
 	}
-	/**Thêm tài khoản mới vào hệ thống
-	 * 
-	 * @param tk
-	 * @return
-	 * @throws SQLException
-	 */
+	
+	//thêm tài khoản
 	public boolean themTaikhoan(TaiKhoan tk) throws SQLException {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
@@ -85,11 +98,8 @@ public class DaoTaiKhoan {
 		}
 		return n > 0;
 	}
-	/** đổi mật khẩu tài khoản
-	 * 
-	 * @param tk
-	 * @return
-	 */
+	
+	//đổi mk
 	public boolean doiMatkhau(TaiKhoan tk, String matkhaumoi) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getCon();
@@ -111,6 +121,24 @@ public class DaoTaiKhoan {
 		}
 		return n > 0;
 	}
+	
+	//xoa
+	public boolean delTaiKhoan(String maNhanVien) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getCon();
+		try {
+			PreparedStatement ps = con.prepareStatement("delete from TaiKhoan where maNhanVien=?");
+			ps.setString(1, maNhanVien);
+			int n = ps.executeUpdate();
+			if (n > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	/**Tìm tài khoản theo tên tài khoản
 	 * 
 	 * @param tenTK
